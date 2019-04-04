@@ -12,7 +12,17 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: () => import(/* webpackChunkName: "home" */ '@/views/index.vue')
+      component: () => import(/* webpackChunkName: "home" */ '@/views/index.vue'),
+      children: [
+        {
+          path: '/',
+          redirect: '/main'
+        },
+        ...board,
+        ...addressBook,
+        ...my,
+        ...main
+      ]
     }
   ]
 })

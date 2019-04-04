@@ -1,7 +1,8 @@
 <template>
   <div class="sp">
-    <!-- <router-view /> -->
-    dasdas
+    <div class="main-content">
+      <router-view />
+    </div>
     <div class="sp-tabbar">
       <cube-tab-bar
         v-model="selectedLabelDefault"
@@ -19,19 +20,19 @@ export default {
       selectedLabelDefault: "Vip",
       tabs: [
         {
-          label: "Home",
+          label: "首页",
           icon: "cubeic-home"
         },
         {
-          label: "Like",
+          label: "通讯录",
           icon: "cubeic-like"
         },
         {
-          label: "Vip",
+          label: "看板",
           icon: "cubeic-vip"
         },
         {
-          label: "Me",
+          label: "我的",
           icon: "cubeic-person"
         }
       ]
@@ -39,14 +40,22 @@ export default {
   },
 
   beforeRouteEnter(to, from, next) {
-    console.log(to);
+    next();
   },
   methods: {
     clickHandler(label) {
-      // if you clicked home tab, then print 'Home'
-      console.log(label);
+      if(label == '首页') {
+        this.$router.push('/main');
+      }else if(label == '通讯录') {
+        this.$router.push('/address-book');
+      }else if(label == '看板') {
+        this.$router.push('/board');
+      }else if(label == '我的') {
+        this.$router.push('/my');
+      }
     },
     changeHandler(label) {
+      console.log(label)
       // if you clicked different tab, this methods can be emitted
     }
   }
@@ -54,6 +63,20 @@ export default {
 </script>
 <style lang="less" scoped>
 .sp {
+  .main-content{
+    height: calc(100vh - 48px);
+    >div{
+      padding-bottom: 48px;
+    }
+  }
+  .sp-tabbar{
+    background: white;
+    z-index: 9999;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    box-shadow: 0px 0px 18px 2px rgba(0, 0, 0, 0.1);
+  }
 }
 </style>
 
