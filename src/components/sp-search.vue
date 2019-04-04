@@ -1,8 +1,6 @@
 <template>
     <div class="sp-search">
-        <mt-search v-model="value">
-            <mt-cell v-for="item in result" :title="item.title" :value="item.value" :key="item.title"></mt-cell>
-        </mt-search>
+       
     </div>
 </template>
 <script>
