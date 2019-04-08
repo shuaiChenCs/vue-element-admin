@@ -52,7 +52,7 @@ export default {
       }
     },
     changeHandler(label) {
-      console.log(label)
+      // console.log(label)
       // if you clicked different tab, this methods can be emitted
     }
   }
