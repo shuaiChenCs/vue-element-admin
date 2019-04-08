@@ -39,9 +39,6 @@ export default {
     };
   },
 
-  beforeRouteEnter(to, from, next) {
-    next();
-  },
   methods: {
     clickHandler(label) {
       if(label == '首页') {
