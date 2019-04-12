@@ -1,9 +1,9 @@
 <template>
   <div class="sp">
-    <div class="main-content">
+    <div class="main-content" :class="{hastab: hastab}">
       <router-view />
     </div>
-    <div class="sp-tabbar">
+    <div class="sp-tabbar" v-if="hastab">
       <cube-tab-bar
         v-model="selectedLabelDefault"
         :data="tabs"
@@ -17,6 +17,7 @@
 export default {
   data() {
     return {
+      hastab: true,
       selectedLabelDefault: "Vip",
       tabs: [
         {
@@ -38,7 +39,11 @@ export default {
       ]
     };
   },
-
+  watch: {
+    '$route'(val) {
+      this.hastab = val.meta.hastab;
+    }
+  },
   methods: {
     clickHandler(label) {
       if(label == '首页') {
@@ -61,9 +66,15 @@ export default {
 <style lang="less" scoped>
 .sp {
   .main-content{
-    height: calc(100vh - 48px);
+    height: 100vh;
+    &.hastab{
+      height: calc(100vh - 48px);
+      >div{
+        padding-bottom: 48px;
+      }
+    }
     >div{
-      padding-bottom: 48px;
+      background: #F8F8F8;
     }
   }
   .sp-tabbar{

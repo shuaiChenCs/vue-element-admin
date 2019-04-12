@@ -4,10 +4,12 @@ import './plugins/axios'
 import App from './App.vue'
 import router from './router/router.js'
 import store from './store'
-import './assets/css/main.css'
+import './directives/scroll.js';
+import './assets/css/main.css';
+import fixedButton from '@/components/fixed-button';
 
 Vue.config.productionTip = false
-
+Vue.component('fixed-button', fixedButton);
 router.beforeEach((to,from,next)=>{
     console.log(to.meta.title)
     document.title=to.meta.title;

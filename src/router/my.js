@@ -4,12 +4,12 @@ export default [
 		path: '/my',
 		name: 'my',
 		component: () => import(/* webpackChunkName: "my" */ '../views/my/index'),
-		meta:{title:'我的'}
+		meta:{title:'我的', hastab: true}
 	},
     {
         path: 'my/goods',
         name: 'goods',
-        component: () => import(/* webpackChunkName: "my" */ '../views/my/goods/goods'),
+        component: () => import(/* webpackChunkName: "my" */ '../views/my/goods/goods1'),
         meta:{title:'我的商品'}
     },
     {
