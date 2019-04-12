@@ -1,5 +1,5 @@
 <template>
-    <div class="goods">
+    <div class="goods-edit">
     <cube-form
             :model="model"
             :schema="schema"
@@ -33,7 +33,7 @@
                             fields: [
                                 {
                                     type: 'upload',
-                                    modelKey: 'uploadValue',
+                                    modelKey: 'bannerList',
                                     events: {
                                         'file-removed': (...args) => {
                                             console.log('file removed', args)
@@ -43,18 +43,18 @@
                                         uploaded: (val, config) => {
                                             return Promise.all(val.map((file, i) => {
                                                 return new Promise((resolve, reject) => {
-                                                    if (file.uploadedUrl) {
-                                                        return resolve()
-                                                    }
+                                                    // if (file.uploadedUrl) {
+                                                    //     return resolve()
+                                                    // }
                                                     // fake request
-                                                    setTimeout(() => {
-                                                        if (i % 2) {
-                                                            reject(new Error())
-                                                        } else {
-                                                            file.uploadedUrl = 'uploaded/url'
-                                                            resolve()
-                                                        }
-                                                    }, 1000)
+                                                    // setTimeout(() => {
+                                                    //     if (i % 2) {
+                                                    //         reject(new Error())
+                                                    //     } else {
+                                                    //         file.uploadedUrl = 'uploaded/url'
+                                                    //         resolve()
+                                                    //     }
+                                                    // }, 1000)
                                                 })
                                             })).then(() => {
                                                 return true
@@ -71,6 +71,16 @@
                                     label: '商品名称',
                                     props: {
                                         placeholder: '请输入商品名称'
+                                    },
+                                    // validating when blur
+                                    trigger: 'blur'
+                                },
+                                {
+                                    type: 'input',
+                                    modelKey: 'type',
+                                    label: '商品类型',
+                                    props: {
+                                        placeholder: '请输入商品类型'
                                     },
                                     // validating when blur
                                     trigger: 'blur'
@@ -131,9 +141,9 @@
             }
         },
         methods: {
-            submitHandler(e) {
+            submitHandler(e,model) {
                 e.preventDefault()
-                console.log('submit', e)
+                console.log( model)
             },
             validateHandler(result) {
                 this.validity = result.validity
@@ -144,4 +154,7 @@
     }
 </script>
 <style lang="less" scoped>
+.cube-btn{
+    
+}
 </style>
