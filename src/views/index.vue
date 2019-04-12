@@ -14,6 +14,8 @@
   </div>
 </template>
 <script>
+
+
 export default {
   data() {
     return {
@@ -39,6 +41,11 @@ export default {
     };
   },
 
+  created(){
+    this.$post('/simulate/login?openId=o-8zG5Ttt33KRa222_DGLq85GLMw').then((response) =>{
+      console.log(response);
+    });
+  },
   methods: {
     clickHandler(label) {
       if(label == '首页') {
