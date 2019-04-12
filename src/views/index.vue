@@ -15,6 +15,7 @@
 </template>
 <script>
 
+  import apiConfig from '../api/apiConfig'
 
 export default {
   data() {
@@ -42,7 +43,7 @@ export default {
   },
 
   created(){
-    this.$post('/simulate/login?openId=o-8zG5Ttt33KRa222_DGLq85GLMw').then((response) =>{
+    this.$post(apiConfig.login+'?openId=o-8zG5Ttt33KRa222_DGLq85GLMw').then((response) =>{
       console.log(response);
     });
   },
