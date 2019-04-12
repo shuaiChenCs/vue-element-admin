@@ -14,6 +14,9 @@
   </div>
 </template>
 <script>
+
+  import apiConfig from '../api/apiConfig'
+
 export default {
   data() {
     return {
@@ -43,6 +46,11 @@ export default {
     '$route'(val) {
       this.hastab = val.meta.hastab;
     }
+  },
+  created(){
+    this.$post(apiConfig.login+'?openId=o-8zG5Ttt33KRa222_DGLq85GLMw').then((response) =>{
+      console.log(response);
+    });
   },
   methods: {
     clickHandler(label) {

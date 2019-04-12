@@ -10,6 +10,15 @@ import fixedButton from '@/components/fixed-button';
 
 Vue.config.productionTip = false
 Vue.component('fixed-button', fixedButton);
+import './assets/css/main.css'
+import {post,fetch,del,put} from './api/http';
+
+Vue.config.productionTip = false
+Vue.prototype.$post=post;
+Vue.prototype.$fetch=fetch;
+Vue.prototype.$del=del;
+Vue.prototype.$put=put;
+
 router.beforeEach((to,from,next)=>{
     console.log(to.meta.title)
     document.title=to.meta.title;
