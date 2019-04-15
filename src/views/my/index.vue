@@ -3,9 +3,9 @@
         <div class="my-header">
             <div class="card">
                 <div class="card-img">
-                    <img src="@/assets/images/header.jpg" alt="">
+                    <img :src="headImg" alt="">
                 </div>
-                <div class="card-name">AA</div>
+                <div class="card-name">{{nikeName}}</div>
                 <div class="btn">
                     <cube-button :inline="true">进入名片</cube-button>
                     <cube-button :inline="true">名片海报</cube-button>
@@ -15,7 +15,7 @@
         <div class="vip">
             <i class="cubeic-alert"></i>
             <span class="vip-text">VIP会员</span>
-            <span class="time">2020-9-30到期</span>
+            <span class="time">{{registerTime | formatDate}}到期</span>
         </div>
         <my-block :blockData="data1" :title="'我的资产'"></my-block>
         <my-block :blockData="data2" :title="'我的数据'"></my-block>
@@ -24,9 +24,14 @@
 </template>
 <script>
 import myBlock from '@/components/my-block.vue';
+import {formatDate} from '@/common/date.js';
+
 export default {
     data() {
         return {
+            name:'',
+            headImg:'',
+            registerTime:'',
             data1: [
                 {title: '我的邀请码', icon:'', url: ''},
                 {title: '邀请好友', icon:'', url: ''},
@@ -45,6 +50,18 @@ export default {
                 {title: '联系客服', icon:'', url: ''},
             ],
         }
+    },
+    filters: {
+        formatDate(time) {
+            var date = new Date(time);
+            return formatDate(date, 'yyyy-MM-dd');
+        }
+    },
+    created(){
+      let loginInfo = JSON.parse(sessionStorage.getItem('loginInfo'));
+      this.nikeName=loginInfo.nikeName;
+      this.headImg=loginInfo.headImg;
+      this.registerTime=loginInfo.registerTime;
     },
     components: {
         myBlock

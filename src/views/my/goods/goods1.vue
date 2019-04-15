@@ -5,13 +5,13 @@
             <span>欢迎来到「AA」的商品库</span>
         </div>
         <div class="goods-box">
-             <div class="goods-item" v-for="item in 20" :key="item">
+             <div class="goods-item" v-for="(item,index) in data" :key="index">
                  <div class="img">
-                     <img src="https://img.hrsugaphre.com/userHead/33E79D50626A4DCC8BC930DFA1AB8F9D.png" alt="">
+                     <img :src="item.imgUrl" alt="">
                  </div>
-                 <div class="name">衣衣服衣服衣服服</div>
+                 <div class="name">{{item.name}}</div>
                  <div class="handler">
-                     <span>$12</span>
+                     <span>￥{{item.price}}</span>
                      <i class="cubeic-more"></i>
                  </div>
              </div>
@@ -65,12 +65,25 @@ const foods = [
 export default {
     data() {
         return {
-            data: foods
+            data: [],
+            current:1,
+            size:10
         }
     },
+    created(){
+        this.loadData();
+    },
     methods: {
+        loadData(){
+            this.$post(this.$apiConfig.getGoodsList,{current:this.current,size:this.size}).then((res)=>{
+                if(res.code=='0'){
+                    this.data = this.data.concat(res.data.records);
+                }
+            });
+        },
         loadmore() {
-            // this.data = this.data.concat(this.data)
+            this.current++;
+            this.loadData();
         }
     }
 }
