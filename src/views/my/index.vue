@@ -61,6 +61,7 @@ export default {
        this.$fetch(this.$apiConfig.memberInfo,{}).then((res)=>{
            let memberInfo = res.data;
            vm.card = memberInfo.cardVO;
+           sessionStorage.setItem('card',JSON.stringify(vm.card));
        });
     },
     components: {

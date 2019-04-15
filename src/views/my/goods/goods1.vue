@@ -1,8 +1,8 @@
 <template>
     <div class="goods" v-scroll="loadmore">
         <div class="goods-header">
-            <img src="@/assets/images/header.jpg" alt="">
-            <span>欢迎来到「AA」的商品库</span>
+            <img :src="card.headImg" alt="">
+            <span>欢迎来到「{{card.cardName}}」的商品库</span>
         </div>
         <div class="goods-box">
              <div class="goods-item" v-for="(item,index) in data" :key="index">
@@ -65,6 +65,7 @@ const foods = [
 export default {
     data() {
         return {
+            card:JSON.parse(sessionStorage.getItem('card')),
             data: [],
             current:1,
             size:10
@@ -75,7 +76,8 @@ export default {
     },
     methods: {
         loadData(){
-            this.$post(this.$apiConfig.getGoodsList,{current:this.current,size:this.size}).then((res)=>{
+            let card = JSON.parse(sessionStorage.getItem('card'));
+            this.$post(this.$apiConfig.getGoodsList,{current:this.current,size:this.size,cardId:card.id}).then((res)=>{
                 if(res.code=='0'){
                     this.data = this.data.concat(res.data.records);
                 }
