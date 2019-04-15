@@ -6,7 +6,12 @@
 
 <script>
 export default {
-  
+    created(){
+        //登录，设置全局token
+        this.$post(this.$apiConfig.login+'?openId=o-8zG5Ttt33KRa222_DGLq85GLMw').then((response) =>{
+            axios.defaults.headers['Authentication'] = response.data.token;
+        });
+    }
 };
 </script>
 

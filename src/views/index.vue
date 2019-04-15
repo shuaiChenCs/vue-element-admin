@@ -45,14 +45,6 @@ export default {
       this.hastab = val.meta.hastab;
     }
   },
-  created(){
-      axios.defaults.headers['Authentication'] = 'eyJhbGciOiJIUzI1NiJ9.eyJwMSI6MywicDIiOjYsImV4cCI6MTU1NjE1NzEwOCwiaWF0IjoxNTU1MjkzMTA4fQ.qtPfQIn6IRVFPCMEk0a751RhHnn32QxZoO_8PhsXaAU'
-      this.$post(this.$apiConfig.login+'?openId=o-8zG5Ttt33KRa222_DGLq85GLMw').then((response) =>{
-          console.log(response.data);
-          sessionStorage.setItem('loginInfo',JSON.stringify(response.data));
-
-      });
-  },
   methods: {
     clickHandler(label) {
       if(label == '首页') {
