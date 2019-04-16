@@ -1,5 +1,5 @@
 <template>
-  <div class="sp-upload">
+  <div class="dynamic-upload">
     <cube-upload
       v-model="value"
       :action="url"
@@ -75,7 +75,7 @@ export default {
 };
 </script>
 <style lang="less">
-.sp-upload {
+.dynamic-upload {
   padding: 15px 0;
   -webkit-overflow-scrolling: touch;
   overflow-x: auto;
@@ -85,15 +85,20 @@ export default {
   .cube-upload-def {
     margin: 0;
     display: flex;
+    flex-wrap: wrap;
   }
   .cube-upload-file,
   .cube-upload-btn {
-    margin-bottom: 0 !important;
+      width: calc((100% - 39px) / 4);
+      &:nth-child(4n){
+          margin-right: 0 !important;
+      }
   }
   .cube-upload-btn {
     overflow: visible !important;
   }
-  .cube-upload-btn-def {
+  .cube-upload-file-def,.cube-upload-btn-def {
+      width: 100%;
     box-shadow: none !important;
   }
 }

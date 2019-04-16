@@ -169,6 +169,7 @@ export default {
 </script>
 <style lang="less" scoped>
 .goods {
+	padding-bottom: 64px;
   .goods-header {
     height: 284px/2;
     background: linear-gradient(
@@ -249,7 +250,6 @@ export default {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    padding-bottom: 128px/2;
     .goods-item {
       border-radius: 5px;
       overflow: hidden;

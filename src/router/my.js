@@ -33,13 +33,13 @@ export default [
     {
         path: 'my/dynamic',
         name: 'dynamic',
-        component: () => import(/* webpackChunkName: "my" */ '../views/my/dynamic/dynamic1'),
+        component: () => import(/* webpackChunkName: "my" */ '../views/my/dynamic/dynamic'),
         meta:{title:'动态'}
     },
     {
-        path: 'my/dynamic/edit',
-        name: 'dynamic-edit',
-        component: () => import(/* webpackChunkName: "my" */ '../views/my/dynamic/dynamic-edit'),
+        path: 'my/dynamic/add',
+        name: 'dynamic-add',
+        component: () => import(/* webpackChunkName: "my" */ '../views/my/dynamic/dynamic-add'),
         meta:{title:'发布动态'}
     }
 ]
