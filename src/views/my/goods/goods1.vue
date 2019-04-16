@@ -38,7 +38,7 @@
         <div class="name">{{item.name}}</div>
         <div class="handler">
           <span>￥{{item.price}}</span>
-          <i class="cubeic-more"></i>
+          <i class="cubeic-more" @click="set"></i>
         </div>
       </div>
     </div>
@@ -106,8 +106,46 @@ export default {
     this.loadData();
   },
   methods: {
+    set() {
+      this.$createActionSheet({
+                    // title: '置顶',
+                    active: 2,  //高亮
+                    data: [
+                        {
+                            content: '置顶'
+                        },
+                        {
+                            content: '编辑',
+                        },
+                        {
+                            content: '删除',
+                            // class: 'color:#ff0000'    //颜色红色
+                        }
+                    ],
+                    onSelect: (item, index) => {
+                        switch (index) {
+                            case 0:
+                                this.$createToast({
+                                    txt: `Clicked ${item.content}`,
+                                    time: 1000
+                                }).show();
+                                break;
+                            case 1:
+                                this.$router.push('goods/edit');
+                                break;
+                            case 2:
+                                this.$createToast({
+                                    txt: `Clicked ${item.content}`,
+                                    time: 1000
+                                }).show();
+                                break;
+                        }
+
+                    }
+                }).show()
+    },
     addGoods() {
-      console.log(111);
+      this.$router.push('/my/goods/add');
     },
     loadData() {
       axios

@@ -25,7 +25,7 @@
 <style lang="less">
 .save-btn-box{
 	height: 128px/2;
-	z-index: 9998;
+	z-index: 99;
 	width: 100%;
 	bottom: 0;
 	position: fixed;

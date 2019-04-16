@@ -15,9 +15,10 @@ import './assets/css/my-mint.css';
 import apiConfig from './api/apiConfig.js';
 Vue.config.productionTip = false
 Vue.prototype.$apiConfig=apiConfig;
+Vue.prototype.$hastab;
 
 router.beforeEach((to,from,next)=>{
-    console.log(to.meta.title)
+    Vue.prototype.$hastab = to.meta.hastab;
     document.title=to.meta.title;
     next();
 })

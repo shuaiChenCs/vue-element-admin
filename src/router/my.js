@@ -19,6 +19,12 @@ export default [
         meta:{title:'编辑商品'}
     },
     {
+        path: 'my/goods/add',
+        name: 'goods-add',
+        component: () => import(/* webpackChunkName: "my" */ '../views/my/goods/goods-add'),
+        meta:{title:'添加商品'}
+    },
+    {
         path: 'my/dynamic',
         name: 'dynamic',
         component: () => import(/* webpackChunkName: "my" */ '../views/my/dynamic/dynamic'),

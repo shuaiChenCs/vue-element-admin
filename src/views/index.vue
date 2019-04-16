@@ -1,9 +1,9 @@
 <template>
   <div class="sp">
-    <div class="main-content" :class="{hastab: hastab}">
+    <div class="main-content" :class="{hastab: $hastab}">
       <router-view />
     </div>
-    <div class="sp-tabbar" v-if="hastab">
+    <div class="sp-tabbar" v-if="$hastab">
       <cube-tab-bar
         v-model="selectedLabelDefault"
         :data="tabs"
@@ -18,7 +18,6 @@
 export default {
   data() {
     return {
-      hastab: true,
       selectedLabelDefault: "Vip",
       tabs: [
         {
@@ -42,7 +41,8 @@ export default {
   },
   watch: {
     '$route'(val) {
-      this.hastab = val.meta.hastab;
+      // this.hastab = val.meta.hastab;
+      console.log(val)
     }
   },
   methods: {
@@ -60,6 +60,9 @@ export default {
     changeHandler(label) {
       // console.log(label)
       // if you clicked different tab, this methods can be emitted
+    },
+    beforeRouteEnter(to,from ,next) {
+      console.log(to)
     }
   }
 };
