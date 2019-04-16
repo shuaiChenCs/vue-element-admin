@@ -33,7 +33,7 @@ export default [
     {
         path: 'my/dynamic',
         name: 'dynamic',
-        component: () => import(/* webpackChunkName: "my" */ '../views/my/dynamic/dynamic'),
+        component: () => import(/* webpackChunkName: "my" */ '../views/my/dynamic/dynamic1'),
         meta:{title:'动态'}
     },
     {

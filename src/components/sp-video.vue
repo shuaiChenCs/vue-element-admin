@@ -5,6 +5,7 @@
       controls
       :src="src"
       style="object-fit:fill"
+      :poster="src+'?x-oss-process=video/snapshot,t_10000,m_fast'"
       webkit-playsinline="true"
       x-webkit-airplay="true"
       playsinline="true"

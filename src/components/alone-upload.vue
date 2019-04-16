@@ -22,7 +22,7 @@ export default {
     },
     max: {
       type: Number,
-      default: 1
+      default: 10000
     },
     fileList: {
       type: Array,
