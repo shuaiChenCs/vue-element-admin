@@ -1,15 +1,15 @@
 <template>
-    <div class="product-detail sp-scroll">
+    <div class="product-detail">
         <div class="header">
             <div class="main-img">
                 <!--<swiper class="swiper" :indicator-dots="true" :autoplay="true" :interval="5000" :duration="500">-->
-                    <!--<swiper-item v-for="item in productDetail.bannerList" :key="item.id">-->
-                        <!--<image :src="item.imgUrl" mode="aspectFit" @tap="previewImg(item.imgUrl)" ></image>-->
-                    <!--</swiper-item>-->
+                <!--<swiper-item v-for="item in productDetail.bannerList" :key="item.id">-->
+                <!--<image :src="item.imgUrl" mode="aspectFit" @tap="previewImg(item.imgUrl)" ></image>-->
+                <!--</swiper-item>-->
                 <!--</swiper>-->
                 <cube-slide class="swiper" ref="slide" :data="goodsDetail.bannerList">
                     <cube-slide-item v-for="(item, index) in goodsDetail.bannerList" :key="index">
-                            <img :src="item.imgUrl">
+                        <img :src="item.imgUrl">
                     </cube-slide-item>
                 </cube-slide>
             </div>
@@ -24,8 +24,7 @@
             <div class="info-block" v-for="item in goodsDetail.infoList" :key="item.id">
                 <div class="img-video">
                     <img  @tap="previewImg(item.multimediaUrl)" :src="item.multimediaUrl" mode="widthFix" v-if="item.multimediaType == 1"></img>
-                    <sp-video :src="item.multimediaUrl" v-if="item.multimediaType == 2"></sp-video>
-                    <!-- <video :src="item.multimediaUrl" controls v-if="item.multimediaType == 2" :poster="item.multimediaUrl+'?x-oss-process=video/snapshot,t_10000,m_fast'"></video> -->
+                    <video :src="item.multimediaUrl" controls v-if="item.multimediaType == 2" :poster="item.multimediaUrl+'?x-oss-process=video/snapshot,t_10000,m_fast'"></video>
                 </div>
                 <div class="descript">
                     {{item.content}}
@@ -37,30 +36,20 @@
 </template>
 
 <script>
-    // import api from '@/api/api.js';
     export default {
         data() {
             return {
-                goodsDetail: {},
-                items: [
-                    {
-                        image: '//webapp.didistatic.com/static/webapp/shield/cube-ui-examples-slide01.png'
-                    },
-                    {
-                        image: '//webapp.didistatic.com/static/webapp/shield/cube-ui-examples-slide02.png'
-                    },
-                    {
-                        image: '//webapp.didistatic.com/static/webapp/shield/cube-ui-examples-slide03.png'
-                    }
-                ]
+                id:0,
+                goodsDetail: {}
             };
         },
         created(){
-            this.getGoodDetail(this.$route.params.id);
+            this.id = this.$route.params.id;
+            this.getGoodDetail(this.id);
         },
         methods: {
             editGoods(){
-
+                this.$router.push({name:'goods-edit',params:{id:this.id}});
             },
             previewImg(url) {
                 // uni.previewImage({
@@ -78,7 +67,7 @@
     }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
     .product-detail{
         .bottom{
             background: white;

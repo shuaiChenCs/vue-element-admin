@@ -4,7 +4,7 @@
             <textarea placeholder="说点什么吧..."></textarea>
         </div>
         <div class="imgs">
-            <dynamic-upload @success="bannerSuccess" v-model="fileList" :type="'dynamic'" :max="10"></dynamic-upload>
+            <dynamic-upload @success="bannerSuccess" :type="'dynamic'" :max="9"></dynamic-upload>
         </div>
         <fixed-button :title="'保存'" @clickHandler="save"></fixed-button>
     </div>
@@ -15,12 +15,7 @@ export default {
     data() {
         return {
             fileList: [
-                {
-                    
-                    url: 'https://img.hrsugaphre.com/userHead/3311E8B49107456DBF0BFA348146EEE9.png',
-                    status: 'success',
-                    progress: 1
-                }
+
             ]
         }
     },

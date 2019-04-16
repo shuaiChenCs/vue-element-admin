@@ -1,7 +1,7 @@
 <template>
   <div class="sp-upload">
     <cube-upload
-      v-model="value"
+      v-model="listArr"
       :action="url"
       :simultaneous-uploads="1"
       @files-added="filesAdded"
@@ -14,10 +14,6 @@
 <script>
 export default {
   props: {
-    value: {
-      type: Array,
-      default: () => []
-    },
     type: String,
     accept: {
       type: String,
@@ -33,10 +29,23 @@ export default {
     }
   },
   data() {
-    return {};
+    return {
+        listArr: []
+    };
   },
+    watch: {
+        fileList(val) {
+          val.forEach(item => {
+              let t = {
+                  url: item,
+                  status: 'success',
+                  progress: 1
+              }
+              this.listArr.push(t);
+          });
+      }
+    },
   computed: {
-    list() {},
     url() {
       let v = this.accept.indexOf("video");
       if (v == -1) {

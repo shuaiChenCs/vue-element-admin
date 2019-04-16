@@ -14,6 +14,7 @@ const apiConfig = {
     getGoodsType: `/app/goodsType/user/list`,//获取商品分类
     getGoodsList: `/app/goods/list/page`,//获取商品列表
     getGoodDetail: `/app/goods/get`,//获取商品详情
+    editGoods:`/app/goods/edit`, //编辑商品
     setGoodTop:`/app/goods/setTop`,//设置商品置顶
     addGoods:`/app/goods/add`, //新增商品
     delGoods:`/app/goods/delete/`,//删除商品
