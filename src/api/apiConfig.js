@@ -15,6 +15,7 @@ const apiConfig = {
     getGoodsList: `/app/goods/list/page`,//获取商品列表
     getGoodDetail: `/app/goods/get`,//获取商品详情
     setGoodTop:`/app/goods/setTop`,//设置商品置顶
+    addGoods:`/app/goods/add`, //新增商品
     delGoods:`/app/goods/delete/`,//删除商品
     saveDelicacy: `/app/card/edit/delicacy`,//保存精选照片
     getDelicacyList: `/app/card/list/delicacy`,//获取个人精选照片

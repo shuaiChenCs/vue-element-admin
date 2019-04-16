@@ -10,11 +10,11 @@
       </div>
       <div class="input-text">
         <span>商品名称</span>
-        <input type="text" placeholder="请输入商品名称">
+        <input type="text" v-model="name" placeholder="请输入商品名称">
       </div>
       <div class="input-text">
         <span>商品价格</span>
-        <input type="text" placeholder="请输入商品价格">
+        <input type="tel" v-model="price" placeholder="请输入商品价格"  maxlength="11" />
       </div>
     </div>
 
@@ -24,15 +24,15 @@
     </div>
     <div class="block-item">
       <div class="detail-list" v-for="(item, index) in detail" :key="index">
-        <div class="img-video" v-if="item.url">
-          <img :src="item.url" alt="" v-if="item.type == 'image/*'">
-          <sp-video :src="item.url" v-else></sp-video>
+        <div class="img-video" v-if="item.multimediaUrl">
+          <img :src="item.multimediaUrl" alt="" v-if="item.multimediaType == '1'">
+          <sp-video :src="item.multimediaUrl" v-else></sp-video>
         </div>
         <div class="detial">
           <textarea v-model="item.content" placeholder="请输入"></textarea>
         </div>
         <div class="handler">
-          <i class="iconfont iconcard_edit_delete"></i>
+          <i class="iconfont iconcard_edit_delete" @click="delDetail(index)"></i>
         </div>
       </div>
     </div>
@@ -61,30 +61,57 @@ export default {
     return {
       fileList: [],
       detail: [],
-      banner: []
+      banner: [],
+        name:'',
+        price:'',
+        type:'',
+        typeId:0
     };
   },
   methods: {
+      delDetail(index){
+        this.detail.splice(index,1);
+      },
     save() {
-
+        let params = {
+            name:this.name,
+            price:this.price,
+            type:this.type,
+            typeId:this.typeId,
+            bannerList:this.banner,
+            infoList:this.detail
+        }
+        let vm =this;
+        axios.post(this.$apiConfig.addGoods,params).then((res)=>{
+           if(res.data.code==0){
+               vm.$router.go(-1);
+           }
+        });
     },
     bannerSuccess(obj) {
       this.banner.push(obj.realpath);
       console.log(this.banner)
     },
     uploadSuccess(obj) {
+        let type ="";
+        if(obj.type=='image/*'){
+            type=1;
+        }else if(obj.type=='video/*'){
+            type=2;
+        }
+
       let detailObj = {
-        url: obj.realpath,
+        multimediaUrl: obj.realpath,
         content: '',
-        type: obj.type
+        multimediaType: type
       }
       this.detail.push(detailObj);
     },
     addContent() {
       let detailObj = {
-        url: '',
-        content: '',
-        type: ''
+          multimediaUrl: '',
+          content: '',
+          multimediaType: ''
       }
       this.detail.push(detailObj);
     }

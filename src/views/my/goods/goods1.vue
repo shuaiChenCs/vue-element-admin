@@ -11,7 +11,7 @@
       </div>
       <div class="search">
         <i class="cubeic-search"></i>
-        <input type="text" @input="inputFun"  placeholder="搜索">
+        <input type="text" @input="inputFun" placeholder="搜索">
       </div>
     </div>
     <div class="goods-type">
@@ -56,7 +56,7 @@ export default {
   },
   methods: {
       clickGoods(item){
-          console.log(item);
+          this.$router.push({name:'goods-detail',params:{id:item.id}});
       },
       showDeleteAlert(id,dataIndex) {
           let vm = this;
