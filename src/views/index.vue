@@ -79,6 +79,7 @@ export default {
     }
   }
   .sp-tabbar{
+    height: 98px/2;
     background: white;
     z-index: 9999;
     position: fixed;

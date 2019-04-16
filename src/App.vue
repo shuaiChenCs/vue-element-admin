@@ -8,8 +8,12 @@
 export default {
     created(){
         //登录，设置全局token
-        this.$post(this.$apiConfig.login+'?openId=o-8zG5Ttt33KRa222_DGLq85GLMw').then((response) =>{
+        axios.post(this.$apiConfig.login+'?openId=o-8zG5Ttt33KRa222_DGLq85GLMw').then((res) =>{
+            let response = res.data;
             axios.defaults.headers['Authentication'] = response.data.token;
+            window.localStorage.token = response.data.token;
+            this.$store.commit('setCard', response.data);
+            this.$store.commit('setToken', response.data.token);
         });
     }
 };

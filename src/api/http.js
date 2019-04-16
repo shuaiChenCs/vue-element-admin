@@ -1,16 +1,17 @@
 import axios from 'axios';
 import router from '../router/router';
+import store from '../store'
 
 axios.defaults.timeout = 5000;
 axios.defaults.baseURL = 'https://c.api.msspay.com/';
-
+console.log(store)
 axios.defaults.headers.post['Content-Type'] = 'application/json';
-
+axios.defaults.headers.common['Authentication'] = store.state.token;
 //错误处理
 axios.interceptors.response.use(function (response) {
     if (response.data.code === 401) {
         sessionStorage.setItem('isLogin', '')
-        router.push({path: '/login'});
+        // router.push({path: '/login'});
     }
     return response;
 }, function (error) {
@@ -21,10 +22,10 @@ axios.interceptors.response.use(function (response) {
 axios.interceptors.response.use(
     response => {
         if(response.data.errCode ==2){
-            router.push({
-                path:"/login",
-                querry:{redirect:router.currentRoute.fullPath}//从哪个页面跳转
-            })
+            // router.push({
+            //     path:"/login",
+            //     querry:{redirect:router.currentRoute.fullPath}//从哪个页面跳转
+            // })
         }
         return response;
     },

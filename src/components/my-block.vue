@@ -1,9 +1,9 @@
 <template>
     <div class="my-block">
-        <div>{{title}}</div>
+        <div class="title">{{title}}</div>
         <div class="block-box">
             <div class="block-item" v-for="item in blockData" :key="item.title" @click="$router.push(item.url)">
-                <i class="cubeic-alert"></i>
+                <img :src="item.icon" alt="">
                 {{item.title}}
             </div>
         </div>
@@ -22,21 +22,32 @@ export default {
 </script>
 <style lang="less" scoped>
 .my-block{
-    margin-bottom: .9375rem /* 15/16 */;
-    background: white;
-    padding: .9375rem /* 15/16 */;
+    padding: 20px 0;
+    .title{
+        font-size: 15px;
+    }
     .block-box{
+        padding: 15px 0 0 0;
         display: flex;
         flex-wrap: wrap;
         justify-content: flex-start;
         .block-item{
-            padding: .625rem 0 0 0 /* 10/16 */;
+            color: rgba(151,160,177,1);
+            font-size: 12px;
+            justify-content: space-between;
+            padding: 15px 0;
+            margin-right: 15px;
+            width: 70px;
+            height: 70px;
+            background:rgba(243,245,247,.5);
+            border-radius:5px;
+            img{
+                width: 20px;
+                height: 20px;
+            }
+            align-items: center;
             display: flex;
             flex-direction: column;
-            justify-content: space-around;
-            height: 5rem /* 80/16 */;
-            width: 25%;
-            text-align: center;
         }
     }
 }
