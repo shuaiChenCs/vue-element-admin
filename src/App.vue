@@ -12,7 +12,7 @@ export default {
             let response = res.data;
             axios.defaults.headers['Authentication'] = response.data.token;
             window.localStorage.token = response.data.token;
-            this.$store.commit('setCard', response.data);
+            // this.$store.commit('setCard', response.data);
             this.$store.commit('setToken', response.data.token);
         });
     }

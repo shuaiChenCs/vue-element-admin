@@ -2,9 +2,9 @@
     <div class="my">
         <div class="my-header">
             <div class="card-img">
-                <img :src="user.headImg" alt="">
+                <img :src="selfCard.headImg" alt="">
             </div>
-            <div class="card-name">{{user.cardName}}</div>
+            <div class="card-name">{{selfCard.cardName}}</div>
             <div class="card-handler">
                 <button>进入名片</button>
                 <button>名片海报</button>
@@ -16,7 +16,7 @@
                     <use xlink:href="#iconmine_member"></use>
                 </svg>
                 <span class="vip-text">VIP会员</span>
-                <span class="time">{{user.expirationTime | formatDate}}到期</span>
+                <span class="time">{{selfCard.expirationTime | formatDate}}到期</span>
             </div>
             <my-block :blockData="data1" :title="'我的资产'"></my-block>
             <my-block :blockData="data2" :title="'我的数据'"></my-block>
@@ -32,7 +32,7 @@ import {formatDate} from '@/common/date.js';
 export default {
     data() {
         return {
-            user:{},
+            selfCard:{},
             data1: [
                 {title: '邀请码', icon:require(`@/assets/images/mine_code@3x.png`), url: ''},
                 {title: '邀请好友', icon:require(`@/assets/images/mine_friends@3x.png`), url: ''},
@@ -58,8 +58,11 @@ export default {
         let vm = this;
         //获取会员信息
         axios.get(this.$apiConfig.memberInfo,{}).then((res)=>{
-           let memberInfo = res.data.data;
-           vm.user = memberInfo.cardVO;
+            let memberInfo = res.data.data;
+            vm.selfCard =  memberInfo.cardVO;
+            this.$store.commit('setCard', vm.selfCard);
+            this.$store.commit('setUser', memberInfo);
+
        });
     },
     components: {

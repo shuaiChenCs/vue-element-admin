@@ -2,43 +2,34 @@
   <div class="goods sp-scroll" v-scroll="loadmore">
     <div class="goods-header">
       <div class="top">
-        <img class="head" src="@/assets/images/header.jpg" alt>
+        <img class="head" :src="selfCard.headImg" alt>
         <div class="info">
-          <span class="name">刘鹤鸣</span>
-          <span class="view">商品量 2 浏览量 3</span>
+          <span class="name">{{selfCard.cardName}}</span>
+          <span class="view">商品量 {{goods.total}} 浏览量 {{goods.browse}}</span>
         </div>
         <img class="goodimg" src="@/assets/images/shop_top_bg@3x.png" alt>
       </div>
       <div class="search">
         <i class="cubeic-search"></i>
-        <input type="text" placeholder="搜索">
+        <input type="text" @input="inputFun"  placeholder="搜索">
       </div>
     </div>
     <div class="goods-type">
       <div class="h-scroll">
         <ul class="goods-ul">
-          <li class="active">全部</li>
-          <li>衣服</li>
-          <li>裤子</li>
-          <li>鞋子</li>
-          <li>其他</li>
-          <li>全部</li>
-          <li>衣服</li>
-          <li>裤子</li>
-          <li>鞋子</li>
-          <li>其他</li>
+          <li v-for="(item,index) in type " :class="{'active':typeId==item.id}" @click="typeClick(item.id)">{{item.name}}</li>
         </ul>
       </div>
     </div>
     <div class="goods-box">
-      <div class="goods-item" v-for="(item,index) in data" :key="index">
+      <div class="goods-item" v-for="(item,index) in data" :key="index" @click="clickGoods(item)">
         <div class="img">
           <img :src="item.imgUrl" alt>
         </div>
         <div class="name">{{item.name}}</div>
         <div class="handler">
           <span>￥{{item.price}}</span>
-          <i class="cubeic-more" @click="set"></i>
+          <i class="cubeic-more" @click="set(item.id,index)"></i>
         </div>
       </div>
     </div>
@@ -46,67 +37,59 @@
   </div>
 </template>
 <script>
-const foods = [
-  {
-    name: "A衣服",
-    // ...
-    imgUrl:
-      "https://img.hrsugaphre.com/userHead/33E79D50626A4DCC8BC930DFA1AB8F9D.png",
-    // "image": "http://fuss10.elemecdn.com/c/cd/c12745ed8a5171e13b427dbc39401jpeg.jpeg?imageView2/1/w/750/h/750"
-    price: 100
-  },
-  {
-    name: "B衣服",
-    // ...
-    imgUrl:
-      "https://img.hrsugaphre.com/userHead/33E79D50626A4DCC8BC930DFA1AB8F9D.png",
-    // "image": "http://fuss10.elemecdn.com/c/cd/c12745ed8a5171e13b427dbc39401jpeg.jpeg?imageView2/1/w/750/h/750"
-    price: 99
-  },
-  {
-    name: "C衣服",
-    // ...
-    imgUrl:
-      "https://img.hrsugaphre.com/userHead/33E79D50626A4DCC8BC930DFA1AB8F9D.png",
-    // "image": "http://fuss10.elemecdn.com/c/cd/c12745ed8a5171e13b427dbc39401jpeg.jpeg?imageView2/1/w/750/h/750"
-    price: 88
-  },
-  {
-    name: "D衣服",
-    // ...
-    imgUrl:
-      "https://img.hrsugaphre.com/userHead/33E79D50626A4DCC8BC930DFA1AB8F9D.png",
-    // "image": "http://fuss10.elemecdn.com/c/cd/c12745ed8a5171e13b427dbc39401jpeg.jpeg?imageView2/1/w/750/h/750"
-    price: 88
-  },
-  {
-    name: "E衣服",
-    // ...
-    imgUrl:
-      "https://img.hrsugaphre.com/userHead/33E79D50626A4DCC8BC930DFA1AB8F9D.png",
-    // "image": "http://fuss10.elemecdn.com/c/cd/c12745ed8a5171e13b427dbc39401jpeg.jpeg?imageView2/1/w/750/h/750"
-    price: 88
-  },
-  {
-    name: "A裤子",
-    imgUrl:
-      "http://fuss10.elemecdn.com/c/cd/c12745ed8a5171e13b427dbc39401jpeg.jpeg?imageView2/1/w/114/h/114",
-    price: 88
-  }
-];
 export default {
   data() {
     return {
+        goodsName:'',
+        typeId:0,
+        selfCard:this.$store.state.card,
       data: [],
+        goods:{},
+        type:[],
       current: 1,
       size: 10
     };
   },
   created() {
     this.loadData();
+      this.loadType();
   },
   methods: {
-    set() {
+      clickGoods(item){
+          console.log(item);
+      },
+      showDeleteAlert(id,dataIndex) {
+          let vm = this;
+          this.$createDialog({
+              type: 'confirm',
+              content: '确认是否删除',
+              onConfirm(e){
+                  axios.delete(vm.$apiConfig.delGoods+'/'+id,{}).then((res)=>{
+                      if(res.data.code==0) {
+                          vm.goods.total= vm.goods.total-1;
+                          vm.data.splice(dataIndex,1);
+                          vm.$createToast({
+                              time: 100
+                          }).show();
+                      }
+                  });
+              }
+          }).show()
+
+      },
+      inputFun(e){
+          this.current=1;
+          this.goodsName = e.target.value;
+          this.data=[];
+          this.loadData();
+      },
+      typeClick(id){
+          this.typeId=id;
+          this.current=1;
+          this.data=[];
+          this.loadData();
+      },
+    set(id,dataIndex) {
       this.$createActionSheet({
                     // title: '置顶',
                     active: 2,  //高亮
@@ -125,19 +108,23 @@ export default {
                     onSelect: (item, index) => {
                         switch (index) {
                             case 0:
-                                this.$createToast({
-                                    txt: `Clicked ${item.content}`,
-                                    time: 1000
-                                }).show();
+                                axios.post(this.$apiConfig.setGoodTop+"?id="+id,{}).then((res)=>{
+                                   if(res.data.code==0){
+                                       let top = this.data.splice(dataIndex,1);
+                                       this.data.unshift(top[0]);
+                                       this.$createToast({
+                                           txt: ``,
+                                           time: 100
+                                       }).show();
+                                   }
+                                });
+
                                 break;
                             case 1:
                                 this.$router.push('goods/edit');
                                 break;
                             case 2:
-                                this.$createToast({
-                                    txt: `Clicked ${item.content}`,
-                                    time: 1000
-                                }).show();
+                                this.showDeleteAlert(id,dataIndex);
                                 break;
                         }
 
@@ -147,15 +134,29 @@ export default {
     addGoods() {
       this.$router.push('/my/goods/add');
     },
+      loadType(){
+          let vm = this;
+        axios.post(this.$apiConfig.getGoodsType+'?cardId='+this.selfCard.id,null).then((res)=>{
+            if(res.data.code== '0'){
+                vm.type = res.data.data;
+            }
+        });
+      },
     loadData() {
       axios
         .post(this.$apiConfig.getGoodsList, {
           current: this.current,
-          size: this.size
+          size: this.size,
+            cardId:this.selfCard.id,
+            name:this.goodsName,
+            typeId:this.typeId
         })
         .then(res => {
-          if (res.data.code == "0") {
-            this.data = this.data.concat(res.data.data.records);
+
+          if (res.data.code == "0" && res.data.data.records.length>0) {
+              this.goods = res.data.data;
+              console.log(this.goods.browse)
+            this.data = this.data.concat(this.goods.records);
           }
         });
     },
