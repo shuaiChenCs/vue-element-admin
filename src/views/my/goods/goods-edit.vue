@@ -109,7 +109,7 @@
                     }
                 });
             },
-            bannerSuccess(obj) {
+            bannerSuccess(arr) {
                 this.banner.push(obj.realpath);
                 console.log(this.banner)
             },

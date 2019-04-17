@@ -61,7 +61,7 @@ export default {
       let arr = [];
       files.forEach(item => {
         let obj = {
-            realpath: item.response && item.response.data[0].destPath,
+            realpath: item.response && item.response.data[0].destPath || item.url,
             type: this.accept
         }
         arr.push(obj);
@@ -75,7 +75,9 @@ export default {
       
     },
     fileSuccess(file) {
-      this.$emit('success', this.buildArr(this.files));
+      this.$nextTick(() => {
+        this.$emit('success', this.buildArr(this.files));
+      })
     },
     filesAdded(files) {
       let hasIgnore = false;
