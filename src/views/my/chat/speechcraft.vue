@@ -5,10 +5,12 @@
       <input type="text" placeholder="dd">
     </div>
     <div class="speechcraft-list">
-        <div class="speechcraft-item" @click="edit">
+        <div class="speechcraft-item" @click.self="edit">
+            <i class="iconfont iconcard_edit_delete"></i>
             请问您想了解哪一方面呢？您可以随时给我发消息，我将快速为您解答~
         </div>
-        <div class="speechcraft-item" @click="edit">
+        <div class="speechcraft-item" @click.self="edit">
+            <i class="iconfont iconcard_edit_delete"></i>
             请问您想了解哪一方面呢？您可以随时给我发消息，我将快速为您解答~
         </div>
     </div>
@@ -60,13 +62,25 @@ export default {
   .speechcraft-list{
       padding: 15px;
       .speechcraft-item{
+        position: relative;
           font-size: 15px;
           line-height: 1.3;
             margin-bottom: 15px;
-          padding: 15px;
+          padding: 20px 15px 15px;
           background: white;
           border-radius: 5px;
+          overflow: hidden;
             box-shadow:0px 0px 10px 1px rgba(0, 0, 0, 0.1);
+            i{
+              position: absolute;
+              top: 0;
+              right: 0;
+              background: black;
+              opacity: .5;
+              width: 20px;
+              text-align: center;
+              border-bottom-left-radius: 5px;
+            }
       }
   }
 }
