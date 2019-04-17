@@ -156,6 +156,8 @@ export default {
           if (res.data.code == "0" && res.data.data.records.length>0) {
               this.goods = res.data.data;
             this.data = this.data.concat(this.goods.records);
+          }else{
+              this.current--;
           }
         });
     },

@@ -115,6 +115,9 @@ export default {
             }).then(res=>{
                 if(res.data.code == 0){
                     this.dynamicList =  this.dynamicList.concat(res.data.data.records);
+                    if(res.data.data.records.length==0){
+                        this.current--;
+                    }
                 }
             })
         },
