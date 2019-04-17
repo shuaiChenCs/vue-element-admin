@@ -10,7 +10,7 @@ import store from '../store'
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 axios.defaults.headers['Authentication'] = localStorage.getItem('token');
 let config = {
-  baseURL: 'https://c.api.msspay.com/',
+  baseURL: 'https://api.sipinoffice.com/',
   timeout: 60 * 1000, // Timeout
   // withCredentials: true, // Check cross-site Access-Control
 };
