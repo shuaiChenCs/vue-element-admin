@@ -66,4 +66,10 @@ export default [
         component: () => import(/* webpackChunkName: "my" */ '../views/my/chat/add'),
         meta:{title:'新增'}
     },
+    {
+        path: 'my/inviteCode',
+        name: 'invite-code',
+        component: () => import(/* webpackChunkName: "my" */ '../views/my/invite-code'),
+        meta:{title:'邀请码'}
+    }
 ]

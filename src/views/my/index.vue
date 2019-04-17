@@ -1,12 +1,15 @@
 <template>
     <div class="my">
+        <cube-popup type="my-popup" :zIndex="10000" :position="''" :mask-closable="true" ref="myPopup4">
+            <sp-card></sp-card>
+        </cube-popup>
         <div class="my-header">
             <div class="card-img">
                 <img :src="selfCard.headImg" alt="">
             </div>
             <div class="card-name">{{selfCard.cardName}}</div>
             <div class="card-handler">
-                <button>进入名片</button>
+                <button @click="aaa">进入名片</button>
                 <button>名片海报</button>
             </div>
         </div>
@@ -34,7 +37,7 @@ export default {
         return {
             selfCard:{},
             data1: [
-                {title: '邀请码', icon:require(`@/assets/images/mine_code@3x.png`), url: ''},
+                {title: '邀请码', icon:require(`@/assets/images/mine_code@3x.png`), url: '/my/inviteCode'},
                 {title: '邀请好友', icon:require(`@/assets/images/mine_friends@3x.png`), url: ''},
             ],
             data2: [
@@ -46,6 +49,12 @@ export default {
                 {title: '聊天选项', icon:require(`@/assets/images/mine_chat@3x.png`), url: '/my/chat'},
                 {title: '联系客服', icon:require(`@/assets/images/mine_service@3x.png`), url: ''},
             ],
+        }
+    },
+    methods: {
+        aaa() {
+             const component = this.$refs.myPopup4
+            component.show()
         }
     },
     filters: {
