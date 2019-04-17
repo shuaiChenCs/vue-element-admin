@@ -110,8 +110,9 @@
                 });
             },
             bannerSuccess(arr) {
-                this.banner.push(obj.realpath);
-                console.log(this.banner)
+                this.banner = arr.map(res=>{
+                    return res['realpath'];
+                });
             },
             uploadSuccess(obj) {
                 let type ="";

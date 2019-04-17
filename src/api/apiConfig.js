@@ -26,6 +26,7 @@ const apiConfig = {
     delDynamic:`/app/dynamic/delete/`,//删除动态
     dynamicPraise: `/app/dynamicPraise/edit/dynamic`,//添加动态点赞
     cardLike: `/app/card/like`,//卡片点赞
-    behavior: `/app/behavior/add`,//行为操作
+    behavior: `/app/behavior/add`,//行为操作,
+    verbalList:`/app/verbal/response/list`,//自动回复列表
 }
 export default apiConfig;

@@ -22,19 +22,21 @@ export default {
     },
     methods: {
         bannerSuccess(arr) {
-            console.log(arr)
-            // let type="";
-            // if(obj.type=='image/*'){
-            //     type=1;
-            // }else if(obj.type=='video/*'){
-            //     type=2;
-            // }
-            // let mul = {
-            //     multimediaType:type,
-            //     multimediaUrl:obj.realpath
-            // }
-            // this.fileList.push(mul);
-            // console.log(this.fileList)
+            this.fileList = [];
+            arr.forEach(item=>{
+                let type="";
+                if(item.type=='image/*'){
+                    type=1;
+                }else if(item.type=='video/*'){
+                    type=2;
+                }
+                let mul = {
+                    multimediaType:type,
+                    multimediaUrl:item.realpath
+                };
+                this.fileList.push(mul);
+            });
+            console.log(this.fileList)
         },
         save() {
             axios.post(this.$apiConfig.addDynamic,{

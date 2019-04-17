@@ -22,9 +22,9 @@
       </div>
     </div>
     <div class="goods-box">
-      <div class="goods-item" v-for="(item,index) in data" :key="index" @click="clickGoods(item)">
+      <div class="goods-item" v-for="(item,index) in data" :key="index">
         <div class="img">
-          <img :src="item.imgUrl" alt>
+          <img :src="item.imgUrl" @click="clickGoods(item)" alt>
         </div>
         <div class="name">{{item.name}}</div>
         <div class="handler">
@@ -121,7 +121,7 @@ export default {
 
                                 break;
                             case 1:
-                                this.$router.push('goods/edit');
+                                this.$router.push({name:'goods-edit',params:{id:id}});
                                 break;
                             case 2:
                                 this.showDeleteAlert(id,dataIndex);
