@@ -50,4 +50,7 @@ textarea, input{
 
 
 /*upload*/
+[class*=" cubeic-"], [class^=cubeic-]{
+    -webkit-text-stroke-width: 0 !important;
+}
 
