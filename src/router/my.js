@@ -61,9 +61,9 @@ export default [
         meta:{title:'话术库'}
     },
     {
-        path: 'my/chat/add',
+        path: 'my/chat/add/:id',
         name: 'chat-add',
         component: () => import(/* webpackChunkName: "my" */ '../views/my/chat/add'),
-        meta:{title:'新增'}
+        meta:{title:'编辑'}
     },
 ]

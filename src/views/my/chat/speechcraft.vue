@@ -5,7 +5,7 @@
       <input type="text" placeholder="搜索" v-model="content" @input="load">
     </div>
     <div class="speechcraft-list">
-        <div class="speechcraft-item" @click.self="edit"  v-for="(verbal,index) in verbalList" :key="verbal.id">
+        <div class="speechcraft-item" @click.self="edit(verbal.id)"  v-for="(verbal,index) in verbalList" :key="verbal.id">
             <i class="iconfont iconcard_edit_delete" @click="del(verbal.id,index)"></i>
             {{verbal.content}}
         </div>
@@ -53,10 +53,10 @@ export default {
             }).show()
         },
         save() {
-            this.$router.push('add')
+            this.$router.push('/my/chat/add/'+0)
         },
-        edit() {
-            this.$router.push('/my/chat/add');
+        edit(id) {
+            this.$router.push('/my/chat/add/'+id);
         }
     }
 };
