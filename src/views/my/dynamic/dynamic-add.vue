@@ -4,7 +4,7 @@
             <textarea placeholder="说点什么吧..." v-model="content"></textarea>
         </div>
         <div class="imgs">
-            <dynamic-upload @success="bannerSuccess" :type="'dynamic'" :max="9"></dynamic-upload>
+            <dynamic-upload @success="bannerSuccess" :type="'dynamic'"></dynamic-upload>
         </div>
         <fixed-button :title="'保存'" @clickHandler="save"></fixed-button>
     </div>
@@ -21,19 +21,20 @@ export default {
         }
     },
     methods: {
-        bannerSuccess(obj) {
-            let type="";
-            if(obj.type=='image/*'){
-                type=1;
-            }else if(obj.type=='video/*'){
-                type=2;
-            }
-            let mul = {
-                multimediaType:type,
-                multimediaUrl:obj.realpath
-            }
-            this.fileList.push(mul);
-            console.log(this.fileList)
+        bannerSuccess(arr) {
+            console.log(arr)
+            // let type="";
+            // if(obj.type=='image/*'){
+            //     type=1;
+            // }else if(obj.type=='video/*'){
+            //     type=2;
+            // }
+            // let mul = {
+            //     multimediaType:type,
+            //     multimediaUrl:obj.realpath
+            // }
+            // this.fileList.push(mul);
+            // console.log(this.fileList)
         },
         save() {
             axios.post(this.$apiConfig.addDynamic,{

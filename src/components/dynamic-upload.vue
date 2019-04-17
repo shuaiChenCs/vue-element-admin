@@ -1,13 +1,15 @@
 <template>
   <div class="dynamic-upload">
     <cube-upload
-      v-model="value"
+    ref="dynamicUpload"
+      v-model="files"
       :action="url"
       :simultaneous-uploads="1"
       @files-added="filesAdded"
       :max="max"
       :accept="accept"
       @file-success="fileSuccess"
+      @file-removed="fileRemove"
     />
   </div>
 </template>
@@ -19,21 +21,17 @@ export default {
       default: () => []
     },
     type: String,
-    accept: {
-      type: String,
-      default: "image/*"
-    },
-    max: {
-      type: Number,
-      default: 10
-    },
     fileList: {
       type: Array,
       default: () => []
     }
   },
   data() {
-    return {};
+    return {
+      files: [],
+      max: 1,
+      accept: 'image/*,video/*'
+    };
   },
   computed: {
     list() {},
@@ -47,16 +45,41 @@ export default {
     }
   },
   methods: {
+    buildArr(files) {
+      let arr = [];
+      files.forEach(item => {
+        let obj = {
+            realpath: item.response && item.response.data[0].destPath,
+            type: this.accept
+        }
+        arr.push(obj);
+      });
+      return arr;
+    },
+    fileRemove(file) {
+      this.$nextTick(() => {
+        this.$emit('success', this.buildArr(this.files));
+        if(this.files.length == 0) {
+          this.accept = 'image/*,video/*';
+        }
+      })
+      
+    },
     fileSuccess(file) {
-      let obj = {
-          realpath: file.response.data[0].destPath,
-          type: this.accept
-      }
-      this.$emit('success', obj);
+      this.$emit('success', this.buildArr(this.files));
     },
     filesAdded(files) {
       let hasIgnore = false;
       const maxSize = 5 * 1024 * 1024; // 1M
+      let firstFile = files[0];
+      if(firstFile.type.indexOf('image') >= 0) {
+        this.max = 9;
+        this.accept = 'image/*';
+      }
+      if(firstFile.type.indexOf('video') >= 0) {
+        this.max = 1;
+        this.accept = 'video/*';
+      }
       for (let k in files) {
         const file = files[k];
         if (file.size > maxSize) {
@@ -68,7 +91,7 @@ export default {
         this.$createToast({
           type: "warn",
           time: 1000,
-          txt: "You selected >5M files"
+          txt: "大小不能超过5M"
         }).show();
     }
   }

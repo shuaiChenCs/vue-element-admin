@@ -1,13 +1,14 @@
 <template>
   <div class="sp-upload">
     <cube-upload
-      v-model="listArr"
+      v-model="files"
       :action="url"
       :simultaneous-uploads="1"
       @files-added="filesAdded"
       :max="max"
       :accept="accept"
       @file-success="fileSuccess"
+      @file-removed="fileRemove"
     />
   </div>
 </template>
@@ -30,7 +31,7 @@ export default {
   },
   data() {
     return {
-        listArr: []
+        files: []
     };
   },
     watch: {
@@ -41,7 +42,7 @@ export default {
                   status: 'success',
                   progress: 1
               }
-              this.listArr.push(t);
+              this.files.push(t);
           });
       }
     },
@@ -56,12 +57,25 @@ export default {
     }
   },
   methods: {
+    buildArr(files) {
+      let arr = [];
+      files.forEach(item => {
+        let obj = {
+            realpath: item.response && item.response.data[0].destPath,
+            type: this.accept
+        }
+        arr.push(obj);
+      });
+      return arr;
+    },
+    fileRemove(file) {
+      this.$nextTick(() => {
+        this.$emit('success', this.buildArr(this.files));
+      })
+      
+    },
     fileSuccess(file) {
-      let obj = {
-          realpath: file.response.data[0].destPath,
-          type: this.accept
-      }
-      this.$emit('success', obj);
+      this.$emit('success', this.buildArr(this.files));
     },
     filesAdded(files) {
       let hasIgnore = false;

@@ -88,9 +88,9 @@ export default {
            }
         });
     },
-    bannerSuccess(obj) {
-      this.banner.push(obj.realpath);
-      console.log(this.banner)
+    bannerSuccess(arr) {
+      // this.banner.push(obj.realpath);
+      console.log(arr)
     },
     uploadSuccess(obj) {
         let type ="";
