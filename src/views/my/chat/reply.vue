@@ -25,7 +25,7 @@
 export default {
     data() {
         return {
-            verbalList:[],
+            cardVerbalList:{},
             title: '自动回复',
             title1: '自动回复1',
             title2: '自动回复2',

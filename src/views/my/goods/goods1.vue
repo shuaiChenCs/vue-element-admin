@@ -56,7 +56,7 @@ export default {
   },
   methods: {
       clickGoods(item){
-          this.$router.push({name:'goods-detail',params:{id:item.id}});
+          this.$router.push('goods/detail/'+item.id);
       },
       showDeleteAlert(id,dataIndex) {
           let vm = this;
@@ -121,7 +121,7 @@ export default {
 
                                 break;
                             case 1:
-                                this.$router.push({name:'goods-edit',params:{id:id}});
+                                this.$router.push('goods/edit/'+id);
                                 break;
                             case 2:
                                 this.showDeleteAlert(id,dataIndex);
