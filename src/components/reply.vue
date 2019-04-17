@@ -18,7 +18,7 @@ export default {
     },
     data() {
         return {
-            content: ''
+            content: this.value
         }
     },
     watch: {

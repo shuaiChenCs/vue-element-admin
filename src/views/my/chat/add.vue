@@ -1,17 +1,28 @@
 <template>
     <div class="speechcraft-add">
         <div class="eidt-box">
-            <span class="count">1/200</span>
-            <textarea maxlength="200" placeholder="请输入话术内容，不超过200字"></textarea>
+            <span class="count">{{content.length}}/255</span>
+            <textarea maxlength="255" placeholder="请输入话术内容，不超过255字" v-model="content"></textarea>
         </div>
         <fixed-button :title="'保存'" @clickHandler="save"></fixed-button>
     </div>
 </template>
 <script>
 export default {
+    data(){
+        return{
+            content:''
+        }
+    },
     methods: {
         save() {
-
+            axios.post(this.$apiConfig.addVerbal,{
+                content:this.content
+            }).then(res=>{
+               if(res.data.code==0){
+                   this.$router.go(-1);
+               }
+            });
         }
     }
 }
