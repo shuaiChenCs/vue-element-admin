@@ -43,7 +43,7 @@ export default {
                 {title: '我的动态', icon:require(`@/assets/images/mine_moments@3x.png`), url: '/my/dynamic'},
             ],
             data3: [
-                {title: '聊天选项', icon:require(`@/assets/images/mine_chat@3x.png`), url: ''},
+                {title: '聊天选项', icon:require(`@/assets/images/mine_chat@3x.png`), url: '/my/chat'},
                 {title: '联系客服', icon:require(`@/assets/images/mine_service@3x.png`), url: ''},
             ],
         }

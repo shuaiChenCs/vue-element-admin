@@ -41,5 +41,29 @@ export default [
         name: 'dynamic-add',
         component: () => import(/* webpackChunkName: "my" */ '../views/my/dynamic/dynamic-add'),
         meta:{title:'发布动态'}
-    }
+    },
+    {
+        path: 'my/chat',
+        name: 'chat',
+        component: () => import(/* webpackChunkName: "my" */ '../views/my/chat/chat'),
+        meta:{title:'聊天选项'}
+    },
+    {
+        path: 'my/chat/reply',
+        name: 'chat-reply',
+        component: () => import(/* webpackChunkName: "my" */ '../views/my/chat/reply'),
+        meta:{title:'自动回复'}
+    },
+    {
+        path: 'my/chat/speechcraft',
+        name: 'chat-speechcraft',
+        component: () => import(/* webpackChunkName: "my" */ '../views/my/chat/speechcraft'),
+        meta:{title:'话术库'}
+    },
+    {
+        path: 'my/chat/add',
+        name: 'chat-add',
+        component: () => import(/* webpackChunkName: "my" */ '../views/my/chat/add'),
+        meta:{title:'新增'}
+    },
 ]
