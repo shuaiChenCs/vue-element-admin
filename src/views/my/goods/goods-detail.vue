@@ -24,7 +24,7 @@
             <div class="info-block" v-for="item in goodsDetail.infoList" :key="item.id">
                 <div class="img-video">
                     <img  @tap="previewImg(item.multimediaUrl)" :src="item.multimediaUrl" mode="widthFix" v-if="item.multimediaType == 1"></img>
-                    <video :src="item.multimediaUrl" controls v-if="item.multimediaType == 2" :poster="item.multimediaUrl+'?x-oss-process=video/snapshot,t_10000,m_fast'"></video>
+                    <sp-video :src="item.multimediaUrl" controls v-if="item.multimediaType == 2"></sp-video>
                 </div>
                 <div class="descript">
                     {{item.content}}
