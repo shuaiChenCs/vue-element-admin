@@ -119,7 +119,8 @@ export default {
             })
         },
 		loadmore() {
-			this.count += 2;
+			this.current++;
+            this.loadDynamic();
 		},
 		addDynamic() {
             this.$router.push('/my/dynamic/add');
