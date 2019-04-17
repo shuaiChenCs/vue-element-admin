@@ -73,7 +73,7 @@ export default {
 	data() {
 		return {
 		    current:1,
-            size:10,
+            size:6,
 			count: 2,
             selfCard:this.$store.state.card,
             dynamicList:[],

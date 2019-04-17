@@ -47,7 +47,7 @@ export default {
         goods:{},
         type:[],
       current: 1,
-      size: 10
+      size: 6
     };
   },
   created() {
