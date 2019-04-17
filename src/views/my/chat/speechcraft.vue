@@ -2,16 +2,12 @@
   <div class="speechcraft">
     <div class="search">
         <i class="cubeic-search"></i>
-      <input type="text" placeholder="dd">
+      <input type="text" placeholder="搜索" v-model="content" @input="load">
     </div>
     <div class="speechcraft-list">
-        <div class="speechcraft-item" @click.self="edit">
-            <i class="iconfont iconcard_edit_delete"></i>
-            请问您想了解哪一方面呢？您可以随时给我发消息，我将快速为您解答~
-        </div>
-        <div class="speechcraft-item" @click.self="edit">
-            <i class="iconfont iconcard_edit_delete"></i>
-            请问您想了解哪一方面呢？您可以随时给我发消息，我将快速为您解答~
+        <div class="speechcraft-item" @click.self="edit(verbal.id)"  v-for="(verbal,index) in verbalList" :key="verbal.id">
+            <i class="iconfont iconcard_edit_delete" @click="del(verbal.id,index)"></i>
+            {{verbal.content}}
         </div>
     </div>
     <fixed-button :title="'新增话术'" @clickHandler="save"></fixed-button>
@@ -21,15 +17,46 @@
 export default {
     data() {
         return {
+            verbalList:[],
             content: ''
         }
     },
+    created(){
+        this.load();
+    },
     methods: {
-        save() {
-            
+        load(){
+            axios.post(this.$apiConfig.verbalList,{
+                content:this.content
+            }).then(res=>{
+                if(res.data.code==0){
+                    console.log(res.data.data);
+                    this.verbalList=res.data.data;
+                }
+            });
         },
-        edit() {
-            this.$router.push('/my/chat/add');
+        del(id,index){
+            let vm = this;
+            this.$createDialog({
+                type: 'confirm',
+                content: '确认是否删除',
+                onConfirm(e){
+                    axios.post(vm.$apiConfig.delVerbal+id,{}).then(res=>{
+                        if(res.data.code==0) {
+                            vm.verbalList.splice(index,1);
+                            vm.$createToast({
+                                time: 100
+                            }).show();
+                        }
+                    });
+                }
+            }).show()
+        },
+        save() {
+            this.$router.push('/my/chat/add/'+0)
+        },
+        edit(id) {
+            this.$router.push('/my/chat/add/'+id);
         }
     }
 };

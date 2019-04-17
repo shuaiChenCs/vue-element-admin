@@ -12,7 +12,7 @@
 		  <img :src="mul.multimediaUrl" v-if="mul.multimediaType==1" alt>
 		  <sp-video :src="mul.multimediaUrl" v-else></sp-video>
 	  </div>
-      <div class="goods-type" v-if="item.type==2">
+      <div class="goods-type" v-if="item.type==2" @click="goGoods(item.typeId)">
         <div class="goods-item">
           <div class="img">
             <img :src="item.goodsImg" alt>
@@ -90,6 +90,9 @@ export default {
         }
     },
 	methods: {
+        goGoods(typeId){
+            this.$router.push('/my/goods/detail/'+typeId);
+        },
         delDynamic(id,index){
             let vm = this;
             this.$createDialog({
@@ -200,7 +203,7 @@ export default {
       overflow: hidden;
       background: white;
       margin: 15px 0;
-      .img {
+      img {
         text-align: center;
           width:100%;
       }

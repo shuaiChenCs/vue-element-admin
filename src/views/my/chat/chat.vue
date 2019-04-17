@@ -6,7 +6,7 @@
                 <span class="bootom">设置文章/名片页自动弹出的消息</span>
             </div>
             <div class="right">
-                <span class="num">2条</span>
+                <span class="num">{{verbal.autoResponseCount}}条</span>
                 <i class="iconfont iconlist_more"></i>
             </div>
         </div>
@@ -16,7 +16,7 @@
                 <span class="bootom">可快速适应精良话术回复对方</span>
             </div>
             <div class="right">
-                <span class="num">11条</span>
+                <span class="num">{{verbal.verbalCount}}条</span>
                 <i class="iconfont iconlist_more"></i>
             </div>
         </div>
@@ -24,7 +24,21 @@
 </template>
 <script>
 export default {
-    
+    data(){
+        return {
+            verbal:{
+                autoResponseCount:0,
+                verbalCount:0
+            }
+        }
+    },
+    created(){
+        axios.get(this.$apiConfig.verbal,{}).then(res=>{
+            if(res.data.code==0){
+                this.verbal = res.data.data;
+            }
+        });
+    }
 }
 </script>
 <style lang="less" scoped>

@@ -13,13 +13,13 @@ export default [
         meta:{title:'我的商品'}
     },
     {
-        path: 'my/goods/detail',
+        path: 'my/goods/detail/:id',
         name: 'goods-detail',
         component: () => import(/* webpackChunkName: "my" */ '../views/my/goods/goods-detail'),
         meta: {title: '商品详情'}
     },
     {
-        path: 'my/goods/edit',
+        path: 'my/goods/edit/:id',
         name: 'goods-edit',
         component: () => import(/* webpackChunkName: "my" */ '../views/my/goods/goods-edit'),
         meta:{title:'编辑商品'}
@@ -61,10 +61,10 @@ export default [
         meta:{title:'话术库'}
     },
     {
-        path: 'my/chat/add',
+        path: 'my/chat/add/:id',
         name: 'chat-add',
         component: () => import(/* webpackChunkName: "my" */ '../views/my/chat/add'),
-        meta:{title:'新增'}
+        meta:{title:'编辑'}
     },
     {
         path: 'my/inviteCode',

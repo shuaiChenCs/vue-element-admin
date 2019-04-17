@@ -17,7 +17,9 @@
             </div>
             <p>当客户访问您的名片时，将自动发送以下消息</p>
         </div>
-        <sp-reply :title="title" v-model="content"></sp-reply>
+        <div v-for="( verbal,index) in this.cardResponse" :key="verbal.id">
+            <sp-reply :title="title" v-model="verbal.content"></sp-reply>
+        </div>
         <fixed-button :title="'保存'" @clickHandler="save"></fixed-button>
     </div>
 </template>
@@ -25,7 +27,7 @@
 export default {
     data() {
         return {
-            verbalList:[],
+            cardResponse:[],
             title: '自动回复',
             title1: '自动回复1',
             title2: '自动回复2',
@@ -34,9 +36,11 @@ export default {
         }
     },
     created(){
-        axios.get(this.$apiConfig.verbalList,{}).then(res=>{
+        axios.get(this.$apiConfig.reponseList,{}).then(res=>{
            if(res.data.code==0){
-               console.log(res.data)
+               // console.log(res.data)
+               this.cardResponse = res.data.data.cardAutoResponseVOList;
+               console.log(this.cardResponse[0].content)
            }
         });
     },

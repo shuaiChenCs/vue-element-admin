@@ -14,7 +14,8 @@
             </div>
             <div class="input-text">
                 <span>商品价格</span>
-                <input type="tel" v-model="price" placeholder="请输入商品价格"  maxlength="11" />
+                <!--<input type="tel" v-model="price" placeholder="请输入商品价格"  maxlength="11" />-->
+                <input type='tel' v-model="price" placeholder="请输入商品价格"  onkeypress='return( /[\d]/.test(String.fromCharCode(event.keyCode) ) )' maxlength="11" />
             </div>
         </div>
 
@@ -71,6 +72,7 @@
         },
         created(){
             this.id = this.$route.params.id;
+            console.log(this.id)
             this.getGoodDetail(this.id);
         },
         methods: {

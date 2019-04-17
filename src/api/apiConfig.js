@@ -27,6 +27,12 @@ const apiConfig = {
     dynamicPraise: `/app/dynamicPraise/edit/dynamic`,//添加动态点赞
     cardLike: `/app/card/like`,//卡片点赞
     behavior: `/app/behavior/add`,//行为操作,
-    verbalList:`/app/verbal/response/list`,//自动回复列表
+    verbal:`/app/verbal/index`,//话术首页
+    reponseList:`/app/verbal/response/list`,//自动回复列表
+    verbalList:`/app/verbal/list`,//自定义话术库
+    getVerbal:`/app/verbal/get/`, //获取话术
+    editVerbal:`/app/verbal/edit`,//更新话术
+    addVerbal:`/app/verbal/add`, //新增话术库
+    delVerbal:`/app/verbal/delete/`, // 删除话术库
 }
 export default apiConfig;
