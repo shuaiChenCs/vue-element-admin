@@ -1,37 +1,37 @@
 <template>
   <div class="dynamic sp-scroll" v-scroll="loadmore">
-    <div class="dynamic-item" v-for="item in count" :key="item">
+    <div class="dynamic-item" v-for="(item,index) in dynamicList" :key="item.id">
       <div class="header">
-        <img src="https://img.hrsugaphre.com/userHead/3311E8B49107456DBF0BFA348146EEE9.png" alt>
-        <span>zhangsan</span>
+        <img :src="item.headImg" alt>
+        <span>{{item.cardName}}</span>
       </div>
 	  <div class="sigle-content">
-		  吴晗吴晗吴晗吴晗吴晗吴晗吴晗吴晗吴晗吴晗吴晗吴晗吴晗吴晗吴晗吴晗吴晗吴晗吴晗吴晗吴晗吴晗吴晗吴晗吴晗吴晗吴晗吴晗吴晗
+		  {{item.content}}
 	  </div>
-	  <div class="sigle-image-video">
-		  <img src="https://img.hrsugaphre.com/userHead/T1.jpg" alt>
-		  <sp-video :src="'https://img.hrsugaphre.com/userHead/CE7D4871C61F456E8DEFCAF0D189424D.mp4'"></sp-video>
+	  <div class="sigle-image-video" v-for="(mul,index) in item.multimediaList" v-if="item.multimediaList.length==1">
+		  <img :src="mul.multimediaUrl" v-if="mul.multimediaType==1" alt>
+		  <sp-video :src="mul.multimediaUrl" v-else></sp-video>
 	  </div>
-      <!-- <div class="goods-type">
+      <div class="goods-type" v-if="item.type==2">
         <div class="goods-item">
           <div class="img">
-            <img src="https://img.hrsugaphre.com/userHead/T1.jpg" alt>
+            <img :src="item.goodsImg" alt>
           </div>
-          <div class="name">新品</div>
+          <div class="name">{{item.goodsName}}</div>
           <div class="handler">
-            <span>￥15</span>
+            <span>￥{{item.goodsPrice}}</span>
           </div>
         </div>
-      </div> -->
-	  <div class="multi-image">
-		  <div v-for="i in 4" :key="i">
-			  <img src="https://img.hrsugaphre.com/userHead/T1.jpg" alt>
+      </div>
+	  <div class="multi-image" v-if="item.multimediaList.length>1">
+		  <div v-for="(mul,index) in item.multimediaList" :key="mul.id">
+              <img :src="mul.multimediaUrl" v-if="mul.multimediaType==1" alt>
 		  </div>
 	  </div>
       <div class="dynamic-handler">
         <div>
-          <span class="time">刚刚</span>
-          <span class="delete">删除</span>
+          <span class="time">{{item.createTime | formatDate}}</span>
+          <span class="delete" @click="delDynamic(item.id,index)">删除</span>
         </div>
         <!-- <div class="btn">
           <div class="btn-box">
@@ -47,17 +47,19 @@
           <i class="iconfont iconmoment_interact"></i>
         </div> -->
       </div>
-      <div class="commet-box">
-        <div class="like-list">
+      <div class="commet-box"  v-if="item.praiseList.length>0 || item.commentList.length>0">
+        <div class="like-list"  v-if="item.praiseList.length>0">
 			<i type="" class="iconfont iconmoment_like"></i>
-			吴晗
+            <span v-for="(praise,index) in item.praiseList">
+                {{praise.cardName}} <span v-if="index<item.praiseList.length-1">,</span>
+            </span>
 		</div>
-		<div class="commet-list">
-			<div class="commet-item" v-for="item in 5" :key="item">
-				<span class="name">吴晗</span>
-				<span>&nbsp;回复&nbsp;</span>
-				<span class="name">张三：</span>
-				<span>123465789</span>
+		<div class="commet-list"  v-if="item.commentList.length>0">
+			<div class="commet-item"  v-for="(comment,index) in item.commentList" :key="comment.id">
+				<span class="name">{{comment.cardName}}</span>
+				<span v-if="comment.beforeCardId">&nbsp;回复&nbsp;</span>
+				<span class="name" v-if="comment.beforeCardId">{{comment.beforeCardName}}</span><span class="name">：</span>
+				<span>{{comment.comment}}</span>
 			</div>
 		</div>
       </div>
@@ -66,13 +68,56 @@
   </div>
 </template>
 <script>
+import {formatDate} from '@/common/date.js';
 export default {
 	data() {
 		return {
-			count: 2
+		    current:1,
+            size:10,
+			count: 2,
+            selfCard:this.$store.state.card,
+            dynamicList:[],
 		}
 	},
+    created(){
+        this.loadDynamic();
+
+    },
+    filters: {
+        formatDate(time) {
+            var date = new Date(time);
+            return formatDate(date, 'yyyy-MM-dd hh:mm:ss');
+        }
+    },
 	methods: {
+        delDynamic(id,index){
+            let vm = this;
+            this.$createDialog({
+                type: 'confirm',
+                content: '确认是否删除',
+                onConfirm(e){
+                    axios.delete(vm.$apiConfig.delDynamic+''+id,{}).then((res)=>{
+                        if(res.data.code==0) {
+                            vm.dynamicList.splice(index,1);
+                            vm.$createToast({
+                                time: 100
+                            }).show();
+                        }
+                    });
+                }
+            }).show()
+        },
+	    loadDynamic(){
+            axios.post(this.$apiConfig.getDynamic,{
+                current:this.current,
+                size:this.size,
+                cardId:this.selfCard.id
+            }).then(res=>{
+                if(res.data.code == 0){
+                    this.dynamicList =  this.dynamicList.concat(res.data.data.records);
+                }
+            })
+        },
 		loadmore() {
 			this.count += 2;
 		},
@@ -153,6 +198,7 @@ export default {
       margin: 15px 0;
       .img {
         text-align: center;
+          width:100%;
       }
       .name,
       .handler {

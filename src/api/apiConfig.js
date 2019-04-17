@@ -22,6 +22,8 @@ const apiConfig = {
     getDelicacyList: `/app/card/list/delicacy`,//获取个人精选照片
     getDynamic: `/app/dynamic/list/page`,//获取动态
     addDynamicCommet: `/app/dynamicComment/add`,//添加动态评论
+    addDynamic:`/app/dynamic/add`,//发布动态
+    delDynamic:`/app/dynamic/delete/`,//删除动态
     dynamicPraise: `/app/dynamicPraise/edit/dynamic`,//添加动态点赞
     cardLike: `/app/card/like`,//卡片点赞
     behavior: `/app/behavior/add`,//行为操作

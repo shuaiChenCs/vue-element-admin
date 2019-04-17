@@ -1,7 +1,7 @@
 <template>
     <div class="dynamic-add">
         <div class="block">
-            <textarea placeholder="说点什么吧..."></textarea>
+            <textarea placeholder="说点什么吧..." v-model="content"></textarea>
         </div>
         <div class="imgs">
             <dynamic-upload @success="bannerSuccess" :type="'dynamic'" :max="9"></dynamic-upload>
@@ -16,14 +16,35 @@ export default {
         return {
             fileList: [
 
-            ]
+            ],
+            content:''
         }
     },
     methods: {
         bannerSuccess(obj) {
-            console.log(obj)
+            let type="";
+            if(obj.type=='image/*'){
+                type=1;
+            }else if(obj.type=='video/*'){
+                type=2;
+            }
+            let mul = {
+                multimediaType:type,
+                multimediaUrl:obj.realpath
+            }
+            this.fileList.push(mul);
+            console.log(this.fileList)
         },
-        save() {}
+        save() {
+            axios.post(this.$apiConfig.addDynamic,{
+                content:this.content,
+                multimediaList:this.fileList
+            }).then(res=>{
+                if(res.data.code==0){
+                    this.$router.go(-1);
+                }
+            })
+        }
     },
     components: {
         dynamicUpload
