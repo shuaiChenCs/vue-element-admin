@@ -2,7 +2,7 @@
     <div class="my-block">
         <div class="title">{{title}}</div>
         <div class="block-box">
-            <div class="block-item" v-for="item in blockData" :key="item.title" @click="$router.push(item.url)">
+            <div class="block-item" v-for="item in blockData" :key="item.title" @click="goto(item)">
                 <img :src="item.icon" alt="">
                 {{item.title}}
             </div>
@@ -17,6 +17,15 @@ export default {
             default: () => []
         },
         title: String
+    },
+    methods: {
+        goto(item) {
+            if(item.click) {
+                item.click();
+            }else{
+                this.$router.push(item.url);
+            }
+        }
     }
 }
 </script>

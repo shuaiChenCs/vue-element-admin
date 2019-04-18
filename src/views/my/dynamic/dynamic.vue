@@ -271,7 +271,10 @@ export default {
       box-shadow: 0px 0px 18px 2px rgba(0, 0, 0, 0.1);
 	  border-radius: 5px;
 	//   height: 345px/2;
-	  overflow: hidden;
+    overflow: hidden;
+    img,video{
+      max-width: 100%;
+    }
 	}
 	.multi-image{
 		margin-top: 15px;

@@ -33,6 +33,178 @@ const cityData = [
       {
         "name": "ANQING",
         "value": 4
+      },
+      {
+        "name": "ANQING",
+        "value": 4
+      },
+      {
+        "name": "ANQING",
+        "value": 4
+      },
+      {
+        "name": "ANQING",
+        "value": 4
+      },
+      {
+        "name": "ANQING",
+        "value": 4
+      },
+      {
+        "name": "ANQING",
+        "value": 4
+      },
+      {
+        "name": "ANQING",
+        "value": 4
+      },
+      {
+        "name": "ANQING",
+        "value": 4
+      },
+      {
+        "name": "ANQING",
+        "value": 4
+      },
+      {
+        "name": "ANQING",
+        "value": 4
+      },
+      {
+        "name": "ANQING",
+        "value": 4
+      },
+      {
+        "name": "ANQING",
+        "value": 4
+      },
+      {
+        "name": "ANQING",
+        "value": 4
+      },
+      {
+        "name": "ANQING",
+        "value": 4
+      },
+      {
+        "name": "ANQING",
+        "value": 4
+      },
+      {
+        "name": "ANQING",
+        "value": 4
+      },
+      {
+        "name": "ANQING",
+        "value": 4
+      },
+      {
+        "name": "ANQING",
+        "value": 4
+      },
+      {
+        "name": "ANQING",
+        "value": 4
+      },
+      {
+        "name": "ANQING",
+        "value": 4
+      },
+      {
+        "name": "ANQING",
+        "value": 4
+      },
+      {
+        "name": "ANQING",
+        "value": 4
+      },
+      {
+        "name": "ANQING",
+        "value": 4
+      },
+      {
+        "name": "ANQING",
+        "value": 4
+      },
+      {
+        "name": "ANQING",
+        "value": 4
+      },
+      {
+        "name": "ANQING",
+        "value": 4
+      },
+      {
+        "name": "ANQING",
+        "value": 4
+      },
+      {
+        "name": "ANQING",
+        "value": 4
+      },
+      {
+        "name": "ANQING",
+        "value": 4
+      },
+      {
+        "name": "ANQING",
+        "value": 4
+      },
+      {
+        "name": "ANQING",
+        "value": 4
+      },
+      {
+        "name": "ANQING",
+        "value": 4
+      },
+      {
+        "name": "ANQING",
+        "value": 4
+      },
+      {
+        "name": "ANQING",
+        "value": 4
+      },
+      {
+        "name": "ANQING",
+        "value": 4
+      },
+      {
+        "name": "ANQING",
+        "value": 4
+      },
+      {
+        "name": "ANQING",
+        "value": 4
+      },
+      {
+        "name": "ANQING",
+        "value": 4
+      },
+      {
+        "name": "ANQING",
+        "value": 4
+      },
+      {
+        "name": "ANQING",
+        "value": 4
+      },
+      {
+        "name": "ANQING",
+        "value": 4
+      },
+      {
+        "name": "ANQING",
+        "value": 4
+      },
+      {
+        "name": "ANQING",
+        "value": 4
+      },
+      {
+        "name": "ANQING",
+        "value": 4
       }
     ]
   }
@@ -58,9 +230,5 @@ export default {
 <style lang="less" scoped>
 .address-book{
     height: 100%;
-    >div{
-        // height: 1000px;
-        background: #ccc;
-    }
 }
 </style>

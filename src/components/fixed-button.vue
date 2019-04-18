@@ -1,13 +1,17 @@
 <template>
 	<div class="save-btn-box">
-		<cube-button @click="clickHandler">{{title}}</cube-button>
+		<cube-button :disabled="disabled" @click="clickHandler">{{title}}</cube-button>
 	</div>
 </template>
 
 <script>
 	export default {
 		props: {
-			title: String
+			title: String,
+			disabled: {
+				type: Boolean,
+				default: false
+			}
 		},
 		data() {
 			return {

@@ -54,3 +54,7 @@ textarea, input{
     -webkit-text-stroke-width: 0 !important;
 }
 
+
+.cube-btn_disabled{
+    background: #ccc !important;
+}

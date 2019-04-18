@@ -1,7 +1,10 @@
 <template>
     <div class="my">
-        <cube-popup type="my-popup" :zIndex="10000" :position="''" :mask-closable="true" ref="myPopup4">
-            <sp-card></sp-card>
+        <cube-popup type="my-popup" :zIndex="10000" :position="''" :mask-closable="true" ref="cardPopup">
+            <sp-card :title="'进入名片'" :url="''"></sp-card>
+        </cube-popup>
+        <cube-popup type="my-popup" :zIndex="10000" :position="''" :mask-closable="true" ref="servicePopup">
+            <sp-card :title="'联系客服'" :url="''"></sp-card>
         </cube-popup>
         <div class="my-header">
             <div class="card-img">
@@ -9,7 +12,7 @@
             </div>
             <div class="card-name">{{selfCard.cardName}}</div>
             <div class="card-handler">
-                <button @click="aaa">进入名片</button>
+                <button @click="toMycard">进入名片</button>
                 <button>名片海报</button>
             </div>
         </div>
@@ -41,20 +44,24 @@ export default {
                 {title: '邀请好友', icon:require(`@/assets/images/mine_friends@3x.png`), url: ''},
             ],
             data2: [
-                {title: '我的名片', icon:require(`@/assets/images/mine_card@3x.png`), url: ''},
+                {title: '我的名片', icon:require(`@/assets/images/mine_card@3x.png`), url: '', click: () => {this.toMycard()}},
                 {title: '我的商品', icon:require(`@/assets/images/mine_shop@3x.png`), url: '/my/goods'},
                 {title: '我的动态', icon:require(`@/assets/images/mine_moments@3x.png`), url: '/my/dynamic'},
             ],
             data3: [
                 {title: '聊天选项', icon:require(`@/assets/images/mine_chat@3x.png`), url: '/my/chat'},
-                {title: '联系客服', icon:require(`@/assets/images/mine_service@3x.png`), url: ''},
+                {title: '联系客服', icon:require(`@/assets/images/mine_service@3x.png`), url: '', click: () => {this.toService()}},
             ],
         }
     },
     methods: {
-        aaa() {
-             const component = this.$refs.myPopup4
-            component.show()
+        toService() {
+            const component = this.$refs.servicePopup;
+            component.show();
+        },
+        toMycard() {
+            const component = this.$refs.cardPopup;
+            component.show();
         }
     },
     filters: {
@@ -81,6 +88,7 @@ export default {
 </script>
 <style lang="less">
 .my{
+    padding-bottom: 48px;
     .my-header{
         background:linear-gradient(45deg,rgba(11,196,183,1) 0%,rgba(43,217,144,1) 100%);
         height: 373px/2;

@@ -4,12 +4,16 @@
       <router-view />
     </div>
     <div class="sp-tabbar" v-if="$hastab">
-      <cube-tab-bar
+      <div class="tab-item" v-for="(item, index) in tabs" :key="index" @click="clickHandler(item.label)">
+        <img :src="selectedLabelDefault == item.label ? item.activeIcon : item.icon" :class="{w8: !item.label}" alt="">
+        <span v-if="item.label" :class="{active: selectedLabelDefault == item.label}">{{item.label}}</span>
+      </div>
+      <!-- <cube-tab-bar
         v-model="selectedLabelDefault"
         :data="tabs"
         @click="clickHandler"
         @change="changeHandler"
-      ></cube-tab-bar>
+      ></cube-tab-bar> -->
     </div>
   </div>
 </template>
@@ -18,23 +22,31 @@
 export default {
   data() {
     return {
-      selectedLabelDefault: "Vip",
+      selectedLabelDefault: "首页",
       tabs: [
         {
           label: "首页",
-          icon: "cubeic-home"
+          icon: `${this.$imageUrl}/tabbar_home02@2x.png`,
+          activeIcon: `${this.$imageUrl}/tabbar_home01@2x.png`
         },
         {
           label: "通讯录",
-          icon: "cubeic-like"
+          icon: `${this.$imageUrl}/tabbar_contacts02@2x.png`,
+          activeIcon: `${this.$imageUrl}/tabbar_contacts01@2x.png`
+        },
+        {
+          label: "",
+          icon: `${this.$imageUrl}/tabbar_add@3x.png`
         },
         {
           label: "看板",
-          icon: "cubeic-vip"
+          icon: `${this.$imageUrl}/tabbar_board02@2x.png`,
+          activeIcon: `${this.$imageUrl}/tabbar_board01@2x.png`
         },
         {
           label: "我的",
-          icon: "cubeic-person"
+          icon: `${this.$imageUrl}/tabbar_mine02@2x.png`,
+          activeIcon: `${this.$imageUrl}/tabbar_mine01@2x.png`
         }
       ]
     };
@@ -47,6 +59,7 @@ export default {
   },
   methods: {
     clickHandler(label) {
+      this.selectedLabelDefault = label;
       if(label == '首页') {
         this.$router.push('/main');
       }else if(label == '通讯录') {
@@ -61,9 +74,9 @@ export default {
       // console.log(label)
       // if you clicked different tab, this methods can be emitted
     },
-    beforeRouteEnter(to,from ,next) {
-      console.log(to)
-    }
+    // beforeRouteEnter(to,from ,next) {
+    //   console.log(to)
+    // }
   }
 };
 </script>
@@ -74,7 +87,7 @@ export default {
     &.hastab{
       height: calc(100vh - 48px);
       >div{
-        padding-bottom: 48px;
+        // padding-bottom: 48px;
       }
     }
     >div{
@@ -89,6 +102,31 @@ export default {
     bottom: 0;
     width: 100%;
     box-shadow: 0px 0px 18px 2px rgba(0, 0, 0, 0.1);
+    display: flex;
+    .tab-item{
+      // padding: 5px 0;
+      align-items: center;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      color:rgba(204,210,219,1);
+      font-size: 10px;
+      img{
+        width: 25px;
+        height: 25px;
+        &.w8{
+          width: 40px;
+          height: 40px;
+        }
+      }
+      span{
+        padding-top: 2px;
+        &.active{
+          color: #1ED29A;
+        }
+      }
+    }
   }
 }
 </style>

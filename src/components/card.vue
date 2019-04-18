@@ -1,6 +1,6 @@
 <template>
     <div class="card">
-        <div class="header">进入名片</div>
+        <div class="header">{{title}}</div>
         <div class="code">
             <img src="@/assets/123.jpg" alt="">
             <div>长按图片识别小程序码</div>
@@ -9,10 +9,9 @@
 </template>
 <script>
 export default {
-    data() {
-        return {
-            show: false
-        }
+    props: {
+        title: String,
+        url: String
     }
 }
 </script>
@@ -21,7 +20,6 @@ export default {
 .card{
     height: 624px/2;
     width: 510px/2;
-    background: white;
     border-radius: 5px;
     overflow: hidden;
     display: flex;
@@ -35,6 +33,7 @@ export default {
         background:linear-gradient(30deg,rgba(11,196,183,1) 0%,rgba(43,217,144,1) 100%);
     }
     .code{
+        background: white;
         flex: 1;
         padding: 30px 0;
         display: flex;
