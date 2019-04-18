@@ -28,7 +28,7 @@
             <my-block :blockData="data2" :title="'我的数据'"></my-block>
             <my-block :blockData="data3" :title="'其他'"></my-block>
         </div>
-        <div class="yaoqingren">您的邀请人： 心脉科技</div>
+        <div class="yaoqingren">您的邀请人： {{recommendUser.nikeName}}</div>
     </div>
 </template>
 <script>
@@ -38,6 +38,9 @@ import {formatDate} from '@/common/date.js';
 export default {
     data() {
         return {
+            recommendUser:{
+                nikeName:'心脉科技'
+            }, //邀请人
             selfCard:{},
             data1: [
                 {title: '邀请码', icon:require(`@/assets/images/mine_code@3x.png`), url: '/my/inviteCode'},
@@ -76,6 +79,7 @@ export default {
         axios.get(this.$apiConfig.memberInfo,{}).then((res)=>{
             let memberInfo = res.data.data;
             vm.selfCard =  memberInfo.cardVO;
+            this.recommendUser = memberInfo.recommendUser;
             this.$store.commit('setCard', vm.selfCard);
             this.$store.commit('setUser', memberInfo);
 

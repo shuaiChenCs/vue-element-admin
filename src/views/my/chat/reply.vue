@@ -27,7 +27,6 @@
 export default {
     data() {
         return {
-            request:true,
             cardResponse:[],
             title: '自动回复',
             title1: '自动回复1',
@@ -45,9 +44,12 @@ export default {
     },
     methods: {
         save() {
-            axios.post(this.$apiConfig.editReponseVerbal, {}).then(res => {
+            let vm = this;
+            axios.post(this.$apiConfig.editReponseVerbal, this.cardResponse).then(res => {
                 if (res.data.code == 0) {
-
+                    vm.$createToast({
+                        time: 100
+                    }).show();
                 }
 
             });

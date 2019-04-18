@@ -35,5 +35,6 @@ const apiConfig = {
     editReponseVerbal:`/app/verbal/response/edit`,//编辑自动回复话术
     addVerbal:`/app/verbal/add`, //新增话术库
     delVerbal:`/app/verbal/delete/`, // 删除话术库
+    getClientList:`/app/client/list/directory`,//获取通讯录
 }
 export default apiConfig;

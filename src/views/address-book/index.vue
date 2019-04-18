@@ -6,21 +6,21 @@
       <span v-if="searching" @click="searching = false">取消</span>
     </div>
     <div class="address-block" v-if="!searching">
-      <cube-index-list :data="cityData" :speed="2">
-        <cube-index-list-group v-for="(group, index) in cityData" :key="index" :group="group">
+      <cube-index-list :data="listDirectiony" :speed="2">
+        <cube-index-list-group v-for="(group, index) in listDirectiony" :key="index" :group="group">
           <cube-index-list-item
-            class="sp-list-item"
-            v-for="(item, index) in group.items"
-            :key="index"
-            :item="item"
-            @select="selectItem"
+                  class="sp-list-item"
+                  v-for="(item, index) in group.items"
+                  :key="index"
+                  :item="item"
+                  @select="selectItem"
           >
             <div class="custom-item">
               <img
-                src="https://img.hrsugaphre.com/userHead/FA0C670A2C714C1CB4B1FDA684CCEF94.png"
-                alt
+                      :src="item.headImg"
+                      alt
               >
-              {{item.name}}
+              {{item.nikeName || item.name}}
             </div>
           </cube-index-list-item>
         </cube-index-list-group>
@@ -29,238 +29,54 @@
   </div>
 </template>
 <script>
-const cityData = [
-  {
-    name: "",
-    items: [
-      {
-        name: "客户留言",
-        value: 1
-      },
-      {
-        name: "群发消息",
-        value: 2
-      },
-      {
-        name: "标签",
-        value: 1
-      },
-      {
-        name: "人脉广场",
-        value: 2
-      }
-    ]
-  },
-  {
-    name: "★Hot City",
-    items: [
-      {
-        name: "BEIJING",
-        value: 1
-      },
-      {
-        name: "SHANGHAI",
-        value: 2
-      }
-    ]
-  },
-  {
-    name: "A",
-    items: [
-      {
-        name: "ANSHAN",
-        value: 3
-      },
-      {
-        name: "ANQING",
-        value: 4
-      },
-      {
-        name: "ANQING",
-        value: 4
-      },
-      {
-        name: "ANQING",
-        value: 4
-      },
-      {
-        name: "ANQING",
-        value: 4
-      },
-      {
-        name: "ANQING",
-        value: 4
-      },
-      {
-        name: "ANQING",
-        value: 4
-      },
-      {
-        name: "ANQING",
-        value: 4
-      },
-      {
-        name: "ANQING",
-        value: 4
-      },
-      {
-        name: "ANQING",
-        value: 4
-      },
-      {
-        name: "ANQING",
-        value: 4
-      },
-      {
-        name: "ANQING",
-        value: 4
-      },
-      {
-        name: "ANQING",
-        value: 4
-      },
-      {
-        name: "ANQING",
-        value: 4
-      },
-      {
-        name: "ANQING",
-        value: 4
-      },
-      {
-        name: "ANQING",
-        value: 4
-      },
-      {
-        name: "ANQING",
-        value: 4
-      },
-      {
-        name: "ANQING",
-        value: 4
-      },
-      {
-        name: "ANQING",
-        value: 4
-      },
-      {
-        name: "ANQING",
-        value: 4
-      },
-      {
-        name: "ANQING",
-        value: 4
-      },
-      {
-        name: "ANQING",
-        value: 4
-      },
-      {
-        name: "ANQING",
-        value: 4
-      },
-      {
-        name: "ANQING",
-        value: 4
-      },
-      {
-        name: "ANQING",
-        value: 4
-      },
-      {
-        name: "ANQING",
-        value: 4
-      },
-      {
-        name: "ANQING",
-        value: 4
-      },
-      {
-        name: "ANQING",
-        value: 4
-      },
-      {
-        name: "ANQING",
-        value: 4
-      },
-      {
-        name: "ANQING",
-        value: 4
-      },
-      {
-        name: "ANQING",
-        value: 4
-      },
-      {
-        name: "ANQING",
-        value: 4
-      },
-      {
-        name: "ANQING",
-        value: 4
-      },
-      {
-        name: "ANQING",
-        value: 4
-      },
-      {
-        name: "ANQING",
-        value: 4
-      },
-      {
-        name: "ANQING",
-        value: 4
-      },
-      {
-        name: "ANQING",
-        value: 4
-      },
-      {
-        name: "ANQING",
-        value: 4
-      },
-      {
-        name: "ANQING",
-        value: 4
-      },
-      {
-        name: "ANQING",
-        value: 4
-      },
-      {
-        name: "ANQING",
-        value: 4
-      },
-      {
-        name: "ANQING",
-        value: 4
-      },
-      {
-        name: "ANQING",
-        value: 4
-      },
-      {
-        name: "ANQING",
-        value: 4
-      },
-      {
-        name: "ANQING",
-        value: 4
-      }
-    ]
-  }
-];
 
 export default {
   data() {
     return {
-      cityData: cityData,
+      listDirectiony: [
+          {
+              name: "",
+              items: [
+                  {
+                      name: "客户留言",
+                      headImg:'https://img.hrsugaphre.com/userHead/FA0C670A2C714C1CB4B1FDA684CCEF94.png',
+                      value: 1
+                  },
+                  {
+                      name: "群发消息",
+                      headImg:'https://img.hrsugaphre.com/userHead/FA0C670A2C714C1CB4B1FDA684CCEF94.png',
+                      value: 2
+                  },
+                  {
+                      name: "标签",
+                      headImg:'https://img.hrsugaphre.com/userHead/FA0C670A2C714C1CB4B1FDA684CCEF94.png',
+                      value: 1
+                  },
+                  {
+                      name: "人脉广场",
+                      headImg:'https://img.hrsugaphre.com/userHead/FA0C670A2C714C1CB4B1FDA684CCEF94.png',
+                      value: 2
+                  }
+              ]
+          }
+      ],
       searching: false
     };
   },
+    created(){
+      axios.get(this.$apiConfig.getClientList,{}).then(res=>{
+          if(res.data.code==0){
+              let param={
+                  name:'A',
+                  items:res.data.data
+              }
+              this.listDirectiony.push(param);
+          }
+      })
+    },
   methods: {
     selectItem(item) {
-      console.log(item.name);
+          this.listDirectiony.splice(1,this.listDirectiony.length);
     }
   }
 };
