@@ -9,7 +9,7 @@
                 <!--</swiper>-->
                 <cube-slide class="swiper" ref="slide" :data="goodsDetail.bannerList">
                     <cube-slide-item v-for="(item, index) in goodsDetail.bannerList" :key="index">
-                        <img :src="item.imgUrl">
+                        <img :src="item.imgUrl" @click="showBannerImagePreview(index)">
                     </cube-slide-item>
                 </cube-slide>
             </div>
@@ -21,9 +21,9 @@
                 <i type="" class="iconfont iconcard_pause"></i>
                 <span>商品信息</span>
             </div>
-            <div class="info-block" v-for="item in goodsDetail.infoList" :key="item.id">
+            <div class="info-block" v-for="(item,index) in goodsDetail.infoList" :key="item.id">
                 <div class="img-video">
-                    <img  @tap="previewImg(item.multimediaUrl)" :src="item.multimediaUrl" mode="widthFix" v-if="item.multimediaType == 1"></img>
+                    <img  @tap="previewImg(item.multimediaUrl)" :src="item.multimediaUrl" mode="widthFix" v-if="item.multimediaType == 1"  @click="showInfoImgPreview(item.id)"></img>
                     <sp-video :src="item.multimediaUrl" controls v-if="item.multimediaType == 2"></sp-video>
                 </div>
                 <div class="descript">
@@ -40,7 +40,9 @@
         data() {
             return {
                 id:0,
-                goodsDetail: {}
+                goodsDetail: {},
+                bannerList:[],
+                infoImgList:[]
             };
         },
         created(){
@@ -48,6 +50,40 @@
             this.getGoodDetail(this.id);
         },
         methods: {
+            showBannerImagePreview(index) {
+                this.showImgPreview(this.bannerList,index);
+            },
+            showInfoImgPreview(id){
+                let img = [];
+                let index = 0;
+                this.infoImgList.forEach((res,i)=>{
+                    img.push(res['multimediaUrl']);
+                    if(id == res['id']){
+                        index = i;
+                    }
+                });
+                this.showImgPreview(img,index);
+            },
+            showImgPreview(imgs,index){
+                if(imgs<=0){
+                    return;
+                }
+                this.initialIndex = index
+                const params = {
+                    $props: {
+                        imgs: imgs,
+                        initialIndex: 'initialIndex', // 响应式数据的key名
+                        loop: false
+                    },
+                    $events: {
+                        change: (i) => {
+                            // 必须更新 initialIndex
+                            this.initialIndex = i
+                        }
+                    }
+                }
+                this.$createImagePreview({ ...params }).show()
+            },
             editGoods(){
                 this.$router.push({name:'goods-edit',params:{id:this.id}});
             },
@@ -60,6 +96,13 @@
                 axios.get(this.$apiConfig.getGoodDetail+"?id="+id,{}).then((res)=>{
                     if(res.data.code==0){
                         this.goodsDetail = res.data.data;
+                        this.bannerList = this.goodsDetail.bannerList.map(item=>{return item['imgUrl']});
+                        let infoList = this.goodsDetail.infoList;
+                        infoList.forEach(item=>{
+                            if(item.multimediaType==1){
+                                this.infoImgList.push(item);
+                            }
+                        });
                     }
                 });
             }

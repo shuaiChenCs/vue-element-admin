@@ -67,7 +67,8 @@
                 name:'',
                 price:'',
                 type:'',
-                typeId:0
+                typeId:0,
+                editRequest:true
             };
         },
         created(){
@@ -95,21 +96,25 @@
             },
             save() {
                 // console.log(this.banner);
-                let params = {
-                    id:this.id,
-                    name:this.name,
-                    price:this.price,
-                    type:this.type,
-                    typeId:this.typeId,
-                    bannerList:this.banner,
-                    infoList:this.detail
-                };
-                let vm =this;
-                axios.put(this.$apiConfig.editGoods,params).then((res)=>{
-                    if(res.data.code==0){
-                        vm.$router.push('/my/goods');
-                    }
-                });
+                if(this.editRequest) {
+                    let params = {
+                        id: this.id,
+                        name: this.name,
+                        price: this.price,
+                        type: this.type,
+                        typeId: this.typeId,
+                        bannerList: this.banner,
+                        infoList: this.detail
+                    };
+                    let vm = this;
+                    this.editRequest=false;
+                    axios.put(this.$apiConfig.editGoods, params).then((res) => {
+                        vm.editRequest=true;
+                        if (res.data.code == 0) {
+                            vm.$router.push('/my/goods');
+                        }
+                    });
+                }
             },
             bannerSuccess(arr) {
                 this.banner = arr.map(res=>{

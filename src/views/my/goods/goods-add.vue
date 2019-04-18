@@ -52,7 +52,7 @@
         </div>
       </div>
     </div>
-    <fixed-button :title="'保存'" @clickHandler="save"></fixed-button>
+    <fixed-button :title="'保存'" :disabled="name.length==0 && banner.length==0" @clickHandler="save"></fixed-button>
   </div>
 </template>
 <script>
@@ -65,7 +65,8 @@ export default {
         name:'',
         price:'',
         type:'',
-        typeId:0
+        typeId:0,
+        addRequest:true
     };
   },
   methods: {
@@ -73,20 +74,24 @@ export default {
         this.detail.splice(index,1);
       },
     save() {
-        let params = {
-            name:this.name,
-            price:this.price,
-            type:this.type,
-            typeId:this.typeId,
-            bannerList:this.banner,
-            infoList:this.detail
-        }
-        let vm =this;
-        axios.post(this.$apiConfig.addGoods,params).then((res)=>{
-           if(res.data.code==0){
-               vm.$router.go(-1);
-           }
-        });
+          if(this.addRequest) {
+              this.addRequest=false;
+              let params = {
+                  name: this.name,
+                  price: this.price,
+                  type: this.type,
+                  typeId: this.typeId,
+                  bannerList: this.banner,
+                  infoList: this.detail
+              };
+              let vm = this;
+              axios.post(this.$apiConfig.addGoods, params).then((res) => {
+                  vm.ddRequest=true;
+                  if (res.data.code == 0) {
+                      vm.$router.go(-1);
+                  }
+              });
+          }
     },
     bannerSuccess(arr) {
         this.banner = arr.map(res=>{

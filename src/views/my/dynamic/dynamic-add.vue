@@ -6,7 +6,7 @@
         <div class="imgs">
             <dynamic-upload @success="bannerSuccess" :type="'dynamic'"></dynamic-upload>
         </div>
-        <fixed-button :title="'保存'" @clickHandler="save"></fixed-button>
+        <fixed-button :title="'保存'" :disabled="content.length==0 && fileList.length==0" @clickHandler="save"></fixed-button>
     </div>
 </template>
 <script>
@@ -17,11 +17,13 @@ export default {
             fileList: [
 
             ],
-            content:''
+            content:'',
+            addRequest:true
         }
     },
     methods: {
         bannerSuccess(arr) {
+            console.log(arr);
             this.fileList = [];
             arr.forEach(item=>{
                 let type="";
@@ -36,17 +38,21 @@ export default {
                 };
                 this.fileList.push(mul);
             });
-            console.log(this.fileList)
         },
         save() {
-            axios.post(this.$apiConfig.addDynamic,{
-                content:this.content,
-                multimediaList:this.fileList
-            }).then(res=>{
-                if(res.data.code==0){
-                    this.$router.go(-1);
-                }
-            })
+            if(this.addRequest) {
+                this.addRequest = false;
+                let vm = this;
+                axios.post(this.$apiConfig.addDynamic, {
+                    content: this.content,
+                    multimediaList: this.fileList
+                }).then(res => {
+                    vm.addRequest = true;
+                    if (res.data.code == 0) {
+                        this.$router.go(-1);
+                    }
+                })
+            }
         }
     },
     components: {

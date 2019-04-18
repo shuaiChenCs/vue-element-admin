@@ -27,6 +27,7 @@
 export default {
     data() {
         return {
+            request:true,
             cardResponse:[],
             title: '自动回复',
             title1: '自动回复1',
@@ -38,15 +39,18 @@ export default {
     created(){
         axios.get(this.$apiConfig.reponseList,{}).then(res=>{
            if(res.data.code==0){
-               // console.log(res.data)
                this.cardResponse = res.data.data.cardAutoResponseVOList;
-               console.log(this.cardResponse[0].content)
            }
         });
     },
     methods: {
         save() {
-            console.log(this.content)
+            axios.post(this.$apiConfig.editReponseVerbal, {}).then(res => {
+                if (res.data.code == 0) {
+
+                }
+
+            });
         }
     }
 }

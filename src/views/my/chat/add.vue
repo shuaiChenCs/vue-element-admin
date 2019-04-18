@@ -12,7 +12,8 @@ export default {
     data(){
         return{
             id:0,
-            content:''
+            content:'',
+            request:true
         }
     },
     created(){
@@ -31,23 +32,29 @@ export default {
             });
         },
         save() {
-            if(this.id==0) {
-                axios.post(this.$apiConfig.addVerbal, {
-                    content: this.content
-                }).then(res => {
-                    if (res.data.code == 0) {
-                        this.$router.go(-1);
-                    }
-                });
-            }else{
-                axios.post(this.$apiConfig.editVerbal,{
-                    id:this.id,
-                    content:this.content
-                }).then(res => {
-                    if (res.data.code == 0) {
-                        this.$router.go(-1);
-                    }
-                });
+            if(this.request) {
+                this.request = false;
+                let vm = this;
+                if (this.id == 0) {
+                    axios.post(this.$apiConfig.addVerbal, {
+                        content: this.content
+                    }).then(res => {
+                        vm.request = true;
+                        if (res.data.code == 0) {
+                            this.$router.go(-1);
+                        }
+                    });
+                } else {
+                    axios.post(this.$apiConfig.editVerbal, {
+                        id: this.id,
+                        content: this.content
+                    }).then(res => {
+                        vm.request = true;
+                        if (res.data.code == 0) {
+                            this.$router.go(-1);
+                        }
+                    });
+                }
             }
         }
     }
