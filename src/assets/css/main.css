@@ -58,3 +58,14 @@ textarea, input{
 .cube-btn_disabled{
     background: #ccc !important;
 }
+.cube-btn_disabled:after{
+    width: 0 !important;
+    height: 0 !important;
+}
+
+.cube-index-list-nav>ul>li.active{
+    color: #1ED29A;
+}
+.cube-index-list-anchor{
+    padding: 10px 15px !important;
+}
