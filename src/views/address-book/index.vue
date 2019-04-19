@@ -64,19 +64,20 @@ export default {
     };
   },
     created(){
-      axios.get(this.$apiConfig.getClientList,{}).then(res=>{
-          if(res.data.code==0){
-              let param={
-                  name:'A',
-                  items:res.data.data
-              }
-              this.listDirectiony.push(param);
-          }
-      })
+     this.load();
     },
   methods: {
+      load(){
+          axios.get(this.$apiConfig.getClientList,{}).then(res=>{
+              if(res.data.code==0){
+                  this.listDirectiony.splice(1,this.listDirectiony.length);
+
+                  this.listDirectiony = this.listDirectiony.concat(res.data.data);
+              }
+          })
+      },
     selectItem(item) {
-          this.listDirectiony.splice(1,this.listDirectiony.length);
+          // this.listDirectiony.splice(1,this.listDirectiony.length);
     }
   }
 };
