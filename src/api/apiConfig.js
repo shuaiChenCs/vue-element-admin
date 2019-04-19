@@ -36,6 +36,7 @@ const apiConfig = {
     addVerbal:`/app/verbal/add`, //新增话术库
     delVerbal:`/app/verbal/delete/`, // 删除话术库
     getClientList:`/app/client/list/directory`,//获取通讯录,
-    officialRegister:`/official/register`, //公众号注册
+    officialRegister:`/official/register`, //公众号注册,
+    wxConfig:`/wx/config`, //微信jssdk
 }
 export default apiConfig;
