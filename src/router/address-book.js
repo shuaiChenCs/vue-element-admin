@@ -16,5 +16,11 @@ export default [
 		name: 'addressBookMessage',
 		component: () => import(/* webpackChunkName: "addressBook" */ '../views/address-book/message'),
         meta:{title:'客户留言'}
+	},
+	{
+		path: '/address-book/group-send',
+		name: 'addressBookGroup',
+		component: () => import(/* webpackChunkName: "addressBook" */ '../views/address-book/group-send'),
+        meta:{title:'群发消息'}
 	}
 ]
