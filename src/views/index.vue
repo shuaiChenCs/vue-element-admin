@@ -36,7 +36,8 @@ export default {
         },
         {
           label: "",
-          icon: `${this.$imageUrl}/tabbar_add@3x.png`
+          icon: `${this.$imageUrl}/tabbar_add@3x.png`,
+          activeIcon: `${this.$imageUrl}/tabbar_add@3x.png`
         },
         {
           label: "看板",
