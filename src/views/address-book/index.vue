@@ -80,6 +80,9 @@ export default {
       if(item.name == '标签') {
         this.$router.push('/address-book/tags');
       }
+      if(item.name == '客户留言') {
+        this.$router.push('/address-book/message');
+      }
           // this.listDirectiony.splice(1,this.listDirectiony.length);
     }
   }

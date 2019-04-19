@@ -6,7 +6,7 @@
                 {{item.title}}
             </div>
             <div class="tag-block">
-                <div class="tag-item" v-for="tag in item.data" :key="tag">{{tag}}</div>
+                <div class="tag-item" v-for="(tag, subindex) in item.data" :key="subindex">{{tag}}</div>
             </div>
         </div>
     </div>

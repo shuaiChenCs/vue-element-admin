@@ -1,15 +1,14 @@
 import Vue from 'vue'
 import './cube-ui'
 import './plugins/axios'
+import './lib/wxjssdk'
 import App from './App.vue'
 import router from './router/router.js'
 import store from './store'
 import './directives/scroll.js';
 import 'lib-flexible';
 import './lib/common.js';
-
 Vue.config.productionTip = false
-
 import './assets/css/main.css'
 import './assets/css/my-mint.css';
 import '../public/font/iconfont.css';

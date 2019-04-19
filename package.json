@@ -25,7 +25,8 @@
     "postcss-px2rem": "^0.3.0",
     "vue-cli-plugin-axios": "0.0.4",
     "vue-cli-plugin-cube-ui": "^0.2.4",
-    "vue-template-compiler": "^2.5.21"
+    "vue-template-compiler": "^2.5.21",
+    "weixin-js-sdk": "^1.4.0-test"
   },
   "postcss": {
     "plugins": {

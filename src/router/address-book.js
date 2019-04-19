@@ -10,5 +10,11 @@ export default [
 		name: 'addressBookTags',
 		component: () => import(/* webpackChunkName: "addressBook" */ '../views/address-book/tags'),
         meta:{title:'标签'}
+	},
+	{
+		path: '/address-book/message',
+		name: 'addressBookMessage',
+		component: () => import(/* webpackChunkName: "addressBook" */ '../views/address-book/message'),
+        meta:{title:'客户留言'}
 	}
 ]
