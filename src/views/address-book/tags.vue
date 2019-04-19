@@ -3,7 +3,7 @@
         <div v-for="(item, index) in tags" :key="index">
             <div class="block-item-title">
                 <i class="iconfont iconcard_pause"></i>
-                {{item.title}}
+                {{item.labelName}}
             </div>
             <div class="tag-block">
                 <div class="tag-item" v-for="(tag, subindex) in item.data" :key="subindex">{{tag}}</div>
@@ -29,6 +29,13 @@ export default {
                 {title: '客户来源', data: ['名片来源', '客户介绍', '朋友']},
             ]
         }
+    },
+    created(){
+        axios.get(this.$apiConfig.labelLibrary,{}).then(res=>{
+            if(res.data.code==0){
+                this.tags = res.data.data;
+            }
+        });
     }
 }
 </script>

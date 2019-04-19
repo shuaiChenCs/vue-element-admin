@@ -13,22 +13,25 @@ export default {
     created(){
         let code = this.getUrlParam('code');
         // let url = this.getCrtUrl();
-        let url = 'https://h5.sipinoffice.com';
+        // let url = 'https://h5.sipinoffice.com';
         //登录，设置全局token
-        // axios.post(this.$apiConfig.officialRegister+'?code='+code).then(res=> {
-        //     let response = res.data;
-        //     axios.defaults.headers['Authentication'] = response.data.token;
-        //     window.localStorage.token = response.data.token;
-        //     // this.$store.commit('setCard', response.data);
-        //     this.$store.commit('setToken', response.data.token);
-        // });
-        //wxconfig param
-        axios.get(this.$apiConfig.wxConfig+'?url='+encodeURIComponent(url),{}).then(res=>{
-            if(res.data.code ==0){
-                this.wxConfig = res.data.data;
-                this.setWxConfig(wxConfig);
-            }
+        axios.post(this.$apiConfig.officialRegister+'?code='+code).then(res=> {
+            // let response = res.data;
+            // axios.defaults.headers['Authentication'] = response.data.token;
+            // window.localStorage.token = response.data.token;
+            // this.$store.commit('setToken', response.data.token);
+            let token = `eyJhbGciOiJIUzI1NiJ9.eyJwMSI6MywicDIiOjYsImV4cCI6MTU1NjUyMDgxMSwiaWF0IjoxNTU1NjU2ODExfQ.0a_ggGAI0FaT8iytGrudBwMsXF9wLoiSPE8TcoTdUwQ`;
+            axios.defaults.headers['Authentication'] = token;
+            window.localStorage.token =token;
+            this.$store.commit('setToken', token);
         });
+        //wxconfig param
+        // axios.get(this.$apiConfig.wxConfig+'?url='+encodeURIComponent(url),{}).then(res=>{
+        //     if(res.data.code ==0){
+        //         let wxConfig = res.data.data;
+        //         this.setWxConfig(wxConfig);
+        //     }
+        // });
     },
     methods:{
         getUrlParam (name) {
