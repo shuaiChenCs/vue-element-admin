@@ -8,7 +8,7 @@
 export default {
     created(){
         //登录，设置全局token
-        axios.post(this.$apiConfig.login+'?openId=o-8zG5Ttt33KRa222_DGLq85GLMw').then((res) =>{
+        axios.post(this.$apiConfig.login+'?openId=oEJ6f4lq0Wp-tQsLnEyIQLGkiloE').then((res) =>{
             let response = res.data;
             axios.defaults.headers['Authentication'] = response.data.token;
             window.localStorage.token = response.data.token;
