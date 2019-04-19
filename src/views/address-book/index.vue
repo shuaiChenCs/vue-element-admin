@@ -77,6 +77,9 @@ export default {
           })
       },
     selectItem(item) {
+      if(item.name == '标签') {
+        this.$router.push('/address-book/tags');
+      }
           // this.listDirectiony.splice(1,this.listDirectiony.length);
     }
   }
