@@ -67,15 +67,14 @@ export default {
     this.load();
   },
   methods: {
-    load() {
-      axios.get(this.$apiConfig.getClientList, {}).then(res => {
-        if (res.data.code == 0) {
-          this.listDirectiony.splice(1, this.listDirectiony.length);
-
-          this.listDirectiony = this.listDirectiony.concat(res.data.data);
-        }
-      });
-    },
+      load(){
+          axios.get(this.$apiConfig.getClientList,{}).then(res=>{
+              if(res.data.code==0){
+                  this.listDirectiony.splice(1,this.listDirectiony.length);
+                  this.listDirectiony = this.listDirectiony.concat(res.data.data);
+              }
+          })
+      },
     selectItem(item) {
       if (item.name == "标签") {
         this.$router.push("/address-book/tags");
