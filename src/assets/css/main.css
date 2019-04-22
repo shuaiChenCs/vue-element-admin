@@ -141,3 +141,6 @@ textarea, input{
 .cube-dialog-btn_highlight{
     color: #1ED29A !important;
 }
+.cube-popup{
+    position: absolute !important;
+}

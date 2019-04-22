@@ -8,7 +8,7 @@
       <div class="tag-block">
         <div
           class="tag-item"
-          :style="{background: selectTags[item.labelName] == tag.labelName ? tag.backgroundImg : ''}"
+          :style="{background: selectTags[item.labelName] &&  (selectTags[item.labelName] == tag.labelName || selectTags[item.labelName].indexOf(tag.labelName) != -1) ? tag.backgroundImg : ''}"
           @click="select(item.labelName, tag)"
           v-for="(tag, subindex) in item.childList"
           :key="subindex"
@@ -30,35 +30,60 @@ export default {
   data() {
     return {
       tags: [],
-      selectTags: {}
+      selectTags: {},
+      dialog: null
     };
   },
   methods: {
     save() {},
     addTag(name) {
-      let dialog = this.$createDialog({
+      this.dialog = this.$createDialog({
         type: "prompt",
         title: "编辑自定义标签",
         showClose: true,
         prompt: {
+            ref: "hiddenInput",
           autofocus: true,  
           value: "",
           placeholder: "请输入"
         },
         onConfirm: (e, promptValue) => {
-          console.log(this.tags);
-            dialog.promptValue = '';
+          this.tags[this.tags.length -1].childList.push({
+              labelName: promptValue,
+              backgroundImg: '#EFF7FF'
+          })
+            this.dialog.promptValue = '';
         },
         onClose: () => {
-            dialog.promptValue = '';
+            this.dialog.promptValue = '';
         },
         onCancel: () => {
-            dialog.promptValue = '';
+            this.dialog.promptValue = '';
         }
       }).show();
     },
     select(name, tag) {
-      this.$set(this.selectTags, name, tag.labelName);
+        if(name == '自定义标签') {
+            if(!this.selectTags[name]) {
+                this.$set(this.selectTags, name, []);
+                this.selectTags[name].push(tag.labelName);
+            }else{
+                let i = this.selectTags[name].findIndex(item => {
+                    return item == tag.labelName;
+                });
+                if(i != -1) {
+                    this.selectTags[name].splice(i, 1);
+                }else{
+                    this.selectTags[name].push(tag.labelName);
+                }
+            }
+        }else{
+            if(this.selectTags[name] == tag.labelName) {
+                this.$delete(this.selectTags, name);
+            }else{
+                this.$set(this.selectTags, name, tag.labelName);
+            }
+        }
       console.log(this.selectTags);
     }
   },
@@ -66,7 +91,6 @@ export default {
     axios.get(this.$apiConfig.labelLibrary, {}).then(res => {
       if (res.data.code == 0) {
         this.tags = res.data.data;
-        console.log(this.tags);
       }
     });
   }
