@@ -26,24 +26,24 @@
         <cube-checkbox v-model="checked">全选13人</cube-checkbox>
       </div>
     </div>
-    <div class="check-box">
-      <div class="block-item-title">A</div>
-      <div class="check-item" v-for="i in 3" :key="i">
+    <div class="check-box" v-for="(group,index) in listDirectiony" :key="group.name">
+      <div class="block-item-title">{{group.name}}</div>
+      <div class="check-item" v-for="(item,index) in group.items" :key="item.id">
         <cube-checkbox v-model="checked">
-          <img src="https://img.hrsugaphre.com/userHead/FA0C670A2C714C1CB4B1FDA684CCEF94.png" alt>
-          张三
+          <img :src="item.headImg" alt>
+          {{item.nikeName}}
         </cube-checkbox>
       </div>
     </div>
-    <div class="check-box" v-for="item in 10" :key="item">
-      <div class="block-item-title">B</div>
-      <div class="check-item">
-        <cube-checkbox v-model="checked">
-          <img src="https://img.hrsugaphre.com/userHead/FA0C670A2C714C1CB4B1FDA684CCEF94.png" alt>
-          李四
-        </cube-checkbox>
-      </div>
-    </div>
+    <!--<div class="check-box" v-for="item in 10" :key="item">-->
+      <!--<div class="block-item-title">B</div>-->
+      <!--<div class="check-item">-->
+        <!--<cube-checkbox v-model="checked">-->
+          <!--<img src="https://img.hrsugaphre.com/userHead/FA0C670A2C714C1CB4B1FDA684CCEF94.png" alt>-->
+          <!--李四-->
+        <!--</cube-checkbox>-->
+      <!--</div>-->
+    <!--</div>-->
     <fixed-button :title="'下一步'" @clickHandler="save"></fixed-button>
   </div>
 </template>
@@ -51,10 +51,18 @@
 export default {
   data() {
     return {
+        listDirectiony:[],
       searching: false,
       checked: false
     };
   },
+    created(){
+        axios.post(this.$apiConfig.getClientList,{}).then(res=>{
+            if(res.data.code==0){
+                this.listDirectiony = res.data.data;
+            }
+        })
+    },
   methods: {
     save() {}
   }

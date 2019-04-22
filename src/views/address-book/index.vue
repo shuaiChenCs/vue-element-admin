@@ -73,7 +73,7 @@ export default {
   },
   methods: {
       load(){
-          axios.get(this.$apiConfig.getClientList,{}).then(res=>{
+          axios.post(this.$apiConfig.getClientList,{}).then(res=>{
               if(res.data.code==0){
                   this.listDirectiony.splice(1,this.listDirectiony.length);
                   this.listDirectiony = this.listDirectiony.concat(res.data.data);
