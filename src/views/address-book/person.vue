@@ -30,7 +30,7 @@
                 客户标签
             </div>
             <div class="tag-block">
-                <div class="tag-item" v-for="(label,index) in personInfo.clientLabelVOList" :key="item">大傻逼</div>
+                <div class="tag-item" v-for="(label,index) in personInfo.clientLabelVOList" :key="label.id">大傻逼</div>
                 <div class="tag-item add"><i class="iconfont iconcard_edit_add"></i></div>
             </div>
         </div>
