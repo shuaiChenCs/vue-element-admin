@@ -19,7 +19,7 @@ export default {
         }
     },
     created(){
-        axios.get(this.$apiConfig.labelLibrary,{}).then(res=>{
+        axios.get(this.$apiConfig.userLabelLibrary,{}).then(res=>{
             if(res.data.code==0){
                 this.tags = res.data.data;
                 console.log(this.tags)
