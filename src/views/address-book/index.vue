@@ -2,8 +2,8 @@
   <div class="address-book">
     <div class="search" :class="{isSearch: searching}">
       <i class="cubeic-search"></i>
-      <input type="text" placeholder="搜索" @focus="searching = true">
-      <span v-if="searching" @click="searching = false">取消</span>
+      <input type="text" placeholder="搜索" v-model="name" @focus="searchFocus" @input="search">
+      <span v-if="showClean" @click="clean">取消</span>
     </div>
     <div class="address-block" v-if="!searching">
       <cube-index-list :data="listDirectiony" :speed="2">
@@ -30,55 +30,78 @@
 export default {
   data() {
     return {
-      listDirectiony: [
-        {
-          name: "",
-          items: [
+        directiony: [
             {
-              name: "客户留言",
-              headImg:
-                "https://img.hrsugaphre.com/userHead/FA0C670A2C714C1CB4B1FDA684CCEF94.png",
-              value: 1,
-              icon: true
-            },
-            {
-              name: "群发消息",
-              headImg:
-                "https://img.hrsugaphre.com/userHead/FA0C670A2C714C1CB4B1FDA684CCEF94.png",
-              value: 2,
-              icon: true
-            },
-            {
-              name: "标签",
-              headImg:
-                "https://img.hrsugaphre.com/userHead/FA0C670A2C714C1CB4B1FDA684CCEF94.png",
-              value: 1,
-              icon: true
-            },
-            // {
-            //   name: "人脉广场",
-            //   headImg:
-            //     "https://img.hrsugaphre.com/userHead/FA0C670A2C714C1CB4B1FDA684CCEF94.png",
-            //   value: 2,
-            //   icon: true
-            // }
-          ]
-        }
-      ],
-      searching: false
+                name: "",
+                items: [
+                    {
+                        name: "客户留言",
+                        headImg:
+                            "https://img.hrsugaphre.com/userHead/FA0C670A2C714C1CB4B1FDA684CCEF94.png",
+                        value: 1,
+                        icon: true
+                    },
+                    {
+                        name: "群发消息",
+                        headImg:
+                            "https://img.hrsugaphre.com/userHead/FA0C670A2C714C1CB4B1FDA684CCEF94.png",
+                        value: 2,
+                        icon: true
+                    },
+                    {
+                        name: "标签",
+                        headImg:
+                            "https://img.hrsugaphre.com/userHead/FA0C670A2C714C1CB4B1FDA684CCEF94.png",
+                        value: 1,
+                        icon: true
+                    },
+                    // {
+                    //   name: "人脉广场",
+                    //   headImg:
+                    //     "https://img.hrsugaphre.com/userHead/FA0C670A2C714C1CB4B1FDA684CCEF94.png",
+                    //   value: 2,
+                    //   icon: true
+                    // }
+                ]
+            }
+        ],
+      listDirectiony: [],
+      searching: false,
+        name:'',
+        showClean:false
     };
   },
   created() {
     this.load();
   },
   methods: {
+      clean(){
+          this.name = '';
+          this.searching = false;
+          this.showClean = false;
+          this.load();
+      },
+      searchFocus(){
+        this.searching = true;
+          this.showClean = true;
+      },
+      search(){
+          this.searching = true;
+          this.load();
+      },
       load(){
-          axios.post(this.$apiConfig.getClientList,{}).then(res=>{
+          axios.post(this.$apiConfig.getClientList,{
+              nikeName:this.name
+          }).then(res=>{
               if(res.data.code==0){
-                  this.listDirectiony.splice(1,this.listDirectiony.length);
-                  this.listDirectiony = this.listDirectiony.concat(res.data.data);
+                  this.listDirectiony = [];
+                  if(this.name.length==0) {
+                      this.listDirectiony = this.listDirectiony.concat(this.directiony);
+                  }
+                  this.listDirectiony = this.listDirectiony.concat(res.data.data.clientAddressBookVOList);
+                  this.searching=false;
               }
-          })
+          });
       },
     selectItem(item) {
       if (item.name == "标签") {
