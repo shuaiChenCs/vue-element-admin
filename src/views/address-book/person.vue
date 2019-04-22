@@ -2,13 +2,13 @@
     <div class="person">
         <div class="header">
             <div class="avatar">
-                <img src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLmyicbqKNRhXNXkw9V61ficiczicdSOYLO6g8Xf7CDYfrNHeu9p5eCGvhFWvUHiaCLSRW9kFfibiahiaiawHw/132" alt="">
+                <img :src="personInfo.headImg" alt="">
             </div>
             <div class="info">
                 <div class="top">
-                    <span class="name">常杰</span>
+                    <span class="name">{{personInfo.nikeName}}</span>
                 </div>
-                <div class="bottom">互动次数1</div>
+                <div class="bottom">互动次数{{personInfo.interact}}</div>
             </div>
             <div class="copy">
                 <button>留言</button>
@@ -21,7 +21,7 @@
                 备注名称
             </div>
             <div class="setin">
-                <input type="text" placeholder="点击添加备注名" @focus="inputFocus($event)" @blur="inputBlur($event)">
+                <input type="text" v-model="personInfo.remark" placeholder="点击添加备注名" @focus="inputFocus($event)" @blur="inputBlur($event)">
             </div>
         </div>
         <div class="person-item">
@@ -30,8 +30,13 @@
                 客户标签
             </div>
             <div class="tag-block">
+<<<<<<< HEAD
                 <div class="tag-item" v-for="item in 17" :key="item">大傻逼</div>
                 <div class="tag-item add" @click="$router.push('/address-book/addTags')"><i class="iconfont iconcard_edit_add"></i></div>
+=======
+                <div class="tag-item" v-for="(label,index) in personInfo.clientLabelVOList" :key="item">大傻逼</div>
+                <div class="tag-item add"><i class="iconfont iconcard_edit_add"></i></div>
+>>>>>>> 0e5061f15cb6f4e2b73081b0a0f7bb73a9ce3b0b
             </div>
         </div>
         <div class="person-item">
@@ -57,11 +62,27 @@
 </template>
 <script>
 export default {
+<<<<<<< HEAD
     data() {
         return {
             value: true
         }
     },
+=======
+    data(){
+        return {
+            personInfo:{},
+        }
+    },
+    created(){
+        axios.get(this.$apiConfig.getPersonInfo+this.$route.params.id,{}).then(res=>{
+           if(res.data.code==0){
+               console.log(res.data.data);
+               this.personInfo = res.data.data;
+           }
+        });
+    },
+>>>>>>> 0e5061f15cb6f4e2b73081b0a0f7bb73a9ce3b0b
     mounted() {
         let name = '张三';
         document.title = name;
