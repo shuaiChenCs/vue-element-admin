@@ -40,15 +40,15 @@
                 互动轨迹
             </div>
             <div class="push-box">
-                <div class="pushornot">
-                    <span>推送到AI雷达和公众号</span>
-                    <cube-switch v-model="value"></cube-switch>
-                </div>
-                <div class="push-list">
-                    2019-04-02
-                    <div class="push-item">
-                        <span class="content">来自置换用户</span>
-                        <span class="time">17:18</span>
+                <!--<div class="pushornot">-->
+                    <!--<span>推送到AI雷达和公众号</span>-->
+                    <!--<cube-switch v-model="value"></cube-switch>-->
+                <!--</div>-->
+                <div class="push-list" v-for="(group,index) in personInfo.behaviorGroupVOList" :key="group.date">
+                   {{group.date}}
+                    <div class="push-item" v-for="(behavior,index) in group.behaviorVOList">
+                        <span class="content">{{behavior.operateDesc}}</span>
+                        <span class="time">{{behavior.createTime | formatTime}}</span>
                     </div>
                 </div>
             </div>
@@ -56,6 +56,7 @@
     </div>
 </template>
 <script>
+import {formatDate} from '@/common/date.js';
 export default {
     data(){
         return {
@@ -74,6 +75,16 @@ export default {
     mounted() {
         let name = '张三';
         document.title = name;
+    },
+    filters: {
+        formatDate(time) {
+            let date = new Date(time);
+            return formatDate(date, 'yyyy-MM-dd hh:mm:ss');
+        },
+        formatTime(time){
+            let date = new Date(time);
+            return formatDate(date,'hh:mm');
+        }
     },
     methods: {
         inputFocus(e) {
@@ -186,6 +197,7 @@ export default {
         }
         .push-list{
             color: #6F6F76;
+            margin-bottom:18px;
             .push-item{
                 margin-top: 15px;
                 padding: 15px;
