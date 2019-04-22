@@ -6,7 +6,7 @@
                 {{item.labelName}}
             </div>
             <div class="tag-block">
-                <div class="tag-item" v-for="(tag, subindex) in item.data" :key="subindex">{{tag}}</div>
+                <div class="tag-item" v-for="(tag, subindex) in item.childList" :key="subindex" :style="{background: tag.backgroundImg}">{{tag.labelName}}</div>
             </div>
         </div>
     </div>
@@ -15,25 +15,14 @@
 export default {
     data() {
         return {
-            tags: [
-                {title: '客户类型', data: ['新客户', '亲戚', '朋友']},
-                {title: '客户级别', data: ['一般客户', '核心客户']},
-                {title: '客户来源', data: ['名片来源', '客户介绍', '朋友']},
-                {title: '关注点', data: ['关注商品', '关注动态', '关注官网','关注商品', '关注动态', '关注官网']},
-                {title: '客户来源', data: ['名片来源', '客户介绍', '朋友']},
-                {title: '客户来源', data: ['名片来源', '客户介绍', '朋友']},
-                {title: '关注点', data: ['关注商品', '关注动态', '关注官网','关注商品', '关注动态', '关注官网']},
-                {title: '客户来源', data: ['名片来源', '客户介绍', '朋友']},
-                {title: '客户来源', data: ['名片来源', '客户介绍', '朋友']},
-                {title: '关注点', data: ['关注商品', '关注动态', '关注官网','关注商品', '关注动态', '关注官网']},
-                {title: '客户来源', data: ['名片来源', '客户介绍', '朋友']},
-            ]
+            tags: []
         }
     },
     created(){
         axios.get(this.$apiConfig.labelLibrary,{}).then(res=>{
             if(res.data.code==0){
                 this.tags = res.data.data;
+                console.log(this.tags)
             }
         });
     }

@@ -38,6 +38,7 @@ const apiConfig = {
     getClientList:`/app/client/list/directory`,//获取通讯录,
     officialRegister:`/official/register`, //公众号注册,
     wxConfig:`/wx/config`, //微信jssdk,
-    labelLibrary:`/app/client/list/label/library`,  //用户标签库
+    labelLibrary:`/app/client/list/label/library`,  //用户标签库,
+    getPersonInfo:`/app/client/get/info/` ,//获取用户信息
 }
 export default apiConfig;
