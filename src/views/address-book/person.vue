@@ -31,7 +31,7 @@
             </div>
             <div class="tag-block">
                 <div class="tag-item" v-for="(label,index) in personInfo.clientLabelVOList" :key="index">大傻逼</div>
-                <div class="tag-item add"><i class="iconfont iconcard_edit_add"></i></div>
+                <div class="tag-item add" @click="$router.push('/address-book/addTags')"><i class="iconfont iconcard_edit_add"></i></div>
             </div>
         </div>
         <div class="person-item">
@@ -59,6 +59,7 @@
 export default {
     data(){
         return {
+            value: true,
             personInfo:{},
         }
     },
