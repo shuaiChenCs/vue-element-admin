@@ -134,3 +134,10 @@ textarea, input{
     border-color: #1ED29A;
     background-color: #1ED29A;
 }
+
+.cube-dialog-content-def .cube-input.cube-input_active::after{
+    border-color: #1ED29A !important;
+}
+.cube-dialog-btn_highlight{
+    color: #1ED29A !important;
+}

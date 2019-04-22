@@ -166,7 +166,7 @@ export default {
                 padding: 8px 15px;
                 width: 100px;
                 background: none;
-                border: 1Px dashed #949494;
+                border: 1px dashed #949494;
                 text-align: center;
                 i{
                     color: #949494;
