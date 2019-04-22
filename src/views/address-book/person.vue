@@ -30,13 +30,8 @@
                 客户标签
             </div>
             <div class="tag-block">
-<<<<<<< HEAD
-                <div class="tag-item" v-for="item in 17" :key="item">大傻逼</div>
-                <div class="tag-item add" @click="$router.push('/address-book/addTags')"><i class="iconfont iconcard_edit_add"></i></div>
-=======
-                <div class="tag-item" v-for="(label,index) in personInfo.clientLabelVOList" :key="item">大傻逼</div>
+                <div class="tag-item" v-for="(label,index) in personInfo.clientLabelVOList" :key="index">大傻逼</div>
                 <div class="tag-item add"><i class="iconfont iconcard_edit_add"></i></div>
->>>>>>> 0e5061f15cb6f4e2b73081b0a0f7bb73a9ce3b0b
             </div>
         </div>
         <div class="person-item">
@@ -62,13 +57,6 @@
 </template>
 <script>
 export default {
-<<<<<<< HEAD
-    data() {
-        return {
-            value: true
-        }
-    },
-=======
     data(){
         return {
             personInfo:{},
@@ -82,7 +70,6 @@ export default {
            }
         });
     },
->>>>>>> 0e5061f15cb6f4e2b73081b0a0f7bb73a9ce3b0b
     mounted() {
         let name = '张三';
         document.title = name;
