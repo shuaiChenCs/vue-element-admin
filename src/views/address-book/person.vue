@@ -69,12 +69,12 @@ export default {
            if(res.data.code==0){
                console.log(res.data.data);
                this.personInfo = res.data.data;
+               document.title = this.personInfo.nikeName;;
            }
         });
     },
     mounted() {
-        let name = '张三';
-        document.title = name;
+
     },
     filters: {
         formatDate(time) {
