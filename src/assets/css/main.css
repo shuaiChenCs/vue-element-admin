@@ -129,3 +129,8 @@ textarea, input{
 .cube-checkbox_checked .cube-checkbox-ui i{
     color: #1ED29A;
 }
+
+.cube-switch .cube-switch-input:checked+.cube-switch-ui{
+    border-color: #1ED29A;
+    background-color: #1ED29A;
+}

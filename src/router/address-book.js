@@ -28,5 +28,11 @@ export default [
 		name: 'addressBookPerson',
 		component: () => import(/* webpackChunkName: "addressBook" */ '../views/address-book/person'),
         meta:{title:'编辑'}
-	}
+	},
+	{
+		path: '/address-book/addTags',
+		name: 'addressBookAddTags',
+		component: () => import(/* webpackChunkName: "addressBook" */ '../views/address-book/add-tags'),
+        meta:{title:'添加标签'}
+	},
 ]

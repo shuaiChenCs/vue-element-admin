@@ -31,7 +31,7 @@
             </div>
             <div class="tag-block">
                 <div class="tag-item" v-for="item in 17" :key="item">大傻逼</div>
-                <div class="tag-item add"><i class="iconfont iconcard_edit_add"></i></div>
+                <div class="tag-item add" @click="$router.push('/address-book/addTags')"><i class="iconfont iconcard_edit_add"></i></div>
             </div>
         </div>
         <div class="person-item">
@@ -40,13 +40,28 @@
                 互动轨迹
             </div>
             <div class="push-box">
-                dsfds
+                <div class="pushornot">
+                    <span>推送到AI雷达和公众号</span>
+                    <cube-switch v-model="value"></cube-switch>
+                </div>
+                <div class="push-list">
+                    2019-04-02
+                    <div class="push-item">
+                        <span class="content">来自置换用户</span>
+                        <span class="time">17:18</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </template>
 <script>
 export default {
+    data() {
+        return {
+            value: true
+        }
+    },
     mounted() {
         let name = '张三';
         document.title = name;
@@ -152,6 +167,32 @@ export default {
     }
     .push-box{
         padding: 10px 15px 0;
+        .pushornot{
+            margin-bottom: 15px;
+            padding-left: 15px;
+            font-size: 16px;
+            align-items: center;
+            display: flex;
+            justify-content: space-between;
+        }
+        .push-list{
+            color: #6F6F76;
+            .push-item{
+                margin-top: 15px;
+                padding: 15px;
+                box-shadow:0px 0px 10px 1px rgba(0, 0, 0, 0.1);
+                border-radius: 5px;
+                display: flex;
+                justify-content: space-between;
+                .content{
+                    font-size: 16px;
+                    color: black;
+                }
+                .time{
+                    color: #6F6F76;
+                }
+            }
+        }
     }
 }
 </style>
