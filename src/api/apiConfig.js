@@ -39,7 +39,11 @@ const apiConfig = {
     officialRegister:`/official/register`, //公众号注册,
     wxConfig:`/wx/config`, //微信jssdk,
     labelLibrary:`/app/client/list/label/group`, //标签组
-    userLabelLibrary:`/app/client/list/label/library`,  //用户标签库,
+    userLabelLibrary:`/app/client/list/label/library/`,  //用户标签库,
     getPersonInfo:`/app/client/get/info/` ,//获取用户信息
+    addUserTag:`/app/client/add/custom/label`, //添加自定义标签
+    editRemark:`/app/client/edit/info`, //编辑客户信息,
+    delLabel:`/app/client/delete/custom/label/`, //删除标签
+    addLabel:`/app/client/add/label` ,//给用户打标签
 }
 export default apiConfig;

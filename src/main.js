@@ -8,6 +8,9 @@ import store from './store'
 import './directives/scroll.js';
 import 'lib-flexible';
 import './lib/common.js';
+import VueClipboard from 'vue-clipboard2'
+Vue.use(VueClipboard);
+
 Vue.config.productionTip = false
 import './assets/css/main.css'
 import './assets/css/my-mint.css';

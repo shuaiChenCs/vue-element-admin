@@ -55,13 +55,13 @@ export default {
               value: 1,
               icon: true
             },
-            {
-              name: "人脉广场",
-              headImg:
-                "https://img.hrsugaphre.com/userHead/FA0C670A2C714C1CB4B1FDA684CCEF94.png",
-              value: 2,
-              icon: true
-            }
+            // {
+            //   name: "人脉广场",
+            //   headImg:
+            //     "https://img.hrsugaphre.com/userHead/FA0C670A2C714C1CB4B1FDA684CCEF94.png",
+            //   value: 2,
+            //   icon: true
+            // }
           ]
         }
       ],

@@ -8,13 +8,13 @@
       <div class="tag-block">
         <div
           class="tag-item"
-          :style="{background: selectTags[item.labelName] &&  (selectTags[item.labelName] == tag.labelName || selectTags[item.labelName].indexOf(tag.labelName) != -1) ? tag.backgroundImg : ''}"
-          @click="select(item.labelName, tag)"
+          :style="{background: tag.isCheck   ? tag.backgroundImg : ''}"
+          @click="select(item.labelName, tag, item.childList)"
           v-for="(tag, subindex) in item.childList"
           :key="subindex"
         >
           {{tag.labelName}}
-          <i class="iconfont iconpopup_close" v-if="item.labelName == '自定义标签'"></i>
+          <i class="iconfont iconpopup_close" v-if="item.labelName == '自定义标签'" @click.self.stop="del(tag.id,subindex,item.childList)"></i>
         </div>
         <div class="tag-item add" @click="addTag(item.labelName)" v-if="item.labelName == '自定义标签'">
           <i class="iconfont iconcard_edit_add"></i>
@@ -29,14 +29,56 @@
 export default {
   data() {
     return {
+        id :0,
       tags: [],
       selectTags: {},
       dialog: null
     };
   },
   methods: {
-    save() {},
+    save() {
+        let lables = [];
+        this.tags.forEach(item => {
+            item.childList.forEach(subitem => {
+                if(subitem.isCheck){
+                    lables.push(subitem.id)
+                }
+            })
+        });
+        let params = {
+            id:this.id,
+            labelId:lables
+        }
+        axios.post(this.$apiConfig.addLabel,params).then(res=>{
+           if(res.data.code==0){
+               this.$router.go(-1);
+           }
+        });
+    },
+      del(id,subindex,childList){
+          let vm = this;
+          this.$createDialog({
+              type: 'confirm',
+              content: '确认是否删除',
+              onConfirm(e){
+                  axios.post(vm.$apiConfig.delLabel+'/'+id,{}).then((res)=>{
+                      if(res.data.code==0) {
+                          childList.splice(subindex,1)
+                          vm.$createToast({
+                              time: 100
+                          }).show();
+                      }else{
+                          console.log(1)
+                          this.$createDialog({
+                              content: res.data.message
+                          }).show()
+                      }
+                  });
+              }
+          }).show()
+      },
     addTag(name) {
+        let vm = this;
       this.dialog = this.$createDialog({
         type: "prompt",
         title: "编辑自定义标签",
@@ -45,13 +87,26 @@ export default {
             ref: "hiddenInput",
           autofocus: true,  
           value: "",
-          placeholder: "请输入"
+            maxlength:10,
+          placeholder: "请输入",
+
         },
         onConfirm: (e, promptValue) => {
-          this.tags[this.tags.length -1].childList.push({
-              labelName: promptValue,
-              backgroundImg: '#EFF7FF'
-          })
+            axios.post(vm.$apiConfig.addUserTag,{
+                "backgroundImg": "#EFF7FF",
+                "labelName": promptValue,
+                "parentId":27
+            }).then(res=>{
+                if(res.data.code==0){
+                    vm.tags[vm.tags.length -1].childList.push({
+                        id:res.data.data.id,
+                        labelName: promptValue,
+                        backgroundImg: '#EFF7FF',
+                        isCheck: false
+                    })
+                }
+            });
+
             this.dialog.promptValue = '';
         },
         onClose: () => {
@@ -62,42 +117,49 @@ export default {
         }
       }).show();
     },
-    select(name, tag) {
+    select(name, tag, childs) {
         if(name == '自定义标签') {
             if(!this.selectTags[name]) {
                 this.$set(this.selectTags, name, []);
-                this.selectTags[name].push(tag.labelName);
+                this.selectTags[name].push(tag.id);
+                tag.isCheck = true;
             }else{
                 let i = this.selectTags[name].findIndex(item => {
-                    return item == tag.labelName;
+                    return item == tag.id;
                 });
                 if(i != -1) {
+                    tag.isCheck = false;
                     this.selectTags[name].splice(i, 1);
                 }else{
-                    this.selectTags[name].push(tag.labelName);
+                    tag.isCheck = true;
+                    this.selectTags[name].push(tag.id);
                 }
             }
         }else{
-            if(this.selectTags[name] == tag.labelName) {
+            childs.map(item => item.isCheck = false);
+            if(this.selectTags[name] == tag.id) {
+                tag.isCheck = false;
                 this.$delete(this.selectTags, name);
             }else{
-                this.$set(this.selectTags, name, tag.labelName);
+                tag.isCheck = true;
+                this.$set(this.selectTags, name, tag.id);
             }
         }
-      console.log(this.selectTags);
     }
   },
   created() {
-    axios.get(this.$apiConfig.labelLibrary, {}).then(res => {
-      if (res.data.code == 0) {
-        this.tags = res.data.data;
-      }
-    });
+      this.id = this.$route.params.id
+      axios.get(this.$apiConfig.userLabelLibrary+this.id,{}).then(res=>{
+          if(res.data.code==0){
+              this.tags = res.data.data;
+          }
+      });
   }
 };
 </script>
 <style lang="less" scoped>
 .tags {
+    padding-bottom: 80px;
   .tag-block {
     background: white;
     display: flex;

@@ -6,7 +6,7 @@
                 {{item.labelName}}
             </div>
             <div class="tag-block">
-                <div class="tag-item" v-for="(tag, subindex) in item.childList" :key="subindex" :style="{background: tag.backgroundImg}">{{tag.labelName}}</div>
+                <div class="tag-item" v-for="(tag, subindex) in item.childClientLabelGroupVO" :key="subindex" :style="{background: tag.backgroundImg}">{{tag.labelName}}({{tag.amount}})</div>
             </div>
         </div>
     </div>
@@ -19,7 +19,7 @@ export default {
         }
     },
     created(){
-        axios.get(this.$apiConfig.userLabelLibrary,{}).then(res=>{
+        axios.get(this.$apiConfig.labelLibrary,{}).then(res=>{
             if(res.data.code==0){
                 this.tags = res.data.data;
                 console.log(this.tags)

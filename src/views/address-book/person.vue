@@ -12,7 +12,7 @@
             </div>
             <div class="copy">
                 <button>留言</button>
-                <button>复制昵称</button>
+                <button  v-clipboard:success="onCopy" v-clipboard:copy="personInfo.nikeName" >复制昵称</button>
             </div>
         </div>
         <div class="person-item">
@@ -21,7 +21,7 @@
                 备注名称
             </div>
             <div class="setin">
-                <input type="text" v-model="personInfo.remark" placeholder="点击添加备注名" @focus="inputFocus($event)" @blur="inputBlur($event)">
+                <input type="text" v-model="personInfo.remark" placeholder="点击添加备注名" maxlength="10" @focus="inputFocus($event)" @blur="inputBlur($event)">
             </div>
         </div>
         <div class="person-item">
@@ -30,8 +30,8 @@
                 客户标签
             </div>
             <div class="tag-block">
-                <div class="tag-item" v-for="(label,index) in personInfo.clientLabelVOList" :key="index">大傻逼</div>
-                <div class="tag-item add" @click="$router.push('/address-book/addTags')"><i class="iconfont iconcard_edit_add"></i></div>
+                <div class="tag-item" v-for="(label,index) in personInfo.clientLabelVOList" :key="index">{{label.labelName}}</div>
+                <div class="tag-item add" @click="$router.push('/address-book/addTags/'+personInfo.id)"><i class="iconfont iconcard_edit_add"></i></div>
             </div>
         </div>
         <div class="person-item">
@@ -57,17 +57,20 @@
 </template>
 <script>
 import {formatDate} from '@/common/date.js';
+import Clipboard from 'clipboard';
+
 export default {
     data(){
         return {
+            id:0,
             value: true,
             personInfo:{},
         }
     },
     created(){
-        axios.get(this.$apiConfig.getPersonInfo+this.$route.params.id,{}).then(res=>{
+        this.id = this.$route.params.id;
+        axios.get(this.$apiConfig.getPersonInfo+this.id,{}).then(res=>{
            if(res.data.code==0){
-               console.log(res.data.data);
                this.personInfo = res.data.data;
                document.title = this.personInfo.nikeName;;
            }
@@ -87,11 +90,18 @@ export default {
         }
     },
     methods: {
+        onCopy() {
+                alert('复制成功');
+        },
         inputFocus(e) {
             e.target.setAttribute('placeholder', '备注名称最长16个字')
         },
         inputBlur(e) {
             e.target.setAttribute('placeholder', '点击添加备注名')
+            axios.post(this.$apiConfig.editRemark,{
+                id:this.id,
+                remark:this.personInfo.remark
+            }).then();
         }
     }
 }

@@ -30,7 +30,7 @@ export default [
         meta:{title:'编辑'}
 	},
 	{
-		path: '/address-book/addTags',
+		path: '/address-book/addTags/:id',
 		name: 'addressBookAddTags',
 		component: () => import(/* webpackChunkName: "addressBook" */ '../views/address-book/add-tags'),
         meta:{title:'添加标签'}
