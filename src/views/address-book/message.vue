@@ -29,7 +29,7 @@ export default {
             // border-bottom: none;
         }
         padding: 0 15px;
-        height: 75px;
+        height: 70px;
         border-bottom: 1Px solid rgba(237, 238, 241, 1);
         display: flex;
         align-items: center;
@@ -47,8 +47,16 @@ export default {
             justify-content: space-between;
             margin-bottom: 10px;
             .name{
-                font-size: 20px;
+                font-size: 15px;
             }
+            .time{
+                font-size: 11px;
+                color: #97A0B1;
+            }
+        }
+        .bottom{
+            font-size: 12px;
+            color: #97A0B1;
         }
     }
 }

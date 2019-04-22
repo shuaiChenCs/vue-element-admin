@@ -17,7 +17,8 @@
           >
             <div class="custom-item">
               <img :src="item.headImg" alt>
-              {{item.nikeName || item.name}}
+              <span>{{item.nikeName || item.name}}</span>
+              <i v-if="item.icon" class="iconfont iconlist_more"></i>
             </div>
           </cube-index-list-item>
         </cube-index-list-group>
@@ -37,25 +38,29 @@ export default {
               name: "客户留言",
               headImg:
                 "https://img.hrsugaphre.com/userHead/FA0C670A2C714C1CB4B1FDA684CCEF94.png",
-              value: 1
+              value: 1,
+              icon: true
             },
             {
               name: "群发消息",
               headImg:
                 "https://img.hrsugaphre.com/userHead/FA0C670A2C714C1CB4B1FDA684CCEF94.png",
-              value: 2
+              value: 2,
+              icon: true
             },
             {
               name: "标签",
               headImg:
                 "https://img.hrsugaphre.com/userHead/FA0C670A2C714C1CB4B1FDA684CCEF94.png",
-              value: 1
+              value: 1,
+              icon: true
             },
             {
               name: "人脉广场",
               headImg:
                 "https://img.hrsugaphre.com/userHead/FA0C670A2C714C1CB4B1FDA684CCEF94.png",
-              value: 2
+              value: 2,
+              icon: true
             }
           ]
         }
@@ -85,6 +90,12 @@ export default {
       if (item.name == "群发消息") {
         this.$router.push("/address-book/group-send");
       }
+      if (item.name == "群发消息") {
+        this.$router.push("/address-book/group-send");
+      }
+      if(item.id) {
+        this.$router.push("/address-book/person/" + item.id);
+      }
       // this.listDirectiony.splice(1,this.listDirectiony.length);
     }
   }
@@ -96,13 +107,13 @@ export default {
   .address-block {
     // margin-top: -20px;
     height: 100%;
-    padding-bottom: 48px;
+    padding-bottom: 64px;
   }
   .search {
     transition: all 1s ease;
     z-index: 5;
     padding: 15px;
-    background: #f7f7f7;
+    background: white;
     height: 62px;
     display: flex;
     align-items: center;
@@ -121,7 +132,7 @@ export default {
     input {
       width: 100%;
       height: 32px;
-      background: white;
+      background: #f7f7f7;
       border-radius: 16px;
       padding-left: 30px;
       font-size: 13px;

@@ -22,5 +22,11 @@ export default [
 		name: 'addressBookGroup',
 		component: () => import(/* webpackChunkName: "addressBook" */ '../views/address-book/group-send'),
         meta:{title:'群发消息'}
+	},
+	{
+		path: '/address-book/person/:id',
+		name: 'addressBookPerson',
+		component: () => import(/* webpackChunkName: "addressBook" */ '../views/address-book/person'),
+        meta:{title:'编辑'}
 	}
 ]
