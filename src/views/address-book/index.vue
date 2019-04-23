@@ -36,15 +36,13 @@ export default {
                 items: [
                     {
                         name: "客户留言",
-                        headImg:
-                            "https://img.hrsugaphre.com/userHead/FA0C670A2C714C1CB4B1FDA684CCEF94.png",
+                        headImg: `${this.$imageUrl}/contacts_source@3x.png`,
                         value: 1,
                         icon: true
                     },
                     {
                         name: "群发消息",
-                        headImg:
-                            "https://img.hrsugaphre.com/userHead/FA0C670A2C714C1CB4B1FDA684CCEF94.png",
+                        headImg:`${this.$imageUrl}/contacts_message@3x.png`,
                         value: 2,
                         icon: true
                     },

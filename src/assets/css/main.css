@@ -97,6 +97,11 @@ textarea, input{
 .custom-item span {
     flex: 1;
 }
+.custom-item .time {
+    text-align: right;
+    color:rgba(151,160,177,1);
+    font-size: 12px;
+}
 .check-item {
     font-size: 15px;
     background: white;
