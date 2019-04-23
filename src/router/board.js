@@ -34,5 +34,17 @@ export default [
 		name: 'boardLastscview',
 		component: () => import(/* webpackChunkName: "addressBook" */ '../views/board/last-scview'),
 		meta:{title:'昨日浏览'}
+	},
+	{
+		path: '/board/share-count',
+		name: 'boardShareCount',
+		component: () => import(/* webpackChunkName: "addressBook" */ '../views/board/share-count'),
+		meta:{title:'转发次数'}
+	},
+	{
+		path: '/board/new-friend',
+		name: 'boardNewFriend',
+		component: () => import(/* webpackChunkName: "addressBook" */ '../views/board/new-friend'),
+		meta:{title:'新增客户'}
 	}
 ]

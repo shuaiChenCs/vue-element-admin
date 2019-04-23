@@ -3,7 +3,7 @@
     <div class="board-header">
       <div class="header-back">
         <div class="header">
-          <div class="top">
+          <div class="top" @click="$router.push('/board/new-friend')">
             <span class="num">13</span>
             <span class="title">新增客户</span>
           </div>
@@ -12,7 +12,7 @@
               <span class="num">45</span>
               <span class="title">浏览量</span>
             </div>
-            <div class="right">
+            <div class="right" @click="$router.push('/board/share-count')">
               <span class="num">3</span>
               <span class="title">转发次数</span>
             </div>
@@ -56,6 +56,7 @@
         <i class="iconfont iconcard_pause"></i>
         互动次数
       </div>
+      <div id="container1" class="charts-box"></div>
     </div>
   </div>
 </template>
@@ -63,64 +64,168 @@
 let Highcharts = require("highcharts");
 export default {
   mounted() {
-      var chart = Highcharts.chart('container', {
-    chart: {
-        type: 'spline'
-    },
-    title: {
-        text: ''
-    },
-      colors: ["#1ED29A", "#62C3FF"],
-    xAxis: {
+    this.loadmap1();
+    this.loadmap2();
+  },
+  methods: {
+    loadmap1() {
+      var chart = Highcharts.chart("container", {
+        chart: {
+          type: "spline"
+        },
         title: {
           text: ""
         },
-        labels: {
-          style: {
-            fontSize: "30px",
-            whiteSpace: "nowrap"
-          }
-        },
-        categories: ['04-03', '04-10', '04-13', '04-15', '04-17', '04-18', '04-19']
-      },
-    yAxis: {
-        title: {
-          text: ""
-        },
-        labels: {
-          style: {
-            fontSize: "30px"
-          }
-        },
-        step: 1,
-        tickPixelInterval: 100
-    },
-    tooltip: {
-        crosshairs: true,
-        shared: true
-    },
-    plotOptions: {
-        spline: {
-            marker: {
-                radius: 0,
-                lineColor: '#666666',
-                lineWidth: 1
+        colors: ["#1ED29A", "#62C3FF"],
+        xAxis: {
+          title: {
+            text: ""
+          },
+          labels: {
+            style: {
+              fontSize: "30px",
+              whiteSpace: "nowrap"
             }
-        }
+          },
+          categories: [
+            "04-03",
+            "04-10",
+            "04-13",
+            "04-15",
+            "04-17",
+            "04-18",
+            "04-19"
+          ],
+          crosshair: true
+        },
+        legend: {
+          enabled: false
+        },
+        yAxis: {
+          title: {
+            text: ""
+          },
+          labels: {
+            style: {
+              fontSize: "30px"
+            }
+          },
+          step: 1,
+          tickPixelInterval: 100
+        },
+        tooltip: {
+          style: {
+            fontSize: ".3rem",
+            whiteSpace: "nowrap"
+          },
+          headerFormat: "<div>{point.key}</div>",
+          pointFormat:
+            '<span style="color:{point.color}">\u25CF</span> {series.name}: <span>{point.y}</span><br/>',
+          shared: true,
+          useHTML: true
+        },
+        plotOptions: {
+          spline: {
+            marker: {
+              radius: 0,
+              lineColor: "#666666",
+              lineWidth: 1
+            }
+          }
+        },
+        credits: {
+          enabled: false
+        },
+        series: [
+          {
+            name: "浏览量",
+            data: [12, 22, 33, 64, 78, 34, 131]
+          },
+          {
+            name: "客户量",
+            data: [2, 3, 4, 1, 16, 41, 32]
+          }
+        ]
+      });
     },
-    credits: {
-        enabled: false
-    },
-    series: [{
-        name: '浏览量',
-        data: [12, 22, 33, 64, 445, 162, 237]
-    }, {
-        name: '客户量',
-        data: [2, 3, 4, 1, 16,41, 32]
-    }]
-});
-
-    
+    loadmap2() {
+      var chart = Highcharts.chart("container1", {
+        chart: {
+          type: "bar"
+        },
+        title: {
+          text: ""
+        },
+        credits: {
+          enabled: false
+        },
+        xAxis: {
+          categories: [
+            "复制地址",
+            "留言",
+            "复制邮箱",
+            "保存手机",
+            "复制微信",
+            "拨打号码",
+            "点赞",
+            "转发",
+            "浏览"
+          ],
+          title: {
+            text: null
+          },
+          labels: {
+            style: {
+              fontSize: "30px",
+              whiteSpace: "nowrap"
+            }
+          }
+        },
+        yAxis: {
+          min: 0,
+          title: {
+            text: ""
+          },
+          labels: {
+            style: {
+              fontSize: "30px",
+              whiteSpace: "nowrap"
+            }
+          }
+        },
+        tooltip: {
+          enabled: false
+        },
+        plotOptions: {
+          bar: {
+            dataLabels: {
+              enabled: true,
+              allowOverlap: true // 允许数据标签重叠
+            }
+          }
+        },
+        legend: {
+          enabled: false
+        },
+        series: [
+          {
+            data: [107, 31, 635, 203, 2, 107, 31, 635, 203],
+            dataLabels: {
+              enabled: true,
+              align: "left",
+              style: {
+                fontWeight: "bold",
+                fontSize: "30px"
+              },
+              x: 3,
+              verticalAlign: "middle",
+              overflow: true,
+              crop: false
+            }
+          }
+        ]
+      });
+    }
   }
 };
 </script>
