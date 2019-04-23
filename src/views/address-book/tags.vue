@@ -6,7 +6,7 @@
                 {{item.labelName}}
             </div>
             <div class="tag-block">
-                <div class="tag-item" v-for="(tag, subindex) in item.childClientLabelGroupVO" :key="subindex" :style="{background: tag.backgroundImg}">{{tag.labelName}}({{tag.amount}})</div>
+                <div class="tag-item" @click="$router.push('/address-book/tag-type/' + tag.id)" v-for="(tag, subindex) in item.childClientLabelGroupVO" :key="subindex" :style="{background: tag.backgroundImg}">{{tag.labelName}}({{tag.amount}})</div>
             </div>
         </div>
     </div>

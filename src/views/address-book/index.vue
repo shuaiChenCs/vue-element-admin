@@ -2,8 +2,10 @@
   <div class="address-book">
     <div class="search" :class="{isSearch: searching}">
       <i class="cubeic-search"></i>
-      <input type="text" placeholder="搜索" v-model="name" @focus="searchFocus" @input="search">
-      <span v-if="showClean" @click="clean">取消</span>
+      <!-- <input type="text" placeholder="搜索" v-model="name" @focus="searchFocus" @input="search">
+      <span v-if="showClean" @click="clean">取消</span> -->
+      <input type="text" placeholder="搜索" v-model="name" @focus="searching = true">
+      <span v-if="searching" @click="searching =false">取消</span>
     </div>
     <div class="address-block" v-if="!searching">
       <cube-index-list :data="listDirectiony" :speed="2">
@@ -48,8 +50,7 @@ export default {
                     },
                     {
                         name: "标签",
-                        headImg:
-                            "https://img.hrsugaphre.com/userHead/FA0C670A2C714C1CB4B1FDA684CCEF94.png",
+                        headImg:`${this.$imageUrl}/contacts_tag@3x.png`,
                         value: 1,
                         icon: true
                     },
@@ -71,6 +72,11 @@ export default {
   },
   created() {
     this.load();
+  },
+  watch: {
+    name(val) {
+      this.load();
+    }
   },
   methods: {
       clean(){

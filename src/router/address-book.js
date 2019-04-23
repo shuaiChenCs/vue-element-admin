@@ -35,4 +35,10 @@ export default [
 		component: () => import(/* webpackChunkName: "addressBook" */ '../views/address-book/add-tags'),
         meta:{title:'添加标签'}
 	},
+	{
+		path: '/address-book/tag-type/:id',
+		name: 'addressBookTagType',
+		component: () => import(/* webpackChunkName: "addressBook" */ '../views/address-book/tag-type'),
+        meta:{title:'标签成员'}
+	},
 ]
