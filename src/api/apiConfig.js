@@ -45,5 +45,6 @@ const apiConfig = {
     editRemark:`/app/client/edit/info`, //编辑客户信息,
     delLabel:`/app/client/delete/custom/label/`, //删除标签
     addLabel:`/app/client/add/label` ,//给用户打标签
+    labelList:`/app/client/list/client/byLabel/`,//获取标签下的用户组
 }
 export default apiConfig;
