@@ -1,32 +1,52 @@
 <template>
+    <div class="sp-scroll" v-scroll="loadmore">
     <div class="last-add">
         <div class="ai-list">
             <div class="block-item-title">
                 <i class="iconfont iconcard_pause"></i>
-                昨日新增客户（共1位）
+                昨日新增客户（共{{page.total}}位）
             </div>
-            <div class="ai-item" v-for="i in 2" :key="i">
-                <div class="ai-card">
-                    <img src="https://img.hrsugaphre.com/userHead/FA0C670A2C714C1CB4B1FDA684CCEF94.png" alt>
-                    <h1>陈雨涵</h1>
-                    <p>正在看你的名片，快抓住时机，主动出击</p>
-                </div>
-            </div>
-            <div class="ai-item" v-for="i in 2" :key="i">
-                <div class="ai-card">
-                    <img src="https://img.hrsugaphre.com/userHead/FA0C670A2C714C1CB4B1FDA684CCEF94.png" alt>
-                    <h1>陈雨涵</h1>
-                    <p>
-                        查看了商品
-                        <span>[北欧风转椅]</span>
-                    </p>
+            <div class="ai-item" v-for="(item,index) in client" :key="index">
+                <div class="ai-card" @click="$router.push('/address-book/person/'+item.id)">
+                    <img :src="item.headImg" alt>
+                    <h1>{{item.nikeName}}</h1>
+                    <p>看过你的名片，快抓住时机，主动出击</p>
                 </div>
             </div>
         </div>
     </div>
+    </div>
 </template>
 <script>
 export default {
+    data(){
+        return{
+            current:1,
+            size:6,
+            page:{},
+            client:[]
+        }
+    },
+    created(){
+        this.loadClient();
+    },
+    methods:{
+        loadmore(){
+            this.current++;
+            this.loadClient();
+        },
+        loadClient(){
+            axios.get(this.$apiConfig.yesterdayNewClient+"?current="+this.current+"&size="+this.size,{}).then(res=>{
+                if(res.data.code==0){
+                    this.page = res.data.data;
+                    this.client = this.client.concat(this.page.records);
+                    // if(this.page.records.length==0){
+                    //     this.current--;
+                    // }
+                }
+            })
+        }
+    }
 }
 </script>
 <style lang="less" scoped>

@@ -4,17 +4,17 @@
       <div class="header-back">
         <div class="header">
           <div class="top" @click="$router.push('/board/new-friend')">
-            <span class="num">13</span>
+            <span class="num">{{vo.users}}</span>
             <span class="title">新增客户</span>
           </div>
           <div class="bottom">
             <div class="left" @click="$router.push('/board/scview')">
-              <span class="num">45</span>
-              <span class="title">浏览量</span>
+              <span class="num">{{vo.browse}}</span>
+              <span class="title">昨日浏览量</span>
             </div>
             <div class="right" @click="$router.push('/board/share-count')">
-              <span class="num">3</span>
-              <span class="title">转发次数</span>
+              <span class="num">{{vo.forward}}</span>
+              <span class="title">昨日转发次数</span>
             </div>
           </div>
         </div>
@@ -25,22 +25,22 @@
             <i class="iconfont iconcard_pause"></i>
             最近浏览
           </div>
-          <div class="more">
+          <div class="more" @click="$router.push('/board/lately-browse')">
             查看全部
             <i class="iconfont iconlist_more"></i>
           </div>
         </div>
-        <div class="scview-list">
-          <div class="custom-item">
-            <img src="https://img.hrsugaphre.com/userHead/FA0C670A2C714C1CB4B1FDA684CCEF94.png" alt>
-            <span>李海燕</span>
-            <span class="time">2019.04.29 12:09:01</span>
+        <div class="scview-list" v-for="(user,index) in browseUser" :key="index">
+          <div class="custom-item" @click="$router.push('/address-book/person/'+user.directoryId)">
+            <img :src="user.userHeadImg" alt>
+            <span>{{user.userName}}</span>
+            <span class="time">{{user.createTime | formatDate}}</span>
           </div>
-          <div class="custom-item">
-            <img src="https://img.hrsugaphre.com/userHead/FA0C670A2C714C1CB4B1FDA684CCEF94.png" alt>
-            <span>李海燕</span>
-            <span class="time">2019.04.29 12:09:01</span>
-          </div>
+          <!--<div class="custom-item">-->
+            <!--<img src="https://img.hrsugaphre.com/userHead/FA0C670A2C714C1CB4B1FDA684CCEF94.png" alt>-->
+            <!--<span>李海燕</span>-->
+            <!--<span class="time">2019.04.29 12:09:01</span>-->
+          <!--</div>-->
         </div>
       </div>
     </div>
@@ -56,20 +56,60 @@
         <i class="iconfont iconcard_pause"></i>
         互动次数
       </div>
-      <div id="container1" class="charts-box"></div>
+      <div id="container1" class="charts-box1"></div>
     </div>
   </div>
 </template>
 <script>
+import {formatDate} from '@/common/date.js';
 let Highcharts = require("highcharts");
 export default {
+    data(){
+        return {
+            current:1,
+            size:3,
+            vo:{},
+            browseUser:[],
+        }
+    },
+    created(){
+        axios.get(this.$apiConfig.yesterdayBrowseCount,{}).then(res=>{
+            if(res.data.code==0){
+                this.vo = res.data.data;
+            }
+        });
+        axios.post(this.$apiConfig.latelyBrowse,{
+            current:this.current,
+            size:this.size
+        }).then(res=>{
+            if(res.data.code==0){
+                this.browseUser = res.data.data.records;
+            }
+        })
+        axios.get(this.$apiConfig.latelyFlow,{}).then(res=>{
+           if(res.data.code==0){
+               this.loadmap1(res.data.data)
+           }
+        });
+        axios.get(this.$apiConfig.browseGroup,{}).then(res=>{
+           if(res.data.code==0){
+               this.loadmap2(res.data.data);
+           }
+        });
+    },
   mounted() {
-    this.loadmap1();
-    this.loadmap2();
+    // this.loadmap1();
+    // this.loadmap2();
   },
+    filters: {
+        formatDate(time) {
+            var date = new Date(time);
+            return formatDate(date, 'yyyy-MM-dd hh:mm:ss');
+        }
+    },
   methods: {
-    loadmap1() {
-      var chart = Highcharts.chart("container", {
+    loadmap1(lately) {
+      Highcharts.chart("container", {
         chart: {
           type: "spline"
         },
@@ -87,15 +127,7 @@ export default {
               whiteSpace: "nowrap"
             }
           },
-          categories: [
-            "04-03",
-            "04-10",
-            "04-13",
-            "04-15",
-            "04-17",
-            "04-18",
-            "04-19"
-          ],
+          categories: lately.dateList,
           crosshair: true
         },
         legend: {
@@ -139,16 +171,16 @@ export default {
         series: [
           {
             name: "浏览量",
-            data: [12, 22, 33, 64, 78, 34, 131]
+            data: lately.browseList
           },
           {
             name: "客户量",
-            data: [2, 3, 4, 1, 16, 41, 32]
+            data: lately.userList
           }
         ]
       });
     },
-    loadmap2() {
+    loadmap2(data) {
       var chart = Highcharts.chart("container1", {
         chart: {
           type: "bar"
@@ -160,17 +192,18 @@ export default {
           enabled: false
         },
         xAxis: {
-          categories: [
-            "复制地址",
-            "留言",
-            "复制邮箱",
-            "保存手机",
-            "复制微信",
-            "拨打号码",
-            "点赞",
-            "转发",
-            "浏览"
-          ],
+          categories: data.map(e=>{return e.name}),
+          //     [
+          //   "复制地址",
+          //   "留言",
+          //   "复制邮箱",
+          //   "保存手机",
+          //   "复制微信",
+          //   "拨打号码",
+          //   "点赞",
+          //   "转发",
+          //   "浏览"
+          // ],
           title: {
             text: null
           },
@@ -209,7 +242,7 @@ export default {
         },
         series: [
           {
-            data: [107, 31, 635, 203, 2, 107, 31, 635, 203],
+            data: data.map(e=>{return e.count}),//[107, 31, 635, 203, 2, 107, 31, 635, 203],
             dataLabels: {
               enabled: true,
               align: "left",
@@ -241,6 +274,10 @@ export default {
   }
   .charts-box {
     height: 542px/2;
+    padding: 15px;
+  }
+  .charts-box1 {
+    height: 542px;
     padding: 15px;
   }
   .num {

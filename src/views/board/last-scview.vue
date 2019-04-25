@@ -1,45 +1,81 @@
 <template>
+  <div class="sp-scroll" v-scroll="loadmore">
   <div class="last-scview">
       <div class="charts-box">
           <div class="lenged">
-              <div><span style="background: rgb(67, 67, 72);"></span>其他</div>
-              <div><span style="background: rgb(124, 181, 236);"></span>名片</div>
+              <div  v-for="(item,index) in data" :key="index"><span :style="{background: item.color}"></span>{{item.name}}</div>
+              <!--<div><span style="background: bla"></span>名片</div>-->
           </div>
           <div class="charts" id="container"></div>
       </div>
     <div class="ai-list">
       <div class="block-item-title">
         <i class="iconfont iconcard_pause"></i>
-        昨日新增客户（共1位）
+        昨日浏览客户（共{{page.total}}位）
       </div>
-      <div class="ai-item">
-        <div class="ai-card">
-          <img src="https://img.hrsugaphre.com/userHead/FA0C670A2C714C1CB4B1FDA684CCEF94.png" alt>
-          <h1>陈雨涵</h1>
-          <p>正在看你的名片，快抓住时机，主动出击</p>
-        </div>
-      </div>
-      <div class="ai-item" v-for="i in 2" :key="i">
-        <div class="ai-card">
-          <img src="https://img.hrsugaphre.com/userHead/FA0C670A2C714C1CB4B1FDA684CCEF94.png" alt>
-          <h1>陈雨涵</h1>
+      <!--<div class="ai-item">-->
+        <!--<div class="ai-card">-->
+          <!--<img src="https://img.hrsugaphre.com/userHead/FA0C670A2C714C1CB4B1FDA684CCEF94.png" alt>-->
+          <!--<h1>陈雨涵</h1>-->
+          <!--<p>正在看你的名片，快抓住时机，主动出击</p>-->
+        <!--</div>-->
+      <!--</div>-->
+      <div class="ai-item" v-for="(user,index) in browseUser" :key="index">
+        <div class="ai-card" @click="$router.push('/address-book/person/'+user.directoryId)">
+          <img :src="user.userHeadImg" alt>
+          <h1>{{user.userName}}</h1>
           <p>
-            查看了商品
-            <span>[北欧风转椅]</span>
+            看了你的名片，快抓住时机，主动出击
+            <!--<span>[北欧风转椅]</span>-->
           </p>
         </div>
       </div>
+    </div>
     </div>
   </div>
 </template>
 <script>
 let Highcharts = require("highcharts");
 export default {
-  mounted() {
-    this.loadmap1();
-  },
+    data(){
+        return{
+            current:1,
+            size:6,
+            data:[],
+            page:{},
+            browseUser:[],
+            colors:['red','blue','yellow','black']
+        }
+    },
+    created(){
+        axios.get(this.$apiConfig.yesterdayBrowseGroup,{}).then(res=>{
+            if(res.data.code==0){
+                this.data = res.data.data;
+                if(this.data.length>0){
+                    this.data.forEach((e,i)=>{
+                        this.$set(e,'color',this.colors[i]);
+                    })
+                    console.log(this.data);
+                }
+                this.loadmap1(this.data);
+            }
+        });
+       this.loadBrowseList();
+    },
   methods: {
-    loadmap1() {
+      loadmore(){
+        this.current++;
+        this.loadBrowseList();
+      },
+      loadBrowseList(){
+          axios.get(this.$apiConfig.yesterdayBrowseUser+"?current="+this.current+"&size="+this.size,{}).then(res=>{
+              if(res.data.code==0){
+                  this.page = res.data.data;
+                  this.browseUser = this.browseUser.concat(this.page.records);
+              }
+          })
+      },
+    loadmap1(data) {
       Highcharts.chart("container", {
         chart: {
           plotBackgroundColor: null,
@@ -53,6 +89,7 @@ export default {
         tooltip: {
           pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>"
         },
+          //colors: this.colors,
         plotOptions: {
           pie: {
             allowPointSelect: true,
@@ -80,18 +117,7 @@ export default {
           {
             name: "Brands",
             colorByPoint: true,
-            data: [
-              {
-                name: "其他",
-                y: 61.41,
-                sliced: true,
-                selected: true
-              },
-              {
-                name: "名片",
-                y: 11.84
-              }
-            ]
+            data:data
           }
         ]
       });

@@ -3,16 +3,16 @@
     <div class="board-header">
       <div class="header-back">
         <div class="top" @click="$router.push('/board/last-add')">
-          <span class="num">13</span>
+          <span class="num">{{vo.users}}</span>
           <span class="title">昨日新增</span>
         </div>
         <div class="bottom">
           <div class="left" @click="$router.push('/board/last-scview')">
-            <span class="num">45</span>
+            <span class="num">{{vo.browse}}</span>
             <span class="title">昨日浏览</span>
           </div>
           <div class="right" @click="$router.push('/address-book')">
-            <span class="num">3</span>
+            <span class="num">{{vo.count}}</span>
             <span class="title">累计客户</span>
           </div>
         </div>
@@ -49,6 +49,23 @@
     </div>
   </div>
 </template>
+<script>
+    export default {
+        data(){
+            return {
+              vo:{}
+            }
+        },
+        created(){
+         axios.get(this.$apiConfig.yesterdayBrowseCount,{}).then(res=>{
+            if(res.data.code==0){
+                console.log(res.data.data)
+                this.vo = res.data.data;
+            }
+         });
+        }
+    }
+</script>
 
 <style lang="less" scoped>
 .board {

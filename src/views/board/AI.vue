@@ -1,20 +1,17 @@
 <template>
     <div class="ai">
         <div class="ai-list">
-            <div class="ai-item" v-for="i in 10" :key="i">
+            <div class="ai-item" v-for="(item,index) in behaviorList" :key="item.createTime">
                 <div class="time">
-                    2019.04.02  14:00
+                   {{item.createTime | formatDate}}
                 </div>
-                <div class="ai-card">
-                    <img src="https://img.hrsugaphre.com/userHead/FA0C670A2C714C1CB4B1FDA684CCEF94.png" alt>
-                    <h1>陈雨涵</h1>
-                    <p>正在看你的名片，快抓住时机，主动出击</p>
+                <div class="ai-card" @click="$router.push('/address-book/person/'+item.directoryId)">
+                    <img :src="item.userHeadImg" alt>
+                    <h1>{{item.userName}}</h1>
+                    <p>{{item.operateDesc}}</p>
                     <div class="tags">
-                        <div class="tag-item">彬彬有礼</div>
-                        <div class="tag-item">彬彬有礼</div>
-                        <div class="tag-item">彬彬有礼</div>
-                        <div class="tag-item">彬彬有礼</div>
-                        <div class="tag-item add">添加标签</div>
+                        <div class="tag-item"  v-for="(label,labelI) in item.labelList" :key="labelI" v-if="labelI<4">{{label}}</div>
+                        <div class="tag-item add" @click.self.stop="$router.push('/address-book/addTags/'+item.directoryId)">添加标签</div>
                     </div>
                 </div>
             </div>
@@ -22,7 +19,43 @@
     </div>
 </template>
 <script>
+    import {formatDate} from '@/common/date.js';
 export default {
+    data(){
+        return {
+
+            current:1,
+            size:6,
+            page:{},
+            behaviorList:[]
+        }
+    },
+    created(){
+        this.loadAi();
+    },
+    filters: {
+        formatDate(time) {
+            var date = new Date(time);
+            return formatDate(date, 'yyyy-MM-dd hh:mm');
+        }
+    },
+    methods:{
+        loadmore(){
+            this.current++;
+            this.loadAi();
+        },
+        loadAi(){
+            axios.post(this.$apiConfig.ai,{
+                current:this.current,
+                size:this.size
+            }).then(res=>{
+                if(res.data.code==0){
+                    this.page = res.data.data;
+                    this.behaviorList=this.page.records;
+                }
+            })
+        }
+    }
 }
 </script>
 <style lang="less" scoped>

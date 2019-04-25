@@ -34,13 +34,20 @@ export default [
 		name: 'boardLastscview',
 		component: () => import(/* webpackChunkName: "addressBook" */ '../views/board/last-scview'),
 		meta:{title:'昨日浏览'}
-	},
-	{
-		path: '/board/share-count',
-		name: 'boardShareCount',
-		component: () => import(/* webpackChunkName: "addressBook" */ '../views/board/share-count'),
-		meta:{title:'转发次数'}
-	},
+    },
+    {
+        path: '/board/share-count',
+        name: 'boardShareCount',
+        component: () => import(/* webpackChunkName: "addressBook" */ '../views/board/share-count'),
+        meta:{title:'转发次数'}
+    },
+    {
+        path: '/board/lately-browse',
+        name: 'boardLatelyBrowse',
+        component: () => import(/* webpackChunkName: "addressBook" */ '../views/board/lately-browse'),
+        meta:{title:'最近浏览'}
+    }
+    ,
 	{
 		path: '/board/new-friend',
 		name: 'boardNewFriend',

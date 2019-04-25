@@ -3,21 +3,55 @@
         <div>
             <div class="block-item-title">
                 <i class="iconfont iconcard_pause"></i>
-                新增客户 23
+                新增客户 {{page.total}}
             </div>
             <div class="scview-list">
-                <div class="custom-item" v-for="i in 10" :key="i">
-                    <img src="https://img.hrsugaphre.com/userHead/FA0C670A2C714C1CB4B1FDA684CCEF94.png" alt>
-                    <span>李海燕</span>
-                    <span class="time">2019.04.29 12:09:01</span>
+                <div class="custom-item" v-for="(item,index) in client" :key="index" @click="$router.push('/address-book/person/'+item.id)">
+                    <img :src="item.headImg" alt>
+                    <span>{{item.nikeName}}</span>
+                    <span class="time">{{item.createTime | formatDate}}</span>
                 </div>
             </div>
         </div>
     </div>
 </template>
 <script>
+import {formatDate} from '@/common/date.js';
 export default {
-    
+    data(){
+        return{
+            current:1,
+            size:6,
+            page:{},
+            client:[]
+        }
+    },
+    created(){
+        this.loadClient();
+    },
+    filters: {
+        formatDate(time) {
+            var date = new Date(time);
+            return formatDate(date, 'yyyy-MM-dd hh:mm:ss');
+        }
+    },
+    methods:{
+        loadmore(){
+            this.current++;
+            this.loadClient();
+        },
+        loadClient(){
+            axios.get(this.$apiConfig.yesterdayNewClient+"?current="+this.current+"&size="+this.size,{}).then(res=>{
+                if(res.data.code==0){
+                    this.page = res.data.data;
+                    this.client = this.client.concat(this.page.records);
+                    // if(this.page.records.length==0){
+                    //     this.current--;
+                    // }
+                }
+            })
+        }
+    }
 }
 </script>
 <style lang="less" scoped>

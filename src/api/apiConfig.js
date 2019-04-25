@@ -45,6 +45,15 @@ const apiConfig = {
     editRemark:`/app/client/edit/info`, //编辑客户信息,
     delLabel:`/app/client/delete/custom/label/`, //删除标签
     addLabel:`/app/client/add/label` ,//给用户打标签
-    labelList:`/app/client/list/client/byLabel/`,//获取标签下的用户组
+    labelList:`/app/client/list/client/byLabel/`,//获取标签下的用户组,
+    yesterdayBrowseCount:`/app/ai/yesterday/browse/count` ,//昨日浏览统计
+    yesterdayBrowseGroup:`/app/ai/yesterday/browse/group`,//昨日浏览统计饼图
+    yesterdayBrowseUser:`app/ai/yesterday/browse/client`, //昨日浏览用户
+    yesterdayNewClient:`/app/ai/yesterday/new/client`, //昨日新增客户
+    latelyBrowse:`/app/ai/behavior` ,//最近浏览
+    latelyFlow:`/app/ai/lately/flow`, //最近7日流量
+    browseGroup:`/app/ai/browse/group`, //互动次数
+    ai:`app/ai/behavior`, //行为记录
+
 }
 export default apiConfig;

@@ -16,14 +16,14 @@ export default {
         // let url = 'https://h5.sipinoffice.com';
         //登录，设置全局token
         axios.post(this.$apiConfig.officialRegister+'?code='+code).then(res=> {
-            // let response = res.data;
-            // axios.defaults.headers['Authentication'] = response.data.token;
-            // window.localStorage.token = response.data.token;
-            // this.$store.commit('setToken', response.data.token);
-            let token = `eyJhbGciOiJIUzI1NiJ9.eyJwMSI6MywicDIiOjYsImV4cCI6MTU1NjUyMDgxMSwiaWF0IjoxNTU1NjU2ODExfQ.0a_ggGAI0FaT8iytGrudBwMsXF9wLoiSPE8TcoTdUwQ`;
-            axios.defaults.headers['Authentication'] = token;
-            window.localStorage.token =token;
-            this.$store.commit('setToken', token);
+            let response = res.data;
+            axios.defaults.headers['Authentication'] = response.data.token;
+            window.localStorage.token = response.data.token;
+            this.$store.commit('setToken', response.data.token);
+            // let token = `eyJhbGciOiJIUzI1NiJ9.eyJwMSI6MzksInAyIjo0MywiZXhwIjoxNTU3MDM3NTcxLCJpYXQiOjE1NTYxNzM1NzF9.wy9tedxvPf00kXqUKQ01o6u6ZC5bVAlpVRfyBHVBiVw`;
+            // axios.defaults.headers['Authentication'] = token;
+            // window.localStorage.token =token;
+            // this.$store.commit('setToken', token);
         });
         //wxconfig param
         // axios.get(this.$apiConfig.wxConfig+'?url='+encodeURIComponent(url),{}).then(res=>{
