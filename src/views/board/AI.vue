@@ -1,4 +1,5 @@
 <template>
+    <div class="goods sp-scroll" v-scroll="loadmore">
     <div class="ai">
         <div class="ai-list">
             <div class="ai-item" v-for="(item,index) in behaviorList" :key="item.createTime">
@@ -16,6 +17,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </template>
 <script>
