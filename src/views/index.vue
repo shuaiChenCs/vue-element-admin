@@ -1,5 +1,26 @@
 <template>
   <div class="sp">
+    <div class="fabu" v-show="show">
+      <div class="item">
+        <img :src="`${this.$imageUrl}/add_goods@3x.png`" alt="">
+        <div class="des">
+          <p class="main">添加商品</p>
+          <p>上传价廉好物</p>
+          <p>分享您最推荐的日常小物</p>
+        </div>
+      </div>
+      <div class="item">
+        <img :src="`${this.$imageUrl}/add_moments@3x.png`" alt="">
+        <div class="des">
+          <p class="main">发布动态</p>
+          <p>拍摄照片</p>
+          <p>用文字记录您的创业之旅</p>
+        </div>
+      </div>
+      <div class="item">
+        <i class="iconfont iconcard_edit_delete" @click="show = false"></i>
+      </div> 
+    </div>
     <div class="main-content" :class="{hastab: $hastab}">
       <router-view />
     </div>
@@ -8,12 +29,6 @@
         <img :src="selectedLabelDefault == item.label ? item.activeIcon : item.icon" :class="{w8: !item.label}" alt="">
         <span v-if="item.label" :class="{active: selectedLabelDefault == item.label}">{{item.label}}</span>
       </div>
-      <!-- <cube-tab-bar
-        v-model="selectedLabelDefault"
-        :data="tabs"
-        @click="clickHandler"
-        @change="changeHandler"
-      ></cube-tab-bar> -->
     </div>
   </div>
 </template>
@@ -22,6 +37,7 @@
 export default {
   data() {
     return {
+      show: false,
       selectedLabelDefault: "首页",
       tabs: [
         {
@@ -60,6 +76,10 @@ export default {
   },
   methods: {
     clickHandler(label) {
+      if(!label) {
+        this.show = true;
+        return;
+      }
       this.selectedLabelDefault = label;
       if(label == '首页') {
         this.$router.push('/main');
@@ -83,6 +103,43 @@ export default {
 </script>
 <style lang="less" scoped>
 .sp {
+  .fabu{
+    padding-top: 100%;
+    height: 100vh;
+    position: fixed;
+    width: 100%;
+    z-index: 999999;
+    background:rgba(255,255,255,.9);
+    .item{
+      justify-content: center;
+      margin-bottom: 42px;
+      display: flex;
+      align-items: center;
+      i{
+        font-size: 20px;
+      }
+      img{
+        height: 65px;
+        width: 65px;
+        margin-right: 25px;
+      }
+      .des{
+        p{
+          color: #97A0B1;
+          font-size: 15px;
+          &.main{
+            color: #323643;
+            font-weight: bold;
+            font-size: 20px;
+          }
+        }
+        height: 65px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+    }
+  }
   .main-content{
     height: 100vh;
     &.hastab{
