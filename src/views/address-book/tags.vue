@@ -23,7 +23,6 @@ export default {
         axios.get(this.$apiConfig.labelLibrary,{}).then(res=>{
             if(res.data.code==0){
                 this.tags = res.data.data;
-                console.log(this.tags)
             }
         });
     }
@@ -31,6 +30,7 @@ export default {
 </script>
 <style lang="less" scoped>
 .tags{
+    height:100vh;
     .tag-block{
         background: white;
         display: flex;

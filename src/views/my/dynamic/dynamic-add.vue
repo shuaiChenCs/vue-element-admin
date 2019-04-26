@@ -49,7 +49,7 @@ export default {
                 }).then(res => {
                     vm.addRequest = true;
                     if (res.data.code == 0) {
-                        this.$router.go(-1);
+                        this.$router.push('/my/dynamic');
                     }
                 })
             }

@@ -3,7 +3,7 @@
     <div class="fabu" v-show="show">
       <div class="item">
         <img :src="`${this.$imageUrl}/add_goods@3x.png`" alt="">
-        <div class="des">
+        <div class="des" @click="addGoods">
           <p class="main">添加商品</p>
           <p>上传价廉好物</p>
           <p>分享您最推荐的日常小物</p>
@@ -11,7 +11,7 @@
       </div>
       <div class="item">
         <img :src="`${this.$imageUrl}/add_moments@3x.png`" alt="">
-        <div class="des">
+        <div class="des" @click="addDynamic">
           <p class="main">发布动态</p>
           <p>拍摄照片</p>
           <p>用文字记录您的创业之旅</p>
@@ -75,6 +75,14 @@ export default {
     }
   },
   methods: {
+      addGoods(){
+          this.show=false;
+          this.$router.push('/my/goods/add');
+      },
+      addDynamic(){
+          this.show=false;
+          this.$router.push('/my/dynamic/add');
+      },
     clickHandler(label) {
       if(!label) {
         this.show = true;

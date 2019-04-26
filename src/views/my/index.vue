@@ -4,7 +4,7 @@
             <sp-card :title="'进入名片'" :url="qrCode"></sp-card>
         </cube-popup>
         <cube-popup type="my-popup" :zIndex="10000" :position="''" :mask-closable="true" ref="servicePopup">
-            <sp-card :title="'联系客服'" :url="qrCode"></sp-card>
+            <sp-card :title="'联系客服'" :url="customer"></sp-card>
         </cube-popup>
         <div class="my-header">
             <div class="card-img">
@@ -43,6 +43,7 @@ export default {
             }, //邀请人
             selfCard:{},
             qrCode:'',
+            customer:'',
             data1: [
                 {title: '邀请码', icon:require(`@/assets/images/mine_code@3x.png`), url: '/my/inviteCode'},
                 {title: '邀请好友', icon:require(`@/assets/images/mine_friends@3x.png`), url: ''},
@@ -86,8 +87,12 @@ export default {
             window.localStorage.user = JSON.stringify(memberInfo);
             this.$store.commit('setCard', vm.selfCard);
             this.$store.commit('setUser', memberInfo);
-
        });
+        axios.get(this.$apiConfig.customer,{}).then(res=>{
+            if(res.data.code==0){
+                this.customer = res.data.data.customerServiceQrCode;
+            }
+        });
     },
     components: {
         myBlock

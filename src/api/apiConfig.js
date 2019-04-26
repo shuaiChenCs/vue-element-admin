@@ -54,6 +54,6 @@ const apiConfig = {
     latelyFlow:`/app/ai/lately/flow`, //最近7日流量
     browseGroup:`/app/ai/browse/group`, //互动次数
     ai:`app/ai/behavior`, //行为记录
-
+    customer:`/app/customer/get/`, //客服
 }
 export default apiConfig;

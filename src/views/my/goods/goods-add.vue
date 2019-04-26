@@ -88,7 +88,7 @@ export default {
               axios.post(this.$apiConfig.addGoods, params).then((res) => {
                   vm.ddRequest=true;
                   if (res.data.code == 0) {
-                      vm.$router.go(-1);
+                      vm.$router.push('/my/goods')
                   }
               });
           }

@@ -1,13 +1,21 @@
 <template>
     <div class="playbill">
         <div class="img">
-            <img src="@/assets/images/article_bg01.png" alt="">
+            <img :src="image" alt="">
         </div>
-        <fixed-button :title="'保存到本地相册'" @clickHandler="save"></fixed-button>
+        <fixed-button :title="'长按图片保存到相册'" @clickHandler="save"></fixed-button>
     </div>
 </template>
 <script>
 export default {
+    data(){
+        return{
+            image:'',
+        }
+    },
+    created(){
+        this.image = this.$store.state.card.poster;
+    },
     methods: {
         save() {
 
