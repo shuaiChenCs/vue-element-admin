@@ -5,6 +5,7 @@
       <input type="text" placeholder="搜索" v-model="content" @input="load">
     </div>
     <div class="speechcraft-list">
+        <no-data v-if="verbalList.length == 0"></no-data>
         <div class="speechcraft-item" @click.self="edit(verbal.id)"  v-for="(verbal,index) in verbalList" :key="verbal.id">
             <i class="iconfont iconcard_edit_delete" @click="del(verbal.id,index)"></i>
             {{verbal.content}}
@@ -30,7 +31,6 @@ export default {
                 content:this.content
             }).then(res=>{
                 if(res.data.code==0){
-                    console.log(res.data.data);
                     this.verbalList=res.data.data;
                 }
             });
@@ -88,6 +88,7 @@ export default {
   }
   .speechcraft-list{
       padding: 15px;
+      height: 100vh;
       .speechcraft-item{
         position: relative;
           font-size: 15px;

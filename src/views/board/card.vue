@@ -30,6 +30,7 @@
             <i class="iconfont iconlist_more"></i>
           </div>
         </div>
+        <no-data v-if="page.total==0" style="padding-top:10px;padding-bottom: 20px"></no-data>
         <div class="scview-list" v-for="(user,index) in browseUser" :key="index">
           <div class="custom-item" @click="$router.push('/address-book/person/'+user.directoryId)">
             <img :src="user.userHeadImg" alt>
@@ -42,6 +43,7 @@
             <!--<span class="time">2019.04.29 12:09:01</span>-->
           <!--</div>-->
         </div>
+        <no-more v-if="page.total!=0 && page.total==browseUser.length"></no-more>
       </div>
     </div>
     <div class="charts">
@@ -69,6 +71,7 @@ export default {
             current:1,
             size:3,
             vo:{},
+            page:{},
             browseUser:[],
         }
     },
@@ -83,7 +86,8 @@ export default {
             size:this.size
         }).then(res=>{
             if(res.data.code==0){
-                this.browseUser = res.data.data.records;
+                this.page = res.data.data;
+                this.browseUser = this.page.records;
             }
         })
         axios.get(this.$apiConfig.latelyFlow,{}).then(res=>{

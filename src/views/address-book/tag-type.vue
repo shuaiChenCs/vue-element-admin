@@ -35,7 +35,7 @@ export default {
 
 <style lang="less" scoped>
 .tag-type {
-    padding-bottom: 64px;
+    margin-bottom: 64px;
     .search-type{
         background: white;
     }

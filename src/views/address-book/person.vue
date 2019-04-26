@@ -91,7 +91,10 @@ export default {
     },
     methods: {
         onCopy() {
-                alert('复制成功');
+            this.$createToast({
+                txt: '复制成功',
+                type: 'correct'
+            }).show()
         },
         inputFocus(e) {
             e.target.setAttribute('placeholder', '备注名称最长16个字')
@@ -136,7 +139,7 @@ export default {
                 .name{
                     font-weight: bold;
                     font-size: 18px;
-                    margin-right: 30px;
+                    margin-right: 10px;
                 }
             }
         }
@@ -218,6 +221,7 @@ export default {
                 .content{
                     font-size: 16px;
                     color: black;
+                    width: 90%;
                 }
                 .time{
                     color: #6F6F76;

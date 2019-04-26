@@ -6,7 +6,7 @@
                 <span class="bootom">设置文章/名片页自动弹出的消息</span>
             </div>
             <div class="right">
-                <span class="num">{{verbal.autoResponseCount}}条</span>
+                <span class="num">{{verbal.autoResponseCount || 0}}条</span>
                 <i class="iconfont iconlist_more"></i>
             </div>
         </div>
@@ -16,7 +16,7 @@
                 <span class="bootom">可快速适应精良话术回复对方</span>
             </div>
             <div class="right">
-                <span class="num">{{verbal.verbalCount}}条</span>
+                <span class="num">{{verbal.verbalCount || 0}}条</span>
                 <i class="iconfont iconlist_more"></i>
             </div>
         </div>

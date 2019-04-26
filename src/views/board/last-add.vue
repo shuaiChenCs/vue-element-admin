@@ -6,6 +6,7 @@
                 <i class="iconfont iconcard_pause"></i>
                 昨日新增客户（共{{page.total}}位）
             </div>
+            <no-data v-if="page.total==0"></no-data>
             <div class="ai-item" v-for="(item,index) in client" :key="index">
                 <div class="ai-card" @click="$router.push('/address-book/person/'+item.id)">
                     <img :src="item.headImg" alt>

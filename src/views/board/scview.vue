@@ -7,11 +7,13 @@
                 浏览总量 {{page.total}}
             </div>
             <div class="scview-list">
+                <no-data v-if="page.total==0"></no-data>
                 <div class="custom-item" v-for="(item,index) in behaviorList" :key="index" @click="$router.push('/address-book/person/'+item.directoryId)">
                     <img :src="item.userHeadImg" alt>
                     <span>{{item.userName}}</span>
                     <span class="time">{{item.createTime | formatDate}}</span>
                 </div>
+                <no-more v-if="page.total!=0 && page.total == behaviorList.length"></no-more>
             </div>
         </div>
     </div>

@@ -2,6 +2,7 @@
     <div class="goods sp-scroll" v-scroll="loadmore">
     <div class="ai">
         <div class="ai-list">
+            <no-data v-if="page.total==0"></no-data>
             <div class="ai-item" v-for="(item,index) in behaviorList" :key="index">
                 <div class="time">
                    {{item.createTime | formatDate}}
@@ -16,6 +17,7 @@
                     </div>
                 </div>
             </div>
+            <no-more v-if="page.total!=0 && page.total==behaviorList.length"></no-more>
         </div>
     </div>
     </div>

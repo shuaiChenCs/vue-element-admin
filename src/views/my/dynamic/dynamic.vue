@@ -1,5 +1,6 @@
 <template>
     <div class="dynamic sp-scroll" v-scroll="loadmore">
+        <no-data v-if="dynamicList.length==0"></no-data>
         <div class="dynamic-item" v-for="(item,index) in dynamicList" :key="item.id">
             <div class="header">
                 <img :src="item.headImg" alt>
@@ -64,6 +65,7 @@
                 </div>
             </div>
         </div>
+        <no-more v-if="total!=0 && total==dynamicList.length"></no-more>
         <fixed-button :title="'发布动态'" @clickHandler="addDynamic"></fixed-button>
     </div>
 </template>
@@ -74,6 +76,7 @@
             return {
                 current:1,
                 size:6,
+                total:0,
                 count: 2,
                 selfCard:this.$store.state.card,
                 dynamicList:[],
@@ -126,6 +129,7 @@
                             }
                         });
                         if(vm.dynamicList.length<6){
+                            vm.current++;
                             vm.loadDynamic();
                         }
                     }
@@ -138,6 +142,7 @@
                     cardId:this.selfCard.id
                 }).then(res=>{
                     if(res.data.code == 0){
+                        this.total = res.data.data.total;
                         this.dynamicList =  this.dynamicList.concat(res.data.data.records);
                         if(res.data.data.records.length==0){
                             this.current--;

@@ -1,5 +1,6 @@
 <template>
     <div class="tags">
+        <no-data v-if="tags.length==0"></no-data>
         <div v-for="(item, index) in tags" :key="index">
             <div class="block-item-title">
                 <i class="iconfont iconcard_pause"></i>

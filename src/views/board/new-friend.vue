@@ -6,11 +6,13 @@
                 新增客户 {{page.total}}
             </div>
             <div class="scview-list">
+                <no-data v-if="page.total == 0"></no-data>
                 <div class="custom-item" v-for="(item,index) in client" :key="index" @click="$router.push('/address-book/person/'+item.id)">
                     <img :src="item.headImg" alt>
                     <span>{{item.nikeName}}</span>
                     <span class="time">{{item.createTime | formatDate}}</span>
                 </div>
+                <no-more v-if="page.total != 0 && page.total==client.length"></no-more>
             </div>
         </div>
     </div>

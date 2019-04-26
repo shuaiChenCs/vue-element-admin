@@ -5,7 +5,7 @@
         <img class="head" :src="selfCard.headImg" alt>
         <div class="info">
           <span class="name">{{selfCard.cardName}}</span>
-          <span class="view">商品量 {{goods.total}} 浏览量 {{goods.browse}}</span>
+          <span class="view">商品量 {{goods.total || 0}} 浏览量 {{goods.browse || 0}}</span>
         </div>
         <img class="goodimg" src="@/assets/images/shop_top_bg@3x.png" alt>
       </div>
@@ -14,7 +14,7 @@
         <input type="text" @input="inputFun" placeholder="搜索">
       </div>
     </div>
-    <div class="goods-type">
+    <div class="goods-type" v-if="data.length>0">
       <div class="h-scroll">
         <ul class="goods-ul">
           <li v-for="(item,index) in type " :class="{'active':typeId==item.id}" @click="typeClick(item.id)">{{item.name}}</li>
@@ -22,6 +22,7 @@
       </div>
     </div>
     <div class="goods-box">
+      <no-data v-if="goods.total==0"></no-data>
       <div class="goods-item" v-for="(item,index) in data" :key="index">
         <div class="img">
           <img :src="item.imgUrl" @click="clickGoods(item)" alt>
@@ -33,6 +34,7 @@
         </div>
       </div>
     </div>
+    <no-more v-if="goods.total!=0 && data.length==goods.total"></no-more>
     <fixed-button :title="'添加商品'" @clickHandler="addGoods"></fixed-button>
   </div>
 </template>
@@ -153,11 +155,13 @@ export default {
         })
         .then(res => {
 
-          if (res.data.code == "0" && res.data.data.records.length>0) {
+          if (res.data.code == "0") {
               this.goods = res.data.data;
-            this.data = this.data.concat(this.goods.records);
-          }else{
-              this.current--;
+              if(this.goods.records.length>0) {
+                  this.data = this.data.concat(this.goods.records);
+              }else{
+                  this.current--;
+              }
           }
         });
     },

@@ -1,12 +1,12 @@
 <template>
   <div class="sp-scroll" v-scroll="loadmore">
   <div class="last-scview">
-      <div class="charts-box">
+      <div class="charts-box"  v-show="browseGroup.length>0" >
           <div class="lenged">
-              <div  v-for="(item,index) in data" :key="index"><span :style="{background: item.color}"></span>{{item.name}}</div>
+              <div  v-for="(item,index) in browseGroup" :key="index"><span :style="{background: item.color}"></span>{{item.name}}</div>
               <!--<div><span style="background: bla"></span>名片</div>-->
           </div>
-          <div class="charts" id="container"></div>
+            <div class="charts" id="container"></div>
       </div>
     <div class="ai-list">
       <div class="block-item-title">
@@ -20,6 +20,7 @@
           <!--<p>正在看你的名片，快抓住时机，主动出击</p>-->
         <!--</div>-->
       <!--</div>-->
+        <no-data v-if="page.total==0"></no-data>
       <div class="ai-item" v-for="(user,index) in browseUser" :key="index">
         <div class="ai-card" @click="$router.push('/address-book/person/'+user.directoryId)">
           <img :src="user.userHeadImg" alt>
@@ -30,6 +31,7 @@
           </p>
         </div>
       </div>
+        <no-more v-if="page.total!=0 && page.total==browseUser.length"></no-more>
     </div>
     </div>
   </div>
@@ -41,7 +43,7 @@ export default {
         return{
             current:1,
             size:6,
-            data:[],
+            browseGroup:[],
             page:{},
             browseUser:[],
             colors:['red','blue','yellow','black']
@@ -50,14 +52,14 @@ export default {
     created(){
         axios.get(this.$apiConfig.yesterdayBrowseGroup,{}).then(res=>{
             if(res.data.code==0){
-                this.data = res.data.data;
-                if(this.data.length>0){
-                    this.data.forEach((e,i)=>{
+                this.browseGroup = res.data.data;
+                if(this.browseGroup.length>0){
+                    this.browseGroup.forEach((e,i)=>{
                         this.$set(e,'color',this.colors[i]);
                     })
-                    console.log(this.data);
+                    this.loadmap1(this.browseGroup);
                 }
-                this.loadmap1(this.data);
+
             }
         });
        this.loadBrowseList();
