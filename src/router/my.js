@@ -71,5 +71,11 @@ export default [
         name: 'invite-code',
         component: () => import(/* webpackChunkName: "my" */ '../views/my/invite-code'),
         meta:{title:'邀请码'}
+    },
+    {
+        path: 'my/playbill',
+        name: 'playbill',
+        component: () => import(/* webpackChunkName: "my" */ '../views/my/playbill'),
+        meta:{title:'海报'}
     }
 ]

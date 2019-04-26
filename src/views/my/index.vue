@@ -13,7 +13,7 @@
             <div class="card-name">{{selfCard.cardName}}</div>
             <div class="card-handler">
                 <button @click="toMycard">进入名片</button>
-                <button>名片海报</button>
+                <button @click="$router.push('/my/playbill')">名片海报</button>
             </div>
         </div>
         <div class="card-block">
