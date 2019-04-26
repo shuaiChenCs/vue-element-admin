@@ -52,7 +52,7 @@
         </div>
       </div>
     </div>
-    <fixed-button :title="'保存'" :disabled="name.length==0 && banner.length==0" @clickHandler="save"></fixed-button>
+    <fixed-button :title="'保存'" :disabled="name.length==0 || banner.length==0" @clickHandler="save"></fixed-button>
   </div>
 </template>
 <script>

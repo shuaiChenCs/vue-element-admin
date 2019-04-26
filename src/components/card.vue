@@ -2,7 +2,7 @@
     <div class="card">
         <div class="header">{{title}}</div>
         <div class="code">
-            <img src="@/assets/123.jpg" alt="">
+            <img :src="url" alt="">
             <div>长按图片识别小程序码</div>
         </div>
     </div>

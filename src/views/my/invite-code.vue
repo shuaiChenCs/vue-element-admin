@@ -7,16 +7,26 @@
                 <p><i class="iconfont iconmine_code_scan"></i>好友扫描邀请码后，可直接注册成为会员</p>
             </div>
             <div class="code">
-                <img src="@/assets/123.jpg" alt="">
+                <img :src="src" alt="">
             </div>
         </div>
-        <fixed-button :title="'刷新二维码'" @clickHandler="save" style="background: none"></fixed-button>
+        <fixed-button :title="'刷新二维码'" @clickHandler="refesh" style="background: none"></fixed-button>
     </div>
 </template>
 <script>
 export default {
+    data(){
+        return {
+            src:''
+        }
+    },
+    created(){
+        this.src = this.$store.state.user.inviteQrCode;
+    },
     methods: {
-        save() {}
+        refesh(){
+
+        }
     }
 }
 </script>

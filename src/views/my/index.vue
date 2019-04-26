@@ -1,10 +1,10 @@
 <template>
     <div class="my">
         <cube-popup type="my-popup" :zIndex="10000" :position="''" :mask-closable="true" ref="cardPopup">
-            <sp-card :title="'进入名片'" :url="''"></sp-card>
+            <sp-card :title="'进入名片'" :url="qrCode"></sp-card>
         </cube-popup>
         <cube-popup type="my-popup" :zIndex="10000" :position="''" :mask-closable="true" ref="servicePopup">
-            <sp-card :title="'联系客服'" :url="''"></sp-card>
+            <sp-card :title="'联系客服'" :url="qrCode"></sp-card>
         </cube-popup>
         <div class="my-header">
             <div class="card-img">
@@ -42,6 +42,7 @@ export default {
                 nikeName:'心脉科技'
             }, //邀请人
             selfCard:{},
+            qrCode:'',
             data1: [
                 {title: '邀请码', icon:require(`@/assets/images/mine_code@3x.png`), url: '/my/inviteCode'},
                 {title: '邀请好友', icon:require(`@/assets/images/mine_friends@3x.png`), url: ''},
@@ -79,6 +80,7 @@ export default {
         axios.get(this.$apiConfig.memberInfo,{}).then((res)=>{
             let memberInfo = res.data.data;
             vm.selfCard =  memberInfo.cardVO;
+            this.qrCode = memberInfo.qrCode;
             this.recommendUser = memberInfo.recommendUser;
             this.$store.commit('setCard', vm.selfCard);
             this.$store.commit('setUser', memberInfo);

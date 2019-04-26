@@ -2,7 +2,7 @@
     <div class="goods sp-scroll" v-scroll="loadmore">
     <div class="ai">
         <div class="ai-list">
-            <div class="ai-item" v-for="(item,index) in behaviorList" :key="item.createTime">
+            <div class="ai-item" v-for="(item,index) in behaviorList" :key="index">
                 <div class="time">
                    {{item.createTime | formatDate}}
                 </div>
@@ -53,7 +53,7 @@ export default {
             }).then(res=>{
                 if(res.data.code==0){
                     this.page = res.data.data;
-                    this.behaviorList=this.page.records;
+                    this.behaviorList=this.behaviorList.concat(this.page.records);
                 }
             })
         }
