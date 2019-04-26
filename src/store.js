@@ -2,11 +2,21 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 Vue.use(Vuex)
-
+let card,user;
+try {
+  card = JSON.parse(localStorage.getItem('card')) || {};
+} catch (error) {
+  card = {};
+}
+try {
+  user = JSON.parse(localStorage.getItem('user')) || {};
+} catch (error) {
+  user = {};
+}
 export default new Vuex.Store({
   state: {
-    card: JSON.parse(window.localStorage.getItem('card')) || {},
-    user:JSON.parse(window.localStorage.getItem('user')) || {},
+    card: card,
+    user: user,
     token: ''
   },
   mutations: {
