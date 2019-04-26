@@ -46,14 +46,14 @@
         <no-more v-if="page.total!=0 && page.total==browseUser.length"></no-more>
       </div>
     </div>
-    <div class="charts">
+    <div class="charts"  v-show="map1.dateList.length>0">
       <div class="block-item-title">
         <i class="iconfont iconcard_pause"></i>
         近一周流量趋势
       </div>
       <div id="container" class="charts-box"></div>
     </div>
-    <div class="charts">
+    <div class="charts"  v-show="count>0">
       <div class="block-item-title">
         <i class="iconfont iconcard_pause"></i>
         互动次数
@@ -73,9 +73,15 @@ export default {
             vo:{},
             page:{},
             browseUser:[],
+            map1:{
+                dateList:[]
+            },
+            map2:{},
+            count:0,
         }
     },
     created(){
+        let vm =this;
         axios.get(this.$apiConfig.yesterdayBrowseCount,{}).then(res=>{
             if(res.data.code==0){
                 this.vo = res.data.data;
@@ -92,12 +98,20 @@ export default {
         })
         axios.get(this.$apiConfig.latelyFlow,{}).then(res=>{
            if(res.data.code==0){
-               this.loadmap1(res.data.data)
+               this.map1 = res.data.data;
+               this.loadmap1(this.map1)
            }
         });
         axios.get(this.$apiConfig.browseGroup,{}).then(res=>{
            if(res.data.code==0){
-               this.loadmap2(res.data.data);
+               this.map2 = res.data.data;
+               this.map2.forEach(e=>{
+                   if(e.count>0){
+                       vm.count=1;
+                       return false;
+                   }
+               })
+               this.loadmap2(this.map2);
            }
         });
     },

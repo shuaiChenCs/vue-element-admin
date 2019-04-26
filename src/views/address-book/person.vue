@@ -97,7 +97,7 @@ export default {
             }).show()
         },
         inputFocus(e) {
-            e.target.setAttribute('placeholder', '备注名称最长16个字')
+            e.target.setAttribute('placeholder', '备注名称最长10个字')
         },
         inputBlur(e) {
             e.target.setAttribute('placeholder', '点击添加备注名')

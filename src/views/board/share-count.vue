@@ -1,20 +1,20 @@
 <template>
-    <div class="goods sp-scroll" v-scroll="loadmore">
+    <div class="share-count sp-scroll" v-scroll="loadmore">
     <div class="share-count">
         <div>
             <div class="block-item-title">
                 <i class="iconfont iconcard_pause"></i>
                 转发次数 {{page.total}}
             </div>
+            <no-data v-if="page.total==0"></no-data>
             <div class="scview-list">
-                <no-data v-if="page.total==0"></no-data>
                 <div class="custom-item" v-for="(item,index) in behaviorList" :key="index" @click="$router.push('/address-book/person/'+item.directoryId)">
                     <img :src="item.userHeadImg" alt>
                     <span>{{item.userName}}</span>
                     <span class="time">{{item.createTime | formatDate}}</span>
                 </div>
-                <no-more v-if="page.total!=0 && page.total==behaviorList.length"></no-more>
             </div>
+            <no-more v-if="page.total!=0 && page.total==behaviorList.length"></no-more>
         </div>
     </div>
     </div>
@@ -69,8 +69,7 @@
                 border: none;
             }
         }
-        background: white;
-        height: 100hv;
+        background: white
     }
 }
 </style>
