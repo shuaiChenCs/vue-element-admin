@@ -82,6 +82,8 @@ export default {
             vm.selfCard =  memberInfo.cardVO;
             this.qrCode = memberInfo.qrCode;
             this.recommendUser = memberInfo.recommendUser;
+            window.localStorage.card = JSON.stringify(vm.selfCard);
+            window.localStorage.user = JSON.stringify(vm.memberInfo);
             this.$store.commit('setCard', vm.selfCard);
             this.$store.commit('setUser', memberInfo);
 

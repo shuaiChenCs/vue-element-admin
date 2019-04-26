@@ -5,8 +5,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    card: {},
-    user:{},
+    card: JSON.parse(window.localStorage.getItem('card')) || {},
+    user:JSON.parse(window.localStorage.getItem('user')) || {},
     token: ''
   },
   mutations: {
