@@ -5,8 +5,8 @@
                 <i class="iconfont iconcard_pause"></i>
                 新增客户 {{page.total}}
             </div>
+            <no-data v-if="page.total == 0"></no-data>
             <div class="scview-list">
-                <no-data v-if="page.total == 0"></no-data>
                 <div class="custom-item" v-for="(item,index) in client" :key="index" @click="$router.push('/address-book/person/'+item.id)">
                     <img :src="item.headImg" alt>
                     <span>{{item.nikeName}}</span>
@@ -58,6 +58,7 @@ export default {
 </script>
 <style lang="less" scoped>
 .new-friend{
+    height: 100vh;
     .scview-list{
         .custom-item {
             &:last-child {

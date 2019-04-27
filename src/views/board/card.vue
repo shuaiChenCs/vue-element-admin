@@ -126,7 +126,16 @@ export default {
         }
     },
   methods: {
+      loadCss(){
+          let ua = navigator.userAgent.toLowerCase();
+          if(/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)){
+              return "30px";
+          }else if (/(Android)/i.test(navigator.userAgent)){
+              return "15px";
+          }
+      },
     loadmap1(lately) {
+        let fontSize = this.loadCss();
       Highcharts.chart("container", {
         chart: {
           type: "spline"
@@ -141,7 +150,7 @@ export default {
           },
           labels: {
             style: {
-              fontSize: "30px",
+              fontSize: fontSize,
               whiteSpace: "nowrap"
             }
           },
@@ -157,7 +166,7 @@ export default {
           },
           labels: {
             style: {
-              fontSize: "30px"
+              fontSize: fontSize
             }
           },
           step: 1,
@@ -170,7 +179,7 @@ export default {
           },
           headerFormat: "<div>{point.key}</div>",
           pointFormat:
-            '<span style="color:{point.color}">\u25CF</span> {series.name}: <span>{point.y}</span><br/>',
+            '<span style="color:{point.color}">\u25CF</span> {series.name}: {point.y}<br/>',
           shared: true,
           useHTML: true
         },
@@ -199,6 +208,7 @@ export default {
       });
     },
     loadmap2(data) {
+        let fontSize = this.loadCss();
       var chart = Highcharts.chart("container1", {
         chart: {
           type: "bar"
@@ -227,7 +237,7 @@ export default {
           },
           labels: {
             style: {
-              fontSize: "30px",
+              fontSize: fontSize,
               whiteSpace: "nowrap"
             }
           }
@@ -239,7 +249,7 @@ export default {
           },
           labels: {
             style: {
-              fontSize: "30px",
+              fontSize: fontSize,
               whiteSpace: "nowrap"
             }
           }
@@ -266,7 +276,7 @@ export default {
               align: "left",
               style: {
                 fontWeight: "bold",
-                fontSize: "30px"
+                fontSize: fontSize
               },
               x: 3,
               verticalAlign: "middle",

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title>sph5</title>
+    <title>心脉科技</title>
   </head>
   <body>
     <noscript>
@@ -29,10 +29,10 @@
       }
 
       function authWechat(){
-          // if(code == null || code == ''){
-          //     //拿不到code，刷新页面继续
-          //     window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+AppId+'&redirect_uri='+encodeURIComponent(local)+'&response_type=code&scope=snsapi_userinfo&state=1&wechat_redirect';
-          // }
+          if(code == null || code == ''){
+              //拿不到code，刷新页面继续
+              window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+AppId+'&redirect_uri='+encodeURIComponent(local)+'&response_type=code&scope=snsapi_userinfo&state=1&wechat_redirect';
+          }
       }
       authWechat()
       // function getCrtUrl(){
