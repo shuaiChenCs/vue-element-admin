@@ -56,6 +56,7 @@ const apiConfig = {
     ai:`app/ai/behavior`, //行为记录
     customer:`/app/customer/get/`, //客服
     getIMList:`app/member/list/im/account`, //根据imaccount查询会员列表,
-    getFriend:`app/member/list/recommend`, //获取邀请好友
+    getFriend:`app/member/list/recommend`, //获取邀请好友,
+    refreshCode:`/app/card/reset/poster`, //刷新二维码
 }
 export default apiConfig;

@@ -10,7 +10,7 @@
                 <img :src="src" alt="">
             </div>
         </div>
-        <fixed-button :title="'刷新二维码'" @clickHandler="refesh" style="background: none"></fixed-button>
+        <fixed-button :title="'刷新二维码'" @clickHandler="refresh" style="background: none"></fixed-button>
     </div>
 </template>
 <script>
@@ -24,8 +24,12 @@ export default {
         this.src = this.$store.state.user.inviteQrCode;
     },
     methods: {
-        refesh(){
-
+        refresh(){
+            axios.post(this.$apiConfig.refreshCode,{}).then(res=>{
+               if(res.data.code==0){
+                   this.src = this.data.data;
+               }
+            });
         }
     }
 }
