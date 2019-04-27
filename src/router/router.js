@@ -17,7 +17,7 @@ export default new Router({
       children: [
         {
           path: '/',
-          redirect: '/main'
+          redirect: '/board'
         },
         ...board,
         ...addressBook,

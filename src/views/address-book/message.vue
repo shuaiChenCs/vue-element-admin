@@ -1,15 +1,15 @@
 <template>
     <div class="message">
         <div class="message-block">
-            <div class="message-item" v-for="item in 5" :key="item">
+            <div class="message-item" v-for="se in sessions" :key="se.id">
                 <img src="https://img.hrsugaphre.com/userHead/FA0C670A2C714C1CB4B1FDA684CCEF94.png" alt="">
                 <div class="message-info">
                     <div class="top">
                         <span class="name">Marco</span>
-                        <span class="time">昨天</span>
+                        <span class="time">{{se.lastMsg.userUpdateTime | formatDate('yyyy-MM-dd hh:mm:ss')}}</span>
                     </div>
                     <div class="bottom">
-                        您好，欢迎访问我的名片，很高兴认识您！
+                        {{se.lastMsg.text}}
                     </div>
                 </div>
             </div>
@@ -18,7 +18,15 @@
 </template>
 <script>
 export default {
-    
+    mounted() {
+        
+    },
+    computed: {
+        sessions() {
+        console.log(this.$store.state.sessions)
+        return this.$store.state.sessions
+        }
+    },
 }
 </script>
 <style lang="less" scoped>

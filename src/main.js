@@ -5,6 +5,7 @@ import './lib/wxjssdk'
 import App from './App.vue'
 import router from './router/router.js'
 import store from './store'
+import './lib/filter.js';
 import './directives/scroll.js';
 import 'lib-flexible';
 import './lib/common.js';

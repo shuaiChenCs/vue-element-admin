@@ -38,7 +38,7 @@ export default {
   data() {
     return {
       show: false,
-      selectedLabelDefault: "首页",
+      selectedLabelDefault: "看板",
       tabs: [
         // {
         //   label: "首页",

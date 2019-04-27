@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
+import SDK from '../public/js/NIM_Web_SDK_v6.4.0';
+import im from './lib/im.js';
 Vue.use(Vuex)
 let card,user;
 try {
@@ -17,7 +18,9 @@ export default new Vuex.Store({
   state: {
     card: card,
     user: user,
-    token: ''
+    token: '',
+    nim: null,
+    sessions: [],
   },
   mutations: {
     setCard(state, card) {
@@ -28,6 +31,12 @@ export default new Vuex.Store({
     },
     setToken(state, token) {
       state.token = token
+    },
+    initNim(state, user) {
+      im.initNim(state, user);
+    },
+    setSessions(state, sessions) {
+      state.sessions = sessions;
     }
   },
   actions: {

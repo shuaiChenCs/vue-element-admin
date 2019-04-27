@@ -55,5 +55,6 @@ const apiConfig = {
     browseGroup:`/app/ai/browse/group`, //互动次数
     ai:`app/ai/behavior`, //行为记录
     customer:`/app/customer/get/`, //客服
+    getIMList:`app/member/list/im/account`, //根据imaccount查询会员列表
 }
 export default apiConfig;

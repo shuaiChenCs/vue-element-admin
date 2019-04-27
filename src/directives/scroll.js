@@ -16,5 +16,4 @@ Vue.directive('scroll', {
           }
       });
     }
-})
-console.log(111)
+});
