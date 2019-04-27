@@ -1,4 +1,5 @@
 <template>
+    <div class="sp-scroll" v-scroll="loadmore">
     <div class="new-friend">
         <div>
             <div class="block-item-title">
@@ -15,6 +16,7 @@
                 <no-more v-if="page.total != 0 && page.total==client.length"></no-more>
             </div>
         </div>
+    </div>
     </div>
 </template>
 <script>

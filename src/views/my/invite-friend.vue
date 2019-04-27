@@ -1,4 +1,5 @@
 <template>
+    <div class="goods sp-scroll" v-scroll="loadmore">
     <div class="new-friend">
         <div>
             <div class="block-item-title">
@@ -7,7 +8,7 @@
             </div>
             <no-data v-if="page.total == 0"></no-data>
             <div class="scview-list">
-                <div class="custom-item" v-for="(item,index) in friend" :key="index" @click="$router.push('/address-book/person/'+item.id)">
+                <div class="custom-item" v-for="(item,index) in friend" :key="index">
                     <img :src="item.headImg" alt>
                     <span>{{item.nikeName}}</span>
                     <span class="time">{{item.registerTime  | formatDate('yyyy-MM-dd hh:mm:ss')}}</span>
@@ -16,13 +17,14 @@
             </div>
         </div>
     </div>
+    </div>
 </template>
 <script>
     export default {
         data(){
             return{
                 current:1,
-                size:6,
+                size:10,
                 page:{},
                 friend:[],
             }

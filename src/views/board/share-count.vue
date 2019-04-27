@@ -1,5 +1,5 @@
 <template>
-    <div class="share-count sp-scroll" v-scroll="loadmore">
+    <div class="sp-scroll" v-scroll="loadmore">
     <div class="share-count">
         <div>
             <div class="block-item-title">
