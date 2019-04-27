@@ -31,7 +31,7 @@
             </div>
             <div class="dynamic-handler">
                 <div>
-                    <span class="time">{{item.createTime | formatDate}}</span>
+                    <span class="time">{{serverDate| dateDiff(item.createTime)}}</span>
                     <span class="delete" @click="delDynamic(item.id,index)">删除</span>
                 </div>
                 <!-- <div class="btn">
@@ -70,7 +70,6 @@
     </div>
 </template>
 <script>
-    import {formatDate} from '@/common/date.js';
     export default {
         data() {
             return {
@@ -80,17 +79,12 @@
                 count: 2,
                 selfCard:this.$store.state.card,
                 dynamicList:[],
+                serverDate:new Date()
             }
         },
         created(){
             this.loadDynamic();
 
-        },
-        filters: {
-            formatDate(time) {
-                var date = new Date(time);
-                return formatDate(date, 'yyyy-MM-dd hh:mm:ss');
-            }
         },
         methods: {
             showImagePreview(item,index){
@@ -144,6 +138,7 @@
                     if(res.data.code == 0){
                         this.total = res.data.data.total;
                         this.dynamicList =  this.dynamicList.concat(res.data.data.records);
+                        this.serverDate = this.dynamicList[0].serviceDate;
                         if(res.data.data.records.length==0){
                             this.current--;
                         }

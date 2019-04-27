@@ -22,7 +22,7 @@
                     <use xlink:href="#iconmine_member"></use>
                 </svg>
                 <span class="vip-text">VIP会员</span>
-                <span class="time">{{selfCard.expirationTime | formatDate}}到期</span>
+                <span class="time">{{selfCard.expirationTime | formatDate('yyyy-MM-dd')}}到期</span>
             </div>
             <my-block :blockData="data1" :title="'我的资产'"></my-block>
             <my-block :blockData="data2" :title="'我的数据'"></my-block>
@@ -33,7 +33,6 @@
 </template>
 <script>
 import myBlock from '@/components/my-block.vue';
-import {formatDate} from '@/common/date.js';
 
 export default {
     data() {
@@ -46,7 +45,7 @@ export default {
             customer:'',
             data1: [
                 {title: '邀请码', icon:require(`@/assets/images/mine_code@3x.png`), url: '/my/inviteCode'},
-                {title: '邀请好友', icon:require(`@/assets/images/mine_friends@3x.png`), url: ''},
+                {title: '邀请好友', icon:require(`@/assets/images/mine_friends@3x.png`), url: '/my/inviteFriend'},
             ],
             data2: [
                 {title: '我的名片', icon:require(`@/assets/images/mine_card@3x.png`), url: '', click: () => {this.toMycard()}},
@@ -67,12 +66,6 @@ export default {
         toMycard() {
             const component = this.$refs.cardPopup;
             component.show();
-        }
-    },
-    filters: {
-        formatDate(time) {
-            var date = new Date(time);
-            return formatDate(date, 'yyyy-MM-dd');
         }
     },
     created(){

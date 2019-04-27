@@ -48,7 +48,7 @@
                    {{group.date}}
                     <div class="push-item" v-for="(behavior,index) in group.behaviorVOList">
                         <span class="content">{{behavior.operateDesc}}</span>
-                        <span class="time">{{behavior.createTime | formatTime}}</span>
+                        <span class="time">{{behavior.createTime | formatDate('hh:mm')}}</span>
                     </div>
                 </div>
             </div>
@@ -56,7 +56,6 @@
     </div>
 </template>
 <script>
-import {formatDate} from '@/common/date.js';
 import Clipboard from 'clipboard';
 
 export default {
@@ -78,16 +77,6 @@ export default {
     },
     mounted() {
 
-    },
-    filters: {
-        formatDate(time) {
-            let date = new Date(time);
-            return formatDate(date, 'yyyy-MM-dd hh:mm:ss');
-        },
-        formatTime(time){
-            let date = new Date(time);
-            return formatDate(date,'hh:mm');
-        }
     },
     methods: {
         onCopy() {

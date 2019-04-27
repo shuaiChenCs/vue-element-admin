@@ -5,7 +5,7 @@
             <no-data v-if="page.total==0"></no-data>
             <div class="ai-item" v-for="(item,index) in behaviorList" :key="index">
                 <div class="time">
-                   {{item.createTime | formatDate}}
+                   {{item.createTime | formatDate('yyyy-MM-dd hh:mm')}}
                 </div>
                 <div class="ai-card" @click="$router.push('/address-book/person/'+item.directoryId)">
                     <img :src="item.userHeadImg" alt>
@@ -23,7 +23,6 @@
     </div>
 </template>
 <script>
-    import {formatDate} from '@/common/date.js';
 export default {
     data(){
         return {
@@ -36,12 +35,6 @@ export default {
     },
     created(){
         this.loadAi();
-    },
-    filters: {
-        formatDate(time) {
-            var date = new Date(time);
-            return formatDate(date, 'yyyy-MM-dd hh:mm');
-        }
     },
     methods:{
         loadmore(){

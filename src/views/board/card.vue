@@ -35,7 +35,7 @@
           <div class="custom-item" @click="$router.push('/address-book/person/'+user.directoryId)">
             <img :src="user.userHeadImg" alt>
             <span>{{user.userName}}</span>
-            <span class="time">{{user.createTime | formatDate}}</span>
+            <span class="time">{{user.createTime | formatDate('yyyy-MM-dd hh:mm:ss')}}</span>
           </div>
           <!--<div class="custom-item">-->
             <!--<img src="https://img.hrsugaphre.com/userHead/FA0C670A2C714C1CB4B1FDA684CCEF94.png" alt>-->
@@ -63,7 +63,6 @@
   </div>
 </template>
 <script>
-import {formatDate} from '@/common/date.js';
 let Highcharts = require("highcharts");
 export default {
     data(){
@@ -119,12 +118,6 @@ export default {
     // this.loadmap1();
     // this.loadmap2();
   },
-    filters: {
-        formatDate(time) {
-            var date = new Date(time);
-            return formatDate(date, 'yyyy-MM-dd hh:mm:ss');
-        }
-    },
   methods: {
       loadCss(){
           let ua = navigator.userAgent.toLowerCase();

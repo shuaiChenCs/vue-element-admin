@@ -10,7 +10,7 @@
                 <div class="custom-item" v-for="(item,index) in client" :key="index" @click="$router.push('/address-book/person/'+item.id)">
                     <img :src="item.headImg" alt>
                     <span>{{item.nikeName}}</span>
-                    <span class="time">{{item.createTime | formatDate}}</span>
+                    <span class="time">{{item.createTime | formatDate('yyyy-MM-dd hh:mm:ss')}}</span>
                 </div>
                 <no-more v-if="page.total != 0 && page.total==client.length"></no-more>
             </div>
@@ -18,7 +18,6 @@
     </div>
 </template>
 <script>
-import {formatDate} from '@/common/date.js';
 export default {
     data(){
         return{
@@ -30,12 +29,6 @@ export default {
     },
     created(){
         this.loadClient();
-    },
-    filters: {
-        formatDate(time) {
-            var date = new Date(time);
-            return formatDate(date, 'yyyy-MM-dd hh:mm:ss');
-        }
     },
     methods:{
         loadmore(){

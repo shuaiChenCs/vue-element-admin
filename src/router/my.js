@@ -73,6 +73,12 @@ export default [
         meta:{title:'邀请码'}
     },
     {
+        path: 'my/inviteFriend',
+        name: 'invite-code',
+        component: () => import(/* webpackChunkName: "my" */ '../views/my/invite-friend'),
+        meta:{title:'邀请好友'}
+    },
+    {
         path: 'my/playbill',
         name: 'playbill',
         component: () => import(/* webpackChunkName: "my" */ '../views/my/playbill'),

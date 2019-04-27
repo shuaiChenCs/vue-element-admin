@@ -11,7 +11,7 @@
                 <div class="custom-item" v-for="(item,index) in behaviorList" :key="index" @click="$router.push('/address-book/person/'+item.directoryId)">
                     <img :src="item.userHeadImg" alt>
                     <span>{{item.userName}}</span>
-                    <span class="time">{{item.createTime | formatDate}}</span>
+                    <span class="time">{{item.createTime | formatDate('yyyy-MM-dd hh:mm:ss')}}</span>
                 </div>
             </div>
             <no-more v-if="page.total!=0 && page.total==behaviorList.length"></no-more>
@@ -20,8 +20,6 @@
     </div>
 </template>
 <script>
-    import {formatDate} from "../../common/date";
-
     export default {
         data(){
             return{
@@ -33,12 +31,6 @@
         },
         created(){
             this.loadData();
-        },
-        filters:{
-            formatDate(time) {
-                var date = new Date(time);
-                return formatDate(date, 'yyyy-MM-dd hh:mm:ss');
-            }
         },
         methods:{
             loadmore(){
