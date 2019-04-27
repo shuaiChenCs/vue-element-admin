@@ -40,25 +40,25 @@ export default {
       show: false,
       selectedLabelDefault: "首页",
       tabs: [
-        {
-          label: "首页",
-          icon: `${this.$imageUrl}/tabbar_home02@2x.png`,
-          activeIcon: `${this.$imageUrl}/tabbar_home01@2x.png`
-        },
+        // {
+        //   label: "首页",
+        //   icon: `${this.$imageUrl}/tabbar_home02@2x.png`,
+        //   activeIcon: `${this.$imageUrl}/tabbar_home01@2x.png`
+        // },
+          {
+              label: "看板",
+              icon: `${this.$imageUrl}/tabbar_board02@2x.png`,
+              activeIcon: `${this.$imageUrl}/tabbar_board01@2x.png`
+          },
         {
           label: "通讯录",
           icon: `${this.$imageUrl}/tabbar_contacts02@2x.png`,
           activeIcon: `${this.$imageUrl}/tabbar_contacts01@2x.png`
         },
         {
-          label: "",
+          label: "快捷",
           icon: `${this.$imageUrl}/tabbar_add@3x.png`,
           activeIcon: `${this.$imageUrl}/tabbar_add@3x.png`
-        },
-        {
-          label: "看板",
-          icon: `${this.$imageUrl}/tabbar_board02@2x.png`,
-          activeIcon: `${this.$imageUrl}/tabbar_board01@2x.png`
         },
         {
           label: "我的",
@@ -84,7 +84,7 @@ export default {
           this.$router.push('/my/dynamic/add');
       },
     clickHandler(label) {
-      if(!label) {
+      if(label=='快捷') {
         this.show = true;
         return;
       }
