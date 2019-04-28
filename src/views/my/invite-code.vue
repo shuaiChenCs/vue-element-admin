@@ -21,7 +21,11 @@ export default {
         }
     },
     created(){
-        this.src = this.$store.state.user.inviteQrCode;
+        axios.get(this.$apiConfig.getCardPoster+this.$store.state.card.id,{}).then(res=>{
+            if(res.data.code==0){
+                this.src=res.data.data;
+            }
+        })
     },
     methods: {
         refresh(){
@@ -42,7 +46,7 @@ export default {
     .code-box{
         position: absolute;
         width: 590px/2;
-        height: 774px/2;
+        height: 974px/2;
         top: 50px;
         left: 50%;
         margin-left: -590px/4;
@@ -73,10 +77,10 @@ export default {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 230px;
+            height: 360px;
             img{
-                height: 150px;
-                width: 150px;
+                height: 90%;
+                width: 90%;
             }
         }
     }

@@ -59,5 +59,6 @@ const apiConfig = {
     getIMList:`app/member/list/im/account`, //根据imaccount查询会员列表,
     getFriend:`app/member/list/recommend`, //获取邀请好友,
     refreshCode:`/app/card/reset/poster`, //刷新二维码
+    getCardPoster:`app/card/get/poster/`, //获取海报二维码
 }
 export default apiConfig;
