@@ -17,6 +17,16 @@
                 <!--<input type="tel" v-model="price" placeholder="请输入商品价格"  maxlength="11" />-->
                 <input type='tel' v-model="price" placeholder="请输入商品价格"  onkeypress='return( /[\d]/.test(String.fromCharCode(event.keyCode) ) )' maxlength="11" />
             </div>
+            <div class="input-text">
+                <span>商品分类</span>
+                <input type='text' v-model="type" placeholder="请输入商品分类"  maxlength="6" />
+            </div>
+            <div class="tags">
+                <div class="tag-item"  v-for="(type,index) in typeList" :key="index" @click="typeClick(type)">
+                    {{type.name}}
+                    <i class="iconfont iconpopup_close" @click.self.stop="delType(type.id,index)"></i>
+                </div>
+            </div>
         </div>
 
         <div class="block-item-title">
@@ -68,15 +78,53 @@
                 price:'',
                 type:'',
                 typeId:0,
-                editRequest:true
+                editRequest:true,
+                selectTypeName:'',
+                typeList:[]
             };
         },
         created(){
             this.id = this.$route.params.id;
-            console.log(this.id)
             this.getGoodDetail(this.id);
+            axios.post(this.$apiConfig.getGoodsType+"?cardId="+this.$store.state.card.id,{}).then(res=>{
+                if(res.data.code==0){
+                    this.typeList = res.data.data.splice(1);
+                }
+            })
         },
         methods: {
+            delType(typeId,index){
+                let vm = this;
+                this.$createDialog({
+                    type: 'confirm',
+                    content: '确认是否删除',
+                    onConfirm(e){
+                        axios.delete(vm.$apiConfig.delGoodsType+typeId,{}).then(res=>{
+                            if(res.data.code==0){
+                                vm.typeList.splice(index,1);
+                            }else if(res.data.code ==3001){
+                                vm.$createDialog({
+                                    type: 'alert',
+                                    showClose: true,
+                                    title: res.data.message,
+                                    onClose: () => {
+                                        this.$createToast({
+                                            type: 'warn',
+                                            time: 1000,
+                                            txt: '点击关闭按钮'
+                                        }).show()
+                                    }
+                                }).show()
+                            }
+                        });
+                    }
+                }).show()
+            },
+            typeClick(type){
+                this.typeId=type.id;
+                this.type=type.name;
+                this.selectTypeName = type.name;
+            },
             getGoodDetail(id) {
                 axios.get(this.$apiConfig.getGoodDetail+"?id="+id,{}).then((res)=>{
                     if(res.data.code==0){
@@ -84,6 +132,7 @@
                         this.name = goodsDetail.name;
                         this.price = goodsDetail.price;
                         this.detail = goodsDetail.infoList;
+                        this.type=goodsDetail.typeName;
                         this.fileList = goodsDetail.bannerList.map(function (item) {
                             return item['imgUrl'];
                         });
@@ -151,6 +200,24 @@
     .goods-add {
         min-height: 100%;
         .block-item {
+            .tags{
+                display: flex;
+                margin-top:10px;
+                flex-wrap: wrap;
+                .tag-item {
+                    position: relative;
+                    padding: 10px 15px;
+                    background: #f8f8f8;
+                    margin-right: 10px;
+                    margin-bottom: 10px;
+                    border-radius: 20px;
+                    .iconpopup_close {
+                        position: absolute;
+                        top: -5px;
+                        right: -5px;
+                    }
+                }
+            }
             &.last{
                 padding-bottom: 128px/2;
             }

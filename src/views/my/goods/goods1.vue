@@ -14,7 +14,7 @@
         <input type="text" @input="inputFun" placeholder="搜索">
       </div>
     </div>
-    <div class="goods-type" v-if="data.length>0">
+    <div class="goods-type">
       <div class="h-scroll">
         <ul class="goods-ul">
           <li v-for="(item,index) in type " :class="{'active':typeId==item.id}" @click="typeClick(item.id)">{{item.name}}</li>
