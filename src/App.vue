@@ -11,7 +11,7 @@ export default {
         }
     },
     created(){
-        
+        let vm = this;
         let code = this.getUrlParam('code');
         // let url = this.getCrtUrl();
         // let url = 'https://h5.sipinoffice.com';
@@ -23,12 +23,25 @@ export default {
             //     window.localStorage.token = response.data.token;
             //     this.$store.commit('setToken', response.data.token);
             // }
-            let token = `eyJhbGciOiJIUzI1NiJ9.eyJwMSI6MzksInAyIjo0MywiZXhwIjoxNTU3MDM3NTcxLCJpYXQiOjE1NTYxNzM1NzF9.wy9tedxvPf00kXqUKQ01o6u6ZC5bVAlpVRfyBHVBiVw`;
+            
+            let token = `eyJhbGciOiJIUzI1NiJ9.eyJwMSI6MzcsInAyIjo0MSwiZXhwIjoxNTU3MjQzMzgyLCJpYXQiOjE1NTYzNzkzODJ9.g8jC71R6w1GolcgwHZqqF3zKwWzsv9TNb8_Uq6idzYY`;
             axios.defaults.headers['Authentication'] = token;
             window.localStorage.token =token;
             this.$store.commit('setToken', token);
-            this.$store.commit('initNim', {});
+             axios.get(this.$apiConfig.memberInfo,{}).then((res)=>{
+                let memberInfo = res.data.data;
+                vm.selfCard =  memberInfo.cardVO;
+                this.qrCode = memberInfo.qrCode;
+                this.recommendUser = memberInfo.recommendUser;
+                window.localStorage.card = JSON.stringify(vm.selfCard);
+                window.localStorage.user = JSON.stringify(memberInfo);
+                this.$store.commit('setCard', vm.selfCard);
+                this.$store.commit('setUser', memberInfo);
+            }).then(() => {
+                this.$store.commit('initNim', {});
+            });
         });
+       
         //wxconfig param
         // axios.get(this.$apiConfig.wxConfig+'?url='+encodeURIComponent(url),{}).then(res=>{
         //     if(res.data.code ==0){

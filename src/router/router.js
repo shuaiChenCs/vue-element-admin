@@ -4,6 +4,7 @@ import addressBook from './address-book';
 import my from './my';
 import board from './board';
 import main from './main';
+import chat from './chat';
 
 Vue.use(Router)
 
@@ -22,7 +23,8 @@ export default new Router({
         ...board,
         ...addressBook,
         ...my,
-        ...main
+        ...main,
+        ...chat
       ]
     }
   ]

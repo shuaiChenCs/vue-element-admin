@@ -20,6 +20,7 @@ import apiConfig from './api/apiConfig.js';
 Vue.config.productionTip = false
 Vue.prototype.$apiConfig=apiConfig;
 Vue.prototype.$imageUrl = 'https://images.sipinoffice.com/miniProgram/images';
+Vue.prototype.$emojiUrl = 'https://images.sipinoffice.com/miniProgram/emojis';
 Vue.prototype.$hastab;
 
 router.beforeEach((to,from,next)=>{

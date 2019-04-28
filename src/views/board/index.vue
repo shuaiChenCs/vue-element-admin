@@ -39,15 +39,15 @@
           </div>
         </div>
         <div class="scview-list">
-          <div class="message-item"  v-for="se in sessions" :key="se.id">
-                <img src="https://img.hrsugaphre.com/userHead/FA0C670A2C714C1CB4B1FDA684CCEF94.png" alt="">
+          <div class="message-item"  v-for="se in sessions" :key="se.id" @click="goTo(se)">
+                <img :src="se.card.headImg" alt="">
                 <div class="message-info">
                     <div class="top">
-                        <span class="name">Marco</span>
-                        <span class="time">{{se.lastMsg.userUpdateTime | formatDate('yyyy-MM-dd hh:mm:ss')}}</span>
+                        <span class="name">{{se.card.nikeName}}</span>
+                        <span class="time">{{se.updateTime | formatDate('yyyy-MM-dd hh:mm:ss')}}</span>
                     </div>
                     <div class="bottom">
-                        {{se.lastMsg.text}}
+                        {{se.lastMsg.type == 'text' ? se.lastMsg.text : '[图片消息]'}}
                     </div>
                 </div>
             </div>
@@ -65,7 +65,6 @@
         },
         computed: {
           sessions() {
-            console.log(this.$store.state.sessions)
             return this.$store.state.sessions
           }
         },
@@ -75,6 +74,11 @@
                 this.vo = res.data.data;
             }
          });
+        },
+        methods: {
+          goTo(item) {
+            this.$router.push({ path: '/chat', query: { user: item }});
+          }
         }
     }
 </script>

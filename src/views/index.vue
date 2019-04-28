@@ -71,7 +71,7 @@ export default {
   watch: {
     '$route'(val) {
       // this.hastab = val.meta.hastab;
-      console.log(val)
+      // console.log(val)
     }
   },
   methods: {

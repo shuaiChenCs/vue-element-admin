@@ -21,8 +21,14 @@ export default new Vuex.Store({
     token: '',
     nim: null,
     sessions: [],
+    userList: [],
+    toUser:{}
   },
   mutations: {
+    setToUser(state, user) {
+      console.log(user)
+      state.toUser = user;
+    },
     setCard(state, card) {
 			state.card = card
     },
@@ -37,6 +43,9 @@ export default new Vuex.Store({
     },
     setSessions(state, sessions) {
       state.sessions = sessions;
+    },
+    setUserList(state, list) {
+      state.userList = list;
     }
   },
   actions: {
