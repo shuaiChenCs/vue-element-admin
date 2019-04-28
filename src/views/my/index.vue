@@ -71,16 +71,20 @@ export default {
     created(){
         let vm = this;
         //获取会员信息
-        axios.get(this.$apiConfig.memberInfo,{}).then((res)=>{
-            let memberInfo = res.data.data;
-            vm.selfCard =  memberInfo.cardVO;
-            this.qrCode = memberInfo.qrCode;
-            this.recommendUser = memberInfo.recommendUser;
-            window.localStorage.card = JSON.stringify(vm.selfCard);
-            window.localStorage.user = JSON.stringify(memberInfo);
-            this.$store.commit('setCard', vm.selfCard);
-            this.$store.commit('setUser', memberInfo);
-       });
+       //  axios.get(this.$apiConfig.memberInfo,{}).then((res)=>{
+       //      let memberInfo = res.data.data;
+       //      vm.selfCard =  memberInfo.cardVO;
+       //      this.qrCode = memberInfo.qrCode;
+       //      this.recommendUser = memberInfo.recommendUser;
+       //      window.localStorage.card = JSON.stringify(vm.selfCard);
+       //      window.localStorage.user = JSON.stringify(memberInfo);
+       //      this.$store.commit('setCard', vm.selfCard);
+       //      this.$store.commit('setUser', memberInfo);
+       // });
+        let memberInfo = this.$store.state.user;
+        this.selfCard = memberInfo.cardVO;
+        this.qrCode = memberInfo.qrCode;
+        this.recommendUser = memberInfo.recommendUser;
         axios.get(this.$apiConfig.customer,{}).then(res=>{
             if(res.data.code==0){
                 this.customer = res.data.data.customerServiceQrCode;

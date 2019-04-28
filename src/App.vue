@@ -11,35 +11,28 @@ export default {
         }
     },
     created(){
-        let vm = this;
         let code = this.getUrlParam('code');
         // let url = this.getCrtUrl();
         // let url = 'https://h5.sipinoffice.com';
         //登录，设置全局token
         axios.post(this.$apiConfig.officialRegister+'?code='+code).then(res=> {
-            // if(res.data.code==0) {
-            //     let response = res.data;
-            //     axios.defaults.headers['Authentication'] = response.data.token;
-            //     window.localStorage.token = response.data.token;
-            //     this.$store.commit('setToken', response.data.token);
-            // }
-            
-            let token = `eyJhbGciOiJIUzI1NiJ9.eyJwMSI6MzcsInAyIjo0MSwiZXhwIjoxNTU3MjQzMzgyLCJpYXQiOjE1NTYzNzkzODJ9.g8jC71R6w1GolcgwHZqqF3zKwWzsv9TNb8_Uq6idzYY`;
-            axios.defaults.headers['Authentication'] = token;
-            window.localStorage.token =token;
-            this.$store.commit('setToken', token);
-             axios.get(this.$apiConfig.memberInfo,{}).then((res)=>{
-                let memberInfo = res.data.data;
-                vm.selfCard =  memberInfo.cardVO;
-                this.qrCode = memberInfo.qrCode;
-                this.recommendUser = memberInfo.recommendUser;
-                window.localStorage.card = JSON.stringify(vm.selfCard);
-                window.localStorage.user = JSON.stringify(memberInfo);
-                this.$store.commit('setCard', vm.selfCard);
-                this.$store.commit('setUser', memberInfo);
-            }).then(() => {
-                this.$store.commit('initNim', {});
-            });
+            if(res.data.code==0) {
+                let response = res.data;
+                axios.defaults.headers['Authentication'] = response.data.token;
+                window.localStorage.token = response.data.token;
+                this.$store.commit('setToken', response.data.token);
+                axios.get(this.$apiConfig.memberInfo, {}).then((member) => {
+                    if(member.data.code==0) {
+                        let memberInfo = member.data.data;
+                        window.localStorage.card = JSON.stringify(memberInfo.cardVO);
+                        window.localStorage.user = JSON.stringify(memberInfo);
+                        this.$store.commit('setCard', memberInfo.cardVO);
+                        this.$store.commit('setUser', memberInfo);
+                    }
+                }).then(() => {
+                    this.$store.commit('initNim', {});
+                });
+            }
         });
        
         //wxconfig param
