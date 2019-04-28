@@ -240,6 +240,7 @@ export default {
   .goods-type {
     .goods-ul{
       padding: 20px 15px;
+      white-space:nowrap;
       li{
         display: inline-block;
         margin-right: 25px;
