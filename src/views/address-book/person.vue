@@ -11,7 +11,7 @@
                 <div class="bottom">互动次数{{personInfo.interact}}</div>
             </div>
             <div class="copy">
-                <button>留言</button>
+                <button @click="chat(personInfo)">留言</button>
                 <button  v-clipboard:success="onCopy" v-clipboard:copy="personInfo.nikeName" >复制昵称</button>
             </div>
         </div>
@@ -79,6 +79,12 @@ export default {
 
     },
     methods: {
+        chat(item) {
+            let params = {
+                card: item
+            }
+            this.$router.push({ path: '/chat', query: { user: params }});
+        },
         onCopy() {
             this.$createToast({
                 txt: '复制成功',

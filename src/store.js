@@ -16,6 +16,7 @@ try {
 }
 export default new Vuex.Store({
   state: {
+    group: [],
     card: card,
     user: user,
     token: '',
@@ -25,6 +26,9 @@ export default new Vuex.Store({
     toUser:{}
   },
   mutations: {
+    setGroup(state, arr) {
+      state.group = arr;
+    },
     setToUser(state, user) {
       console.log(user)
       state.toUser = user;

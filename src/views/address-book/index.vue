@@ -20,7 +20,8 @@
             <div class="custom-item">
               <img :src="item.headImg" alt>
               <span>{{item.nikeName || item.name}}</span>
-              <i v-if="item.icon" class="iconfont iconlist_more"></i>
+              <div v-if="count && item.count" class="count">{{count}}</div>
+              <i v-if="item.icon && !count && !item.count" class="iconfont iconlist_more"></i>
             </div>
           </cube-index-list-item>
         </cube-index-list-group>
@@ -32,6 +33,7 @@
 export default {
   data() {
     return {
+        count: 0,
         directiony: [
             {
                 name: "",
@@ -40,7 +42,8 @@ export default {
                         name: "客户留言",
                         headImg: `${this.$imageUrl}/contacts_source@3x.png`,
                         value: 1,
-                        icon: true
+                        icon: true,
+                        count: true
                     },
                     {
                         name: "群发消息",
@@ -67,10 +70,14 @@ export default {
       listDirectiony: [],
       searching: false,
         name:'',
-        showClean:false
+        showClean:false,
     };
   },
   created() {
+    let sessions = this.$store.state.sessions;
+    sessions.forEach(element => {
+      this.count += element.unread;
+    });
     this.load();
   },
   watch: {
@@ -112,6 +119,7 @@ export default {
         this.$router.push("/address-book/tags");
       }
       if (item.name == "客户留言") {
+        this.count = 0;
         this.$router.push("/address-book/message");
       }
       if (item.name == "群发消息") {

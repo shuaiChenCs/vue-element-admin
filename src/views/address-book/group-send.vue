@@ -51,7 +51,7 @@
 export default {
   data() {
     return {
-        listDirectiony:[],
+      listDirectiony:[],
       searching: false,
       checked: false,
         name:''
@@ -78,7 +78,25 @@ export default {
               }
           })
       },
-    save() {}
+    save() {
+      let arr = [];
+      this.listDirectiony.clientAddressBookVOList.forEach(item => {
+        item.items.forEach(sub => {
+          if(sub.isCheck) {
+            arr.push(sub);
+          }
+        })
+      });
+      if(arr.length == 0) {
+        this.$createToast({
+            txt: '请最少选择一个人',
+            type: 'warn'
+        }).show()
+      }else{
+        this.$store.commit('setGroup', arr);
+        this.$router.push('/group-chat');
+      }
+    }
   },
     watch: {
         checked(val) {

@@ -82,6 +82,17 @@ textarea, input{
     border-bottom: 1Px solid rgba(237, 238, 241, 1);
     align-items: center;
 }
+
+.custom-item .count{
+    background: #F53B3B;
+    border-radius: 50%;
+    color: white;
+    height: 20px;
+    width: 20px;
+    line-height: 20px;
+    text-align: center;
+    font-size: 12px;
+  }
 .custom-item img {
     height: 40px;
     width: 40px;

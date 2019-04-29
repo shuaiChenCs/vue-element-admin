@@ -62,3 +62,11 @@ Vue.filter('dateDiff',(serverDate, date)=>{
 function padLeftZero (str) {
     return ('00' + str).substr(str.length);
 };
+
+
+Vue.filter('substr',(str)=>{
+    if(str.length >= 18) {
+        str = str.substr(0, 19) + '...';
+    }
+    return str;
+});

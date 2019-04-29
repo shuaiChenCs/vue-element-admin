@@ -60,5 +60,6 @@ const apiConfig = {
     getFriend:`app/member/list/recommend`, //获取邀请好友,
     refreshCode:`/app/card/reset/poster`, //刷新二维码
     getCardPoster:`app/card/get/poster/`, //获取海报二维码
+	messageNotity: `/app/notify/leave/notify`,//消息推送
 }
 export default apiConfig;

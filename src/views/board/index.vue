@@ -47,7 +47,7 @@
                         <span class="time">{{se.updateTime | formatDate('yyyy-MM-dd hh:mm:ss')}}</span>
                     </div>
                     <div class="bottom">
-                        {{se.lastMsg.type == 'text' ? se.lastMsg.text : '[图片消息]'}}
+                        {{se.lastMsg.type == 'text' ? se.lastMsg.text : '[图片消息]'  | substr}}
                     </div>
                 </div>
             </div>

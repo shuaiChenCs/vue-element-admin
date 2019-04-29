@@ -1,23 +1,12 @@
 <template>
     <div class="chat">
-        <div class="content" ref="content">
-			<div class="msg-item" v-for="(msg, index) in historyMsgObj.msgs" :key="index">
-				<div :class="{to: toUser.card.imAccount == msg.fromNick}" v-if="toUser.card.imAccount == msg.fromNick">
-					<img :src="toUser.card.headImg" alt="">
-					<div v-if="msg.type == 'text'" class="text" v-html="msg.strings"></div>
-					<div v-if="msg.type == 'image'" class="image">
-						<img @click="previewImg(msg.file.url)" :src="msg.file.url" :style="{width: msg.file.w + 'px', height: msg.file.h + 'px'}">
-					</div>
-				</div>
-				<div :class="{from: account == msg.fromNick}" v-if="account == msg.fromNick">
-					<div v-if="msg.type == 'text'" class="text" v-html="msg.strings"></div>
-					<div v-if="msg.type == 'image'" class="image">
-						<img @click="previewImg(msg.file.url)" :src="msg.file.url" :style="{width: msg.file.w + 'px', height: msg.file.h + 'px'}">
-					</div>
-					<img :src="self.headImg" alt="">
-				</div>
+		<div class="content" ref="content" v-if="true">
+			<div class="title">你将发消息给{{group.length}}位客户</div>
+			<div class="list">
+				{{groupStr}}
 			</div>
 		</div>
+        
 		<div class="input-warp">
 			<div class="input-box">
                 <img :src="$imageUrl+'/chat_add.png'" @click="setFlag = !setFlag; emojiFlag = false;">
@@ -66,6 +55,8 @@ import event from '@/lib/eventBus.js';
 export default {
     data() {
         return {
+			group: [],
+			groupStr: '',
 			showhuashu: false,
             self: this.$store.state.user,
             nim: this.$store.state.nim,
@@ -81,20 +72,18 @@ export default {
         }
     },
     created() {
+		this.getSpeechcraft();
+		this.getGroup();
 		event.$on('onmsg', this.onmsg);
     },
     mounted() {
-		let toUser = this.$route.query.user;
-		if(typeof(toUser) == 'string'){
-			this.toUser = this.$store.state.toUser;
-		}else{
-			this.$store.commit('setToUser', toUser);
-			this.toUser = toUser;
-		}
-		this.getHistoryMsgs();
-		this.getSpeechcraft();
     },
     methods: {
+		getGroup() {
+			this.group = this.$store.state.group;
+			let strArr = this.group.map(item => item.nikeName);
+			this.groupStr = strArr.join('、');
+		},
 		gethuas(content) {
 			this.inputVal = content;
 			this.$refs.input.focus();
@@ -109,23 +98,37 @@ export default {
                 }
             });
 		},
+		messageNotity(id) {
+			let params = {
+				"formUserId": this.self.id,
+				"toUserId": id
+			};
+			axios.post(this.$apiConfig.messageNotity, params).then(res=>{
+				if(res.data.code==0){
+					console.log('推送成功')
+				}
+			});
+		},
 		fileInput() {
 			let _this = this;
-			this.nim.sendFile({
-				scene: 'p2p',
-				to: _this.toUser.card.imAccount,
-				type: 'image',
-				fileInput: 'file',
-				done: sendMsgDone
-			});
+			this.group.forEach(item => {
+				this.nim.sendFile({
+					scene: 'p2p',
+					to: item.imAccount,
+					type: 'image',
+					fileInput: 'file',
+					done: sendMsgDone
+				});
+				this.messageNotity(item.id);
+			})
+			this.$router.replace('/address-book/message');
 			function sendMsgDone(err, obj) {
 				_this.pushMsg(obj);
 				_this.setFlag = false;
-				_this.messageNotity();
 			}
 		},
 		onmsg(msg) {
-			if((msg.from == this.account && msg.to == this.toUser.card.imAccount) || (msg.to == this.account && msg.from == this.toUser.card.imAccount)){
+			if((msg.from == this.account && msg.to == this.toUser.to) || (msg.to == this.account && msg.from == this.toUser.to)){
 				// this.inputFcous = false;
 				this.pushMsg(msg);
 			}
@@ -137,60 +140,40 @@ export default {
 			this.emojiFlag = false;
 			this.setFlag = false;
 			document.body.scrollTop = 999999;
+			let obj = this.$refs.input;
+			let len = this.inputVal.length;
+			if (document.selection) {
+				let sel = obj.createTextRange();
+				sel.moveStart('character', len);
+				sel.collapse();
+				sel.select();
+			} else if (typeof obj.selectionStart === 'number' && typeof obj.selectionEnd === 'number'){
+				obj.selectionStart = obj.selectionEnd = len;
+			}
 		},
 		scrollToBottom() {
-			setTimeout(() => {
-				this.$refs.content.scrollTop = 9999999;
-			}, 200);
+			// setTimeout(() => {
+			// 	this.$refs.content.scrollTop = 9999999;
+			// }, 200);
 		},
-        getHistoryMsgs() {
-            let _this = this;
-            _this.nim.getHistoryMsgs({
-                scene: 'p2p',
-                to: this.toUser.card.imAccount,
-                asc: true,
-                done: getHistoryMsgsDone
-            })
-            function getHistoryMsgsDone(err, obj) {
-                if(obj) {
-                    obj.msgs.map(msg => {
-                        if(msg.type == 'text') {
-                            msg.strings = _this.buildEmoji(msg.text);
-                        }
-                    });
-					_this.historyMsgObj = obj;
-					_this.$nextTick(() => {
-						_this.scrollToBottom();
-					})
-                }
-            }
-        },
         send() {
 			this.$refs.input.blur();
 			this.emojiFlag = false;
 			let _this = this;
-			let msg = _this.nim.sendText({
-				scene: 'p2p',
-				to: this.toUser.card.imAccount,
-				text: this.inputVal,
-				done: sendMsgDone
-			});
+			this.group.forEach(item => {
+				_this.nim.sendText({
+					scene: 'p2p',
+					to: item.imAccount,
+					text: this.inputVal,
+					done: sendMsgDone
+				});
+				_this.messageNotity(item.id);
+			})
+			this.$router.replace('/address-book/message');
 			function sendMsgDone(error, msg) {
 				_this.pushMsg(msg);
 				_this.inputVal = '';
-				_this.messageNotity();
 			}
-		},
-		messageNotity() {
-			let params = {
-				"formUserId": this.self.id,
-				"toUserId": this.toUser.card.id
-			};
-			axios.post(this.$apiConfig.messageNotity, params).then(res=>{
-				if(res.data.code==0){
-					console.log('推送成功')
-				}
-			});
 		},
 		pushMsg(msgs) {
 			if (!Array.isArray(msgs)) { msgs = [msgs]; }
@@ -200,9 +183,6 @@ export default {
 				}
 			});
 			this.historyMsgObj.msgs = this.nim.mergeMsgs(this.historyMsgObj.msgs, msgs);
-			this.$nextTick(()=> {
-				this.scrollToBottom();
-			});
 		},
         inputBlur() {
 			document.body.scrollTop = 0;
@@ -218,11 +198,6 @@ export default {
             }
             return text;
         },
-        previewImg(url) {
-			this.$createImagePreview({
-				imgs: [url]
-			}).show()
-        }
     }
 }
 </script>
@@ -238,72 +213,15 @@ export default {
         overflow-y: auto;
         flex: 1;
 		padding: 15px;
-		.msg-item{
-			.from, .to{
-				margin-bottom: 15px;
-				
-			}
-			.from{
-				display: flex;
-				justify-content: flex-end;
-				.text{
-					overflow: hidden;
-					white-space: pre-wrap;
-					word-break: break-all;
-					max-width: 200px;
-					background: #1ED29A;
-					color: white;
-					font-size: 14px;
-					padding: 14px 19px 14px 19px;
-					line-height: 1.5;
-                    border-radius: 20px 0 20px 20px;
-				}
-				>img{
-					border: 1Px solid #1ED29A;
-					width: 35px;
-					height: 35px;
-					border-radius: 50%;
-					margin-left: 13px;
-				}
-				.image{
-					max-width: 200px;
-					max-height: 250px;
-					img{
-					    max-width: 100% !important;
-						height: 100% !important;
-					}
-				}
-			}
-			.to{
-				display: flex;
-				>img{
-					border: 1Px solid #1ED29A;
-					width: 35px;
-					height: 35px;
-					border-radius: 50%;
-					margin-right: 13px;
-				}
-				.image{
-					width: 200px;
-					height: 250px;
-					img{
-					    width: 100% !important;
-						height: 100% !important;
-					}
-				}
-				.text{
-					overflow: hidden;
-					white-space: pre-wrap;
-					word-break: break-all;
-					max-width: 200px;
-					background: rgba(243,245,247,1);
-					color: #323643;
-					font-size: 14px;
-					padding: 14px 15px;
-					line-height: 1.5;
-                    border-radius: 0 20px 20px 20px;
-				}
-			}
+		background: white;
+		.list{
+			margin-top: 20px;
+			box-shadow:0px 0px 18px 2px rgba(0, 0, 0, 0.1);
+			border-radius: 5px;
+			padding: 10px;
+			font-size: 13px;
+			line-height: 1.5;
+			word-break: normal;
 		}
 	}
 	.input-warp{
