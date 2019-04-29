@@ -8,7 +8,7 @@ import store from '../store'
 // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
-axios.defaults.headers['Authentication'] = localStorage.getItem('token');
+axios.defaults.headers['Authentication'] = sessionStorage.getItem('token');
 let config = {
   baseURL: 'https://api.sipinoffice.com/',
   timeout: 60 * 1000, // Timeout

@@ -5,12 +5,12 @@ import im from './lib/im.js';
 Vue.use(Vuex)
 let card,user;
 try {
-  card = JSON.parse(localStorage.getItem('card')) || {};
+  card = JSON.parse(sessionStorage.getItem('card')) || {};
 } catch (error) {
   card = {};
 }
 try {
-  user = JSON.parse(localStorage.getItem('user')) || {};
+  user = JSON.parse(sessionStorage.getItem('user')) || {};
 } catch (error) {
   user = {};
 }

@@ -28,7 +28,7 @@
             <my-block :blockData="data2" :title="'我的数据'"></my-block>
             <my-block :blockData="data3" :title="'其他'"></my-block>
         </div>
-        <div class="yaoqingren">您的邀请人： {{recommendUser.nikeName}}</div>
+        <div class="yaoqingren">您的邀请人： {{recommendUser && recommendUser.nikeName || '心脉科技'}}</div>
     </div>
 </template>
 <script>
