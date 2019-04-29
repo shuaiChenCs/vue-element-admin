@@ -22,21 +22,12 @@ export default {
                     axios.defaults.headers['Authentication'] = response.data.token;
                     window.localStorage.token = response.data.token;
                     this.$store.commit('setToken', response.data.token);
-                    axios.get(this.$apiConfig.memberInfo, {}).then((member) => {
-                        if (member.data.code == 0) {
-                            let memberInfo = member.data.data;
-                            window.localStorage.card = JSON.stringify(memberInfo.cardVO);
-                            window.localStorage.user = JSON.stringify(memberInfo);
-                            this.$store.commit('setCard', memberInfo.cardVO);
-                            this.$store.commit('setUser', memberInfo);
-                        }
-                    }).then(() => {
-                        this.$store.commit('initNim', {});
-                    });
+                    this.loadUserInfo();
                 }
             });
+        }else {
+            this.loadUserInfo();
         }
-       
         //wxconfig param
         // axios.get(this.$apiConfig.wxConfig+'?url='+encodeURIComponent(url),{}).then(res=>{
         //     if(res.data.code ==0){
@@ -46,6 +37,19 @@ export default {
         // });
     },
     methods:{
+        loadUserInfo(){
+            axios.get(this.$apiConfig.memberInfo, {}).then((member) => {
+                if (member.data.code == 0) {
+                    let memberInfo = member.data.data;
+                    window.localStorage.card = JSON.stringify(memberInfo.cardVO);
+                    window.localStorage.user = JSON.stringify(memberInfo);
+                    this.$store.commit('setCard', memberInfo.cardVO);
+                    this.$store.commit('setUser', memberInfo);
+                }
+            }).then(() => {
+                this.$store.commit('initNim', {});
+            });
+        },
         getUrlParam (name) {
             let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)');
             let r = window.location.search.substr(1).match(reg);
