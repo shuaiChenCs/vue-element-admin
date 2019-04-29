@@ -57,8 +57,8 @@ export default {
         },
         {
           label: "快捷",
-          icon: `${this.$imageUrl}/tabbar_add@3x.png`,
-          activeIcon: `${this.$imageUrl}/tabbar_add@3x.png`
+          icon: `${this.$imageUrl}/tabber_add01@3x.png`,
+          activeIcon: `${this.$imageUrl}/tabber_add02@3x.png`
         },
         {
           label: "我的",
