@@ -15,7 +15,7 @@ export default {
         // let url = this.getCrtUrl();
         // let url = 'https://h5.sipinoffice.com';
         //登录，设置全局token
-        if(!this.$store.state.token) {
+        if(!localStorage.token) {
             axios.post(this.$apiConfig.officialRegister + '?code=' + code).then(res => {
                 if (res.data.code == 0) {
                     let response = res.data;
