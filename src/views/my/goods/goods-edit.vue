@@ -15,7 +15,7 @@
             <div class="input-text">
                 <span>商品价格</span>
                 <!--<input type="tel" v-model="price" placeholder="请输入商品价格"  maxlength="11" />-->
-                <input type='tel' v-model="price" placeholder="请输入商品价格"  onkeypress='return( /[\d]/.test(String.fromCharCode(event.keyCode) ) )' maxlength="11" />
+                <input type='tel' v-model="price" placeholder="请输入商品价格"  onkeyup="this.value=(this.value.match(/^\d+\.?\d*/)||[''])[0]" maxlength="11" />
             </div>
             <div class="input-text">
                 <span>商品分类</span>
