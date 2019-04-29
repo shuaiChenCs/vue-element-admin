@@ -39,7 +39,7 @@
           </div>
         </div>
         <div class="scview-list">
-          <div class="message-item"  v-for="se in sessions" :key="se.id" @click="goTo(se)">
+          <div class="message-item"  v-for="se in sessions.slice(0, 10)" :key="se.id" @click="goTo(se)">
                 <img :src="se.card.headImg" alt="">
                 <div class="message-info">
                     <div class="top">
@@ -86,7 +86,6 @@
 <style lang="less" scoped>
 .board {
   height: 100%;
-  padding-bottom: 35px;
   .block-item-title {
     color: black;
   }
@@ -168,6 +167,11 @@
     }
   }
   .scview {
+    background: #F8F8F8;
+    padding-bottom: 50px;
+    .scview-list{
+      background: white;
+    }
     .message-item{
         &:last-child{
             // border-bottom: none;
@@ -204,6 +208,7 @@
         }
     }
     .block-item-title {
+      background: white;
       > div {
         display: flex;
         align-items: center;
