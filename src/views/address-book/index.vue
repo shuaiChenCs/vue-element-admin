@@ -33,6 +33,7 @@
 export default {
   data() {
     return {
+        asessions: [],
         count: 0,
         directiony: [
             {
@@ -71,11 +72,13 @@ export default {
       searching: false,
         name:'',
         showClean:false,
+        nim: this.$store.state.nim,
     };
   },
   created() {
-    let sessions = this.$store.state.sessions;
-    sessions.forEach(element => {
+      this.count=0;
+    this.asessions = this.$store.state.sessions;
+    this.asessions.forEach(element => {
       this.count += element.unread;
     });
     this.load();
@@ -119,7 +122,7 @@ export default {
         this.$router.push("/address-book/tags");
       }
       if (item.name == "客户留言") {
-        this.count = 0;
+          this.nim.resetAllSessionUnread();
         this.$router.push("/address-book/message");
       }
       if (item.name == "群发消息") {

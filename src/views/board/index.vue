@@ -3,16 +3,16 @@
     <div class="board-header">
       <div class="header-back">
         <div class="top" @click="$router.push('/board/last-add')">
-          <span class="num">{{vo.users}}</span>
+          <span class="num">{{vo.users || 0}}</span>
           <span class="title">昨日新增</span>
         </div>
         <div class="bottom">
           <div class="left" @click="$router.push('/board/last-scview')">
-            <span class="num">{{vo.browse}}</span>
+            <span class="num">{{vo.browse || 0}}</span>
             <span class="title">昨日浏览</span>
           </div>
           <div class="right" @click="$router.push('/address-book')">
-            <span class="num">{{vo.count}}</span>
+            <span class="num">{{vo.count || 0}}</span>
             <span class="title">累计客户</span>
           </div>
         </div>
