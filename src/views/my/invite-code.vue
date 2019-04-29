@@ -10,14 +10,16 @@
                 <img :src="src" alt="">
             </div>
         </div>
-        <fixed-button :title="'刷新二维码'" @clickHandler="refresh" style="background: none"></fixed-button>
+        <fixed-button :title="title" :disabled="time>0" @clickHandler="refresh" style="background: none"></fixed-button>
     </div>
 </template>
 <script>
 export default {
     data(){
         return {
-            src:''
+            src:'',
+            time:0,
+            title:'刷新二维码'
         }
     },
     created(){
@@ -29,9 +31,13 @@ export default {
     },
     methods: {
         refresh(){
+            this.time=1;
+            this.title='刷新中..'
             axios.post(this.$apiConfig.refreshCode,{}).then(res=>{
                if(res.data.code==0){
-                   this.src = this.data.data;
+                   this.src = res.data.data;
+                   this.time=0;
+                   this.title ='刷新二维码'
                }
             });
         }
