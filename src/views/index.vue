@@ -112,7 +112,7 @@ export default {
 <style lang="less" scoped>
 .sp {
   .fabu{
-    padding-top: 100%;
+    padding-top: 80%;
     height: 100vh;
     position: fixed;
     width: 100%;
@@ -124,7 +124,7 @@ export default {
       display: flex;
       align-items: center;
       i{
-        font-size: 20px;
+        font-size: 30px;
       }
       img{
         height: 65px;

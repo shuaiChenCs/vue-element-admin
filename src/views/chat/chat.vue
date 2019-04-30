@@ -20,7 +20,7 @@
 		</div>
 		<div class="input-warp">
 			<div class="input-box">
-                <img :src="$imageUrl+'/chat_add.png'" @click="setFlag = !setFlag; emojiFlag = false;">
+                <img :src="$imageUrl+'/chat_add.png'" @click="plusHandler">
 				<textarea  @blur="inputBlur" @focus="inputFocus" ref="input" type="text" placeholder="请输入..." v-model="inputVal" ></textarea>
 				<img :src="$imageUrl+'/chat_face.png'" @click="emojiFlag = !emojiFlag; setFlag = false;">
 				<img style="margin-right: 0;" :src="$imageUrl+'/moment_send.png'" alt="" @click="send">
@@ -96,9 +96,25 @@ export default {
 		this.getSpeechcraft();
     },
     methods: {
+		plusHandler() {
+			this.setFlag = !this.setFlag;
+			this.emojiFlag = false;
+			if(!this.setFlag) {
+				this.showhuashu = false;
+			}
+		},
 		gethuas(content) {
-			this.inputVal = content;
-			this.$refs.input.focus();
+			let _this = this;
+			let msg = _this.nim.sendText({
+				scene: 'p2p',
+				to: this.toUser.card.imAccount,
+				text: content,
+				done: sendMsgDone
+			});
+			function sendMsgDone(error, msg) {
+				_this.pushMsg(msg);
+				_this.messageNotity();
+			}
 			this.$nextTick(() => {
 				document.body.scrollTop = 9999999;
 			})
@@ -334,14 +350,19 @@ export default {
 			}
 		}
 		.emojis{
+        	-webkit-overflow-scrolling : touch;
 			border-top: 1Px solid rgba(237,238,241,1);
 			height: 250px;
 			padding: 15px/2;
 			display: flex;
 			flex-wrap: wrap;
+			overflow: auto;
 			>div{
-				width: 25px;
-				height: 25px;
+				width: 35px;
+				height: 35px;
+				display: flex;
+				justify-content: center;
+				align-content: center;
 				img{
 					width: 25px;
 					height: 25px;

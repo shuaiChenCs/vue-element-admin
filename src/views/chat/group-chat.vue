@@ -9,7 +9,7 @@
         
 		<div class="input-warp">
 			<div class="input-box">
-                <img :src="$imageUrl+'/chat_add.png'" @click="setFlag = !setFlag; emojiFlag = false;">
+                <img :src="$imageUrl+'/chat_add.png'" @click="plusHandler">
 				<textarea  @blur="inputBlur" @focus="inputFocus" ref="input" type="text" placeholder="请输入..." v-model="inputVal" ></textarea>
 				<img :src="$imageUrl+'/chat_face.png'" @click="emojiFlag = !emojiFlag; setFlag = false;">
 				<img style="margin-right: 0;" :src="$imageUrl+'/moment_send.png'" alt="" @click="send">
@@ -79,17 +79,33 @@ export default {
     mounted() {
     },
     methods: {
+		plusHandler() {
+			this.setFlag = !this.setFlag;
+			this.emojiFlag = false;
+			if(!this.setFlag) {
+				this.showhuashu = false;
+			}
+		},
 		getGroup() {
 			this.group = this.$store.state.group;
 			let strArr = this.group.map(item => item.nikeName);
 			this.groupStr = strArr.join('、');
 		},
 		gethuas(content) {
-			this.inputVal = content;
-			this.$refs.input.focus();
-			this.$nextTick(() => {
-				document.body.scrollTop = 9999999;
+			let _this = this;
+			this.group.forEach(item => {
+				_this.nim.sendText({
+					scene: 'p2p',
+					to: item.imAccount,
+					text: content,
+					done: sendMsgDone
+				});
+				_this.messageNotity(item.id);
 			})
+			function sendMsgDone(error, msg) {
+				_this.pushMsg(msg);
+			}
+			this.$router.replace('/address-book/message');
 		},
 		getSpeechcraft() {
 			axios.post(this.$apiConfig.verbalList, {content: ''}).then(res=>{
@@ -251,14 +267,19 @@ export default {
 			}
 		}
 		.emojis{
+        	-webkit-overflow-scrolling : touch;
 			border-top: 1Px solid rgba(237,238,241,1);
 			height: 250px;
 			padding: 15px/2;
 			display: flex;
 			flex-wrap: wrap;
+			overflow: auto;
 			>div{
-				width: 25px;
-				height: 25px;
+				width: 35px;
+				height: 35px;
+				display: flex;
+				justify-content: center;
+				align-content: center;
 				img{
 					width: 25px;
 					height: 25px;
