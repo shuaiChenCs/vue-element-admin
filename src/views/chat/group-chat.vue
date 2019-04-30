@@ -139,7 +139,9 @@ export default {
 		inputFocus() {
 			this.emojiFlag = false;
 			this.setFlag = false;
-			document.body.scrollTop = 999999;
+			setTimeout(() => {
+				document.body.scrollTop = 999999;
+			},100)
 			let obj = this.$refs.input;
 			let len = this.inputVal.length;
 			if (document.selection) {
