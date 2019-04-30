@@ -14,7 +14,7 @@
       </div>
       <div class="input-text">
         <span>商品价格</span>
-        <input type='tel' v-model="price" placeholder="请输入商品价格"  onkeyup="this.value=(this.value.match(/^\d+\.?\d*/)||[''])[0]" maxlength="11" />
+        <input type='text' v-model="price" placeholder="请输入商品价格"  onkeyup="this.value=(this.value.match(/^\d+\.?\d*/)||[''])[0]" maxlength="11" />
       </div>
       <div class="input-text">
         <span>商品分类</span>
