@@ -5,6 +5,7 @@
 </template>
 
 <script>
+  import eventBus from '@/lib/eventBus.js'
 export default {
     data(){
         return {
@@ -16,13 +17,14 @@ export default {
         // let url = 'https://h5.sipinoffice.com';
         //登录，设置全局token
         if(!sessionStorage.token) {
-            axios.post(this.$apiConfig.officialRegister + '?code=' + code).then(res => {
+           axios.post(this.$apiConfig.officialRegister + '?code=' + code).then(res => {
                 if (res.data.code == 0) {
                     let response = res.data;
                     axios.defaults.headers['Authentication'] = response.data.token;
                     window.sessionStorage.token = response.data.token;
                     this.$store.commit('setToken', response.data.token);
                     this.loadUserInfo();
+                    eventBus.$emit('setToken')
                 }
             });
         }else {

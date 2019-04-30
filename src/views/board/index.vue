@@ -3,16 +3,16 @@
     <div class="board-header">
       <div class="header-back">
         <div class="top" @click="$router.push('/board/last-add')">
-          <span class="num">{{vo.users || 0}}</span>
+          <span class="num">{{yesterdayCount.users || 0}}</span>
           <span class="title">昨日新增</span>
         </div>
         <div class="bottom">
           <div class="left" @click="$router.push('/board/last-scview')">
-            <span class="num">{{vo.browse || 0}}</span>
+            <span class="num">{{yesterdayCount.browse || 0}}</span>
             <span class="title">昨日浏览</span>
           </div>
           <div class="right" @click="$router.push('/address-book')">
-            <span class="num">{{vo.count || 0}}</span>
+            <span class="num">{{yesterdayCount.count || 0}}</span>
             <span class="title">累计客户</span>
           </div>
         </div>
@@ -57,10 +57,15 @@
   </div>
 </template>
 <script>
+    import eventBus from '@/lib/eventBus.js'
     export default {
         data(){
             return {
-              vo:{}
+              yesterdayCount:{
+                  users:0,
+                  browse:0,
+                  count:0
+              }
             }
         },
         computed: {
@@ -69,13 +74,23 @@
           }
         },
         created(){
-         axios.get(this.$apiConfig.yesterdayBrowseCount,{}).then(res=>{
-            if(res.data.code==0){
-                this.vo = res.data.data;
+            if(sessionStorage.token) {
+                this.getData();
+            }else{
+                let vm = this;
+                eventBus.$once('setToken',function(){
+                    vm.getData()
+                });
             }
-         });
         },
         methods: {
+            getData() {
+                axios.get(this.$apiConfig.yesterdayBrowseCount,{}).then(res=>{
+                    if(res.data.code==0){
+                        this.yesterdayCount = res.data.data;
+                    }
+                })
+            },
           goTo(item) {
             this.$router.push({ path: '/chat', query: { user: item }});
           }
