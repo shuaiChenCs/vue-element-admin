@@ -33,10 +33,10 @@
             <i class="iconfont iconcard_pause"></i>
             最新留言
           </div>
-          <div class="more">
-            查看全部
-            <i class="iconfont iconlist_more"></i>
-          </div>
+          <!--<div class="more">-->
+            <!--查看全部-->
+            <!--<i class="iconfont iconlist_more"></i>-->
+          <!--</div>-->
         </div>
         <div class="scview-list">
           <div class="message-item"  v-for="se in sessions.slice(0, 10)" :key="se.id" @click="goTo(se)">

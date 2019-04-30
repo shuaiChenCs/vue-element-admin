@@ -17,6 +17,7 @@
         <!--<i class="iconfont iconlist_more"></i>-->
       <!--</div>-->
     <!--</div>-->
+    <no-data v-if="listDirectiony.quantity==0" style="height: 100vh"></no-data>
     <div class="check-box" v-if="!searching">
       <div class="block-item-title">
         <i class="iconfont iconcard_pause"></i>
@@ -121,6 +122,7 @@ export default {
     }
   }
 .group-send {
+
   padding-bottom: 80px;
   .search {
     margin-bottom: 10px;

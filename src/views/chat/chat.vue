@@ -85,6 +85,7 @@ export default {
     },
     mounted() {
 		let toUser = this.$route.query.user;
+        document.title = toUser.card.nikeName;
 		if(typeof(toUser) == 'string'){
 			this.toUser = this.$store.state.toUser;
 		}else{
