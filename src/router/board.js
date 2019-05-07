@@ -54,4 +54,11 @@ export default [
 		component: () => import(/* webpackChunkName: "addressBook" */ '../views/board/new-friend'),
 		meta:{title:'新增客户'}
 	}
+    ,
+	{
+		path: '/board/search-user',
+		name: 'boardSearchUser',
+		component: () => import(/* webpackChunkName: "addressBook" */ '../views/board/search-user'),
+		meta:{title:'找客户'}
+	}
 ]

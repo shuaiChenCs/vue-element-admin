@@ -21,6 +21,10 @@
             <img :src="$imageUrl + '/board_ radar@3x.png'" alt>
             AI雷达
           </div>
+          <div @click="$router.push('/board/search-user')">
+            <img :src="$imageUrl + '/board_search@3x.png'" alt>
+            找客户
+          </div>
           <div @click="$router.push('/board/card')">
             <img :src="$imageUrl + '/board_ card@3x.png'" alt>
             名片
@@ -106,7 +110,7 @@
   }
   > div {
     background: white;
-    margin-bottom: 15px;
+    // margin-bottom: 15px;
   }
   .num {
     font-size: 30px;
@@ -165,9 +169,6 @@
       display: flex;
       align-items: center;
       > div {
-        &:first-child {
-          border-right: 1Px solid rgba(237, 238, 241, 1);
-        }
         flex: 1;
         font-size: 12px;
         display: flex;
@@ -176,7 +177,7 @@
         img {
           width: 30px;
           height: 30px;
-          margin-right: 15px;
+          margin-right: 10px;
         }
       }
     }
