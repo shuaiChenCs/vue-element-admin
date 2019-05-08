@@ -9,6 +9,7 @@
 export default {
     data(){
         return {
+            toast:null
         }
     },
     created(){
@@ -18,6 +19,10 @@ export default {
         //登录，设置全局token
         // window.sessionStorage.token =  'eyJhbGciOiJIUzI1NiJ9.eyJwMSI6ODQsInAyIjo4OCwiZXhwIjoxNTU4MDEwMDczLCJpYXQiOjE1NTcxNDYwNzN9.WZ7enKyOyjb7Ei5FxBeIzWWOqzaKF0RumB2L3mIcUWU'
         //sessionStorage.token = 'eyJhbGciOiJIUzI1NiJ9.eyJwMSI6ODMsInAyIjo4NywiZXhwIjoxNTU3NDY1NjE1LCJpYXQiOjE1NTY2MDE2MTV9.C0b7h0o_Tyw3oVnTag24a6522DE5yl4Z1_CSxctOiIs';
+        this.toast = this.$createToast({
+            txt: '登录中..'
+        });
+        this.toast.show();
         if(!sessionStorage.token) {
            axios.post(this.$apiConfig.officialRegister + '?code=' + code).then(res => {
                 if (res.data.code == 0) {
@@ -52,6 +57,7 @@ export default {
                 }
             }).then(() => {
                 this.$store.commit('initNim', {});
+                this.toast.hide()
             });
         },
         getUrlParam (name) {

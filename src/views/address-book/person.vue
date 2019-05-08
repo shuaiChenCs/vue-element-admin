@@ -18,7 +18,7 @@
         <div class="person-item">
             <div class="block-item-title">
                 <i class="iconfont iconcard_pause"></i>
-                备注名称
+                备注
             </div>
             <div class="setin">
                 <input type="text" v-model="personInfo.remark" placeholder="点击添加备注名" maxlength="10" @focus="inputFocus($event)" @blur="inputBlur($event)">
