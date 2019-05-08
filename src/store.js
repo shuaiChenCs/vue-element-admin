@@ -30,7 +30,6 @@ export default new Vuex.Store({
       state.group = arr;
     },
     setToUser(state, user) {
-      console.log(user)
       state.toUser = user;
     },
     setCard(state, card) {

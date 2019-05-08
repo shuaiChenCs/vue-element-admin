@@ -22,13 +22,22 @@ export default {
         this.id = this.$route.params.id;
         axios.get(this.$apiConfig.labelList+this.id,{}).then(res=>{
           if(res.data.code==0) {
-              console.log(res.data.data)
               vm.persons = res.data.data || [];
           }
         });
     },
     methods: {
-        save() {}
+        save() {
+           if(this.persons.length == 0) {
+            this.$createToast({
+                txt: '该标签下没有人',
+                type: 'warn'
+            }).show()
+          }else{
+            this.$store.commit('setGroup', this.persons);
+            this.$router.push('/group-chat');
+          }
+        }
     }
 }
 </script>

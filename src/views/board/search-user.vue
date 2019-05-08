@@ -23,6 +23,19 @@
                 </div>
             </div>
             <div class="scview-list">
+                <div class="good-item">
+                    <img src="https://wx.qlogo.cn/mmopen/vi_32/3fgqmf5ocmjtXN9uXL2SLAb8JuawzU9uicrHRq8URmhNAxicqU4kxFnUVicSkibANNqgeDffDrEQcvwh3KckAVibicog/132" alt="">
+                    <div class="good-detial">
+                        <div class="info">
+                            <span class="name">Iponex</span>
+                            <span class="money">$500</span>
+                        </div>
+                        <div class="record">
+                            <span>浏览次数 300</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span>浏览时长 300</span>
+                        </div>
+                    </div>
+                </div>
                 <div class="title">
                     <span class="base">基本信息</span>
                     <span class="stimes">浏览次数</span>
@@ -252,6 +265,34 @@
             }
         }
         .scview-list {
+          .good-item{
+                display: flex;
+                padding: 15px 15px;
+                img{
+                    height: 60px;
+                    width: 60px;
+                }
+                .good-detial{
+                    flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                }
+                .info{
+                    padding: 5px 10px;
+                    .name{
+                        font-size: 16px;
+                        margin-right: 20px;
+                    }
+                    .money{
+                        color: red;
+                    }
+                }
+                .record{
+                    padding: 5px 10px;
+                    color: #949494;
+                }
+            }
             .title {
                 color: rgba(151, 160, 177, 1);
                 display: flex;
