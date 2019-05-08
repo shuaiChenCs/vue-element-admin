@@ -11,9 +11,9 @@
             <span class="num">{{yesterdayCount.browse || 0}}</span>
             <span class="title">昨日浏览</span>
           </div>
-          <div class="right" @click="$router.push('/address-book')">
-            <span class="num">{{yesterdayCount.count || 0}}</span>
-            <span class="title">累计客户</span>
+          <div class="right" @click="$router.push('/board/share-count')">
+            <span class="num">{{yesterdayCount.forward|| 0}}</span>
+            <span class="title">昨日转发</span>
           </div>
         </div>
         <div class="header">
@@ -35,7 +35,7 @@
         <div class="block-item-title">
           <div class="left">
             <i class="iconfont iconcard_pause"></i>
-            最新留言
+            近7日意向客戶
           </div>
           <!--<div class="more">-->
             <!--查看全部-->

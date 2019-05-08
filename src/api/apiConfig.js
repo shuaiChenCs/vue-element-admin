@@ -51,6 +51,8 @@ const apiConfig = {
     yesterdayBrowseGroup:`/app/ai/yesterday/browse/group`,//昨日浏览统计饼图
     yesterdayBrowseUser:`app/ai/yesterday/browse/client`, //昨日浏览用户
     yesterdayNewClient:`/app/ai/yesterday/new/client`, //昨日新增客户
+    searchUser:`app/ai/potential/group/code` ,// 找客户
+    goodsHeat:`/app/goods/heat`, //商品热度
     latelyBrowse:`/app/ai/behavior` ,//最近浏览
     latelyFlow:`/app/ai/lately/flow`, //最近7日流量
     browseGroup:`/app/ai/browse/group`, //互动次数
@@ -61,5 +63,6 @@ const apiConfig = {
     refreshCode:`/app/card/reset/poster`, //刷新二维码
     getCardPoster:`app/card/get/poster/`, //获取海报二维码
 	messageNotity: `/app/notify/leave/notify`,//消息推送
+    potential:`/app/ai/potential/code`, //找客户
 }
 export default apiConfig;

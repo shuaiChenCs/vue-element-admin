@@ -86,10 +86,10 @@ export default {
           type: "pie"
         },
         title: {
-          text: ""
+          text: "昨日热度分析"
         },
         tooltip: {
-          pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>"
+          pointFormat: "{series.name}: <b>{point.percentage:.1f}</b>"
         },
           //colors: this.colors,
         plotOptions: {
@@ -98,7 +98,7 @@ export default {
             cursor: "pointer",
             dataLabels: {
               enabled: true,
-              format: "{y}%",
+              format: "{y}",
               style: {
                   width: "100px",
                 whiteSpace: "nowrap",
