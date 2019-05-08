@@ -1,24 +1,24 @@
 <template>
   <div class="board-card">
     <div class="board-header">
-      <div class="header-back">
-        <div class="header">
-          <div class="top" @click="$router.push('/board/new-friend')">
-            <span class="num">{{vo.users}}</span>
-            <span class="title">新增客户</span>
-          </div>
-          <div class="bottom">
-            <div class="left" @click="$router.push('/board/scview')">
-              <span class="num">{{vo.browse}}</span>
-              <span class="title">昨日浏览量</span>
-            </div>
-            <div class="right" @click="$router.push('/board/share-count')">
-              <span class="num">{{vo.forward}}</span>
-              <span class="title">昨日转发次数</span>
-            </div>
-          </div>
-        </div>
-      </div>
+      <!--<div class="header-back">-->
+        <!--<div class="header">-->
+          <!--<div class="top" @click="$router.push('/board/new-friend')">-->
+            <!--<span class="num">{{vo.users}}</span>-->
+            <!--<span class="title">新增客户</span>-->
+          <!--</div>-->
+          <!--<div class="bottom">-->
+            <!--<div class="left" @click="$router.push('/board/scview')">-->
+              <!--<span class="num">{{vo.browse}}</span>-->
+              <!--<span class="title">昨日浏览量</span>-->
+            <!--</div>-->
+            <!--<div class="right" @click="$router.push('/board/share-count')">-->
+              <!--<span class="num">{{vo.forward}}</span>-->
+              <!--<span class="title">昨日转发次数</span>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
       <div class="scview">
         <div class="block-item-title">
           <div class="left">

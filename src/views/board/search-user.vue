@@ -31,12 +31,12 @@
                     <img :src="product.imgUrl" alt="">
                     <div class="good-detial">
                         <div class="info">
-                            <span class="name">{{product.name}}</span>
+                            <span class="name">{{product.name}}<span v-if="product.isDelete==1" style="font-size: 12px; color: #ccc;">（已下架）</span></span>
                             <span class="money">￥ {{product.price}}</span>
                         </div>
                         <div class="record">
-                            <span>浏览次数 {{product.browseCount}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <span>浏览时长 {{product.duration}} 秒</span>
+                            <span>浏览次数 {{product.browseCount || 0}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span>浏览时长 {{product.duration || 0}} 秒</span>
                         </div>
                     </div>
                 </div>
@@ -151,7 +151,8 @@
                     let picker = this.$createPicker({
                         title: "商品列表",
                         data: [this.goods],
-                        onSelect: this.selectHandle
+                        onSelect: this.selectHandle,
+                        onCancel: this.selectCancel
                     });
                     picker.show();
                 } else {
@@ -163,6 +164,12 @@
                 this.users = [];
                 this.objectId=this.goods[selectedIndex].id;
                 this.product=this.goods[selectedIndex];
+                this.loadUser();
+            },
+            selectCancel(){
+                this.users = [];
+                this.objectId=this.goods[0].id;
+                this.product=this.goods[0];
                 this.loadUser();
             },
             loadmap1(data) {
@@ -287,6 +294,7 @@
                 .info{
                     padding: 5px 10px;
                     .name{
+                        /*text-decoration:line-through;*/
                         font-size: 16px;
                         margin-right: 20px;
                     }

@@ -17,7 +17,7 @@ const apiConfig = {
     editGoods:`/app/goods/edit`, //编辑商品
     setGoodTop:`/app/goods/setTop`,//设置商品置顶
     addGoods:`/app/goods/add`, //新增商品
-    delGoods:`/app/goods/delete/`,//删除商品
+    putawayGoods:`/app/goods/putaway`,//上架/下架商品
     delGoodsType:`app/goodsType/delete/`, //删除商品类型
     saveDelicacy: `/app/card/edit/delicacy`,//保存精选照片
     getDelicacyList: `/app/card/list/delicacy`,//获取个人精选照片
@@ -64,5 +64,6 @@ const apiConfig = {
     getCardPoster:`app/card/get/poster/`, //获取海报二维码
 	messageNotity: `/app/notify/leave/notify`,//消息推送
     potential:`/app/ai/potential/code`, //找客户
+    potentialWeek:`app/ai/potential/week`, //近7日潜在客戶
 }
 export default apiConfig;

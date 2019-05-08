@@ -25,6 +25,7 @@
       <no-data v-if="goods.total==0"></no-data>
       <div class="goods-item" v-for="(item,index) in data" :key="index">
         <div class="img">
+          <div class="hasdone" v-if="item.isDelete==1">已下架</div>
           <img :src="item.imgUrl" @click="clickGoods(item)" alt>
         </div>
         <div class="name">{{item.name}}</div>
@@ -60,16 +61,17 @@ export default {
       clickGoods(item){
           this.$router.push('goods/detail/'+item.id);
       },
-      showDeleteAlert(id,dataIndex) {
+      showDeleteAlert(id,isDelete,dataIndex) {
           let vm = this;
           this.$createDialog({
               type: 'confirm',
-              content: '确认是否删除',
+              content: '是否确认'+(isDelete==0?'上架':'下架'),
               onConfirm(e){
-                  axios.delete(vm.$apiConfig.delGoods+'/'+id,{}).then((res)=>{
+                  axios.delete(vm.$apiConfig.putawayGoods+"?id="+id+"&isDelete="+isDelete,{}).then((res)=>{
                       if(res.data.code==0) {
-                          vm.goods.total= vm.goods.total-1;
-                          vm.data.splice(dataIndex,1);
+                          // vm.goods.total= vm.goods.total-1;
+                          // vm.data.splice(dataIndex,1);
+                          vm.data[dataIndex].isDelete = isDelete;
                           vm.$createToast({
                               time: 100
                           }).show();
@@ -92,21 +94,24 @@ export default {
           this.loadData();
       },
     set(id,dataIndex) {
+          let  data = [
+                  {
+                      content: '置顶'
+                  },
+                  {
+                      content: '编辑',
+                  }
+         ];
+          let isDelete = 0;
+          if(this.data[dataIndex].isDelete>0){
+              data.push({content:'上架'})
+          }else{
+              data.push({content:'下架'})
+              isDelete = 1;
+          }
       this.$createActionSheet({
                     // title: '置顶',
-                    active: 2,  //高亮
-                    data: [
-                        {
-                            content: '置顶'
-                        },
-                        {
-                            content: '编辑',
-                        },
-                        {
-                            content: '删除',
-                            // class: 'color:#ff0000'    //颜色红色
-                        }
-                    ],
+                  data:data,
                     onSelect: (item, index) => {
                         switch (index) {
                             case 0:
@@ -126,7 +131,7 @@ export default {
                                 this.$router.push('goods/edit/'+id);
                                 break;
                             case 2:
-                                this.showDeleteAlert(id,dataIndex);
+                                this.showDeleteAlert(id,isDelete,dataIndex);
                                 break;
                         }
 
@@ -262,6 +267,19 @@ export default {
       background: white;
       width: 48%;
       margin-bottom: 15px;
+      .img{
+        position: relative;
+        .hasdone{
+          top: 0;
+          right: 0;
+          background: black;
+          opacity: .5;
+          color: white;
+          padding: 5px 10px;
+          position: absolute;
+          border-radius: 0 0 0 5px;
+        }
+      }
       img {
         width: 100%;
         height: 330px/2;

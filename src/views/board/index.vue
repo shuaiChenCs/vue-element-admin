@@ -1,4 +1,5 @@
 <template>
+  <div class="sp-scroll" v-scroll="loadmore">
   <div class="board">
     <div class="board-header">
       <div class="header-back">
@@ -35,29 +36,37 @@
         <div class="block-item-title">
           <div class="left">
             <i class="iconfont iconcard_pause"></i>
-            近7日意向客戶
+            近7日潜在客戶
           </div>
           <!--<div class="more">-->
             <!--查看全部-->
             <!--<i class="iconfont iconlist_more"></i>-->
           <!--</div>-->
         </div>
+        <no-data v-if="users.length==0"></no-data>
         <div class="scview-list">
-          <div class="message-item"  v-for="se in sessions.slice(0, 10)" :key="se.id" @click="goTo(se)">
-                <img :src="se.card.headImg" alt="">
-                <div class="message-info">
-                    <div class="top">
-                        <span class="name">{{se.card.nikeName}}</span>
-                        <span class="time">{{se.updateTime | formatDate('yyyy-MM-dd hh:mm:ss')}}</span>
-                    </div>
-                    <div class="bottom">
-                        {{se.lastMsg.type == 'text' ? se.lastMsg.text : '[图片消息]'  | substr}}
-                    </div>
-                </div>
+
+          <div class="custom-item"  v-for="(user,index) in users" :key="index" @click="$router.push('/address-book/person/'+user.directoryId)">
+            <div class="base">
+              <img
+                      :src="user.userHeadImg"
+                      alt
+              >
+              <span>{{user.userName}}</span>
+            </div>
+            <div class="record">
+              <span>浏览次数 {{user.browseCount || 0}}</span>
+              <span>浏览时长 {{user.duration || 0}}</span>
+            </div>
+            <!--<div class="stimes" :class="{n1: index == 0, n2: index == 1, n3: index == 2}">{{user.browseCount}}-->
+            <!--</div>-->
+            <!--<div class="stime" :class="{n1: index == 0, n2: index == 1, n3: index == 2}">{{user.duration}}</div>-->
             </div>
         </div>
+        <no-more v-if="users.length==page.total"></no-more>
       </div>
     </div>
+  </div>
   </div>
 </template>
 <script>
@@ -65,6 +74,10 @@
     export default {
         data(){
             return {
+                page:{},
+                users:[],
+                current:1,
+                size:10,
               yesterdayCount:{
                   users:0,
                   browse:0,
@@ -88,12 +101,31 @@
             }
         },
         methods: {
+            loadmore(){
+                this.current++;
+                this.loadWeek();
+            },
+            loadWeek(){
+                axios.post(this.$apiConfig.potentialWeek,{
+                    current: this.current,
+                    size: this.size
+                }).then(res=>{
+                    if(res.data.code==0){
+                        this.page = res.data.data;
+                        this.users = this.users.concat(res.data.data.records);
+                        if(res.data.data.records.length==0){
+                            this.current--;
+                        }
+                    }
+                });
+            },
             getData() {
                 axios.get(this.$apiConfig.yesterdayBrowseCount,{}).then(res=>{
                     if(res.data.code==0){
                         this.yesterdayCount = res.data.data;
                     }
                 })
+                this.loadWeek();
             },
           goTo(item) {
             this.$router.push({ path: '/chat', query: { user: item }});
@@ -187,6 +219,55 @@
     padding-bottom: 50px;
     .scview-list{
       background: white;
+      .custom-item {
+        .base {
+          flex: 1;
+        }
+        .stime,
+        .stimes {
+          text-align: center;
+          width: 20%;
+          &.n1 {
+            font-weight: bold;
+            color: #f4cc13;
+          }
+          &.n2 {
+            font-weight: bold;
+            color: #d4d6d3;
+          }
+          &.n3 {
+            font-weight: bold;
+            color: #b47943;
+          }
+        }
+        .stimes {
+          text-align: center;
+          width: 15%;
+          margin-right: 10px;
+        }
+      }
+      .custom-item {
+        .base {
+          display: flex;
+          align-items: center;
+          span {
+            flex: 1;
+          }
+        }
+        &:last-child {
+          border: none;
+        }
+        .record {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          font-size:12px;
+          span {
+            padding: 5px 0;
+          }
+        }
+      }
+
     }
     .message-item{
         &:last-child{

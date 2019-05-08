@@ -40,16 +40,16 @@
                 最关注的商品
             </div>
             <div class="att-good">
-                <div class="good-item">
-                    <img src="https://wx.qlogo.cn/mmopen/vi_32/3fgqmf5ocmjtXN9uXL2SLAb8JuawzU9uicrHRq8URmhNAxicqU4kxFnUVicSkibANNqgeDffDrEQcvwh3KckAVibicog/132" alt="">
+                <div class="good-item" v-for="(product,index) in goods" :key="index">
+                    <img :src="product.imgUrl" alt="">
                     <div class="good-detial">
                         <div class="info">
-                            <span class="name">Iponex</span>
-                            <span class="money">$500</span>
+                            <span class="name">{{product.name}}<span v-if="product.isDelete==1" style="font-size: 12px; color: #ccc;">（已下架）</span></span>
+                            <span class="money">￥{{product.price}}</span>
                         </div>
                         <div class="record">
-                            <span>浏览次数 300</span>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <span>浏览时长 300</span>
+                            <span>浏览次数 {{product.browseCount || 0}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span>浏览时长 {{product.duration || 0}}</span>
                         </div>
                     </div>
                 </div>
@@ -58,7 +58,20 @@
         <div class="person-item">
             <div class="block-item-title">
                 <i class="iconfont iconcard_pause"></i>
-                互动轨迹
+                客户行为
+            </div>
+        <div class="push-list" v-for="(group,index) in personInfo.behaviorGroupVOList" :key="group.date">
+            {{group.date}}
+            <div class="push-item" v-for="(behavior,index) in group.behaviorVOList">
+                <span class="content">{{behavior.operateDesc}}</span>
+                <span class="time">{{behavior.createTime | formatDate('hh:mm')}}</span>
+            </div>
+        </div>
+        </div>
+        <div class="person-item">
+            <div class="block-item-title">
+                <i class="iconfont iconcard_pause"></i>
+                客户观察热度
             </div>
             <div class="charts-box" v-show="browseGroup.length>0">
                 <div class="lenged">
@@ -95,6 +108,7 @@ export default {
         return {
             id:0,
             value: true,
+            goods:[],
             personInfo:{},
             browseGroup: [],
             colors: ["#1ED29A", "#EFCA08", "#60AFFF", "#7E7EFF"],
@@ -106,12 +120,18 @@ export default {
            if(res.data.code==0){
                this.personInfo = res.data.data;
                document.title = this.personInfo.nikeName;;
+               this.browseGroup = this.personInfo.userBrowseList;
+               this.goods = this.personInfo.userAttentionList;
+               this.loadMapData();
            }
         });
-        axios.get(this.$apiConfig.yesterdayBrowseGroup, {}).then(res => {
-            if (res.data.code == 0) {
-                this.browseGroup = res.data.data;
-                if (this.browseGroup.length > 0) {
+    },
+    mounted() {
+
+    },
+    methods: {
+        loadMapData(){
+            if (this.browseGroup.length > 0) {
                 this.browseGroup.forEach((e, i) => {
                     this.$set(e, "color", this.colors[i]);
                 });
@@ -120,14 +140,8 @@ export default {
                     color: "white"
                 }
                 this.loadmap1(this.browseGroup);
-                }
             }
-        });
-    },
-    mounted() {
-
-    },
-    methods: {
+        },
         loadmap1(data) {
             Highcharts.chart("container", {
                 chart: {
