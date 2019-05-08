@@ -83,12 +83,12 @@
             </div>
         </div>
 
-        <div class="person-item" v-if="browseGroup" >
+        <div class="person-item" v-show="browseGroup.length>0">
             <div class="block-item-title">
                 <i class="iconfont iconcard_pause"></i>
                 客户行为统计
             </div>
-            <div class="charts-box" v-show="browseGroup.length>0">
+            <div class="charts-box" >
                 <div class="lenged">
                 <div v-for="(item,index) in browseGroup" :key="index">
                     <span :style="{background: item.color}"></span>
@@ -111,7 +111,9 @@ export default {
             id:0,
             value: true,
             goods:[],
-            personInfo:{},
+            personInfo:{
+                behaviorVOList:[]
+            },
             browseGroup: [],
             colors: ["#1ED29A", "#EFCA08", "#60AFFF", "#7E7EFF"],
         }
