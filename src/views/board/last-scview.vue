@@ -1,6 +1,10 @@
 <template>
   <div class="sp-scroll" v-scroll="loadmore">
   <div class="last-scview">
+    <div class="block-item-title">
+                <i class="iconfont iconcard_pause"></i>
+                昨日热度分析
+            </div>
       <div class="charts-box"  v-show="browseGroup.length>0" >
           <div class="lenged">
               <div  v-for="(item,index) in browseGroup" :key="index"><span :style="{background: item.color}"></span>{{item.name}}</div>
@@ -86,7 +90,7 @@ export default {
           type: "pie"
         },
         title: {
-          text: "昨日热度分析"
+          text: ""
         },
         tooltip: {
           pointFormat: "{series.name}: <b>{point.percentage:.1f}</b>"

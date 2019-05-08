@@ -2,6 +2,10 @@
     <div class="sp-scroll" v-scroll="loadmore">
         <no-data v-if="browseGroup.length==0"></no-data>
         <div class="search-user"  v-show="browseGroup.length>0">
+          <div class="block-item-title">
+                <i class="iconfont iconcard_pause"></i>
+                热度分析
+            </div>
             <div class="charts-box">
                 <div class="lenged">
                     <div v-for="(item,index) in browseGroup" :key="index">
@@ -170,7 +174,7 @@
                         type: "pie"
                     },
                     title: {
-                        text: "热度分析"
+                        text: ""
                     },
                     tooltip: {
                         pointFormat: "{series.name}: <b>{point.percentage:.1f}</b>"
