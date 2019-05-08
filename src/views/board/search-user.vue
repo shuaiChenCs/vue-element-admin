@@ -31,7 +31,7 @@
                     <img :src="product.imgUrl" alt="">
                     <div class="good-detial">
                         <div class="info">
-                            <span class="name">{{product.name}}<span v-if="product.isDelete==1" style="font-size: 12px; color: #ccc;">（已下架）</span></span>
+                            <span class="name">{{product.name}}<span v-if="product.isDelete==1" style="font-size: 24px; color: #ccc;">（已下架）</span></span>
                             <span class="money">￥ {{product.price}}</span>
                         </div>
                         <div class="record">

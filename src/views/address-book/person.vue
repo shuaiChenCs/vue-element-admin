@@ -44,7 +44,7 @@
                     <img :src="product.imgUrl" alt="">
                     <div class="good-detial">
                         <div class="info">
-                            <span class="name">{{product.name}}<span v-if="product.isDelete==1" style="font-size: 12px; color: #ccc;">（已下架）</span></span>
+                            <span class="name">{{product.name}}<span v-if="product.isDelete==1" style="font-size: 24px; color: #ccc;">（已下架）</span></span>
                             <span class="money">￥{{product.price}}</span>
                         </div>
                         <div class="record">
@@ -64,7 +64,7 @@
             <!--</div>-->
         <!--</div>-->
         <!--</div>-->
-        <div class="person-item">
+        <div class="person-item"  v-if="personInfo.behaviorVOList.length>0">
             <div class="block-item-title">
                 <i class="iconfont iconcard_pause"></i>
                 客户行为
@@ -77,13 +77,13 @@
                 <div class="push-list">
                     <div class="push-item" v-for="(behavior,index) in personInfo.behaviorVOList" :key="index">
                         <span class="content">{{behavior.operateDesc}}</span>
-                        <span class="time">{{behavior.createTime | formatDate('hh:mm')}}</span>
+                        <span class="time">{{behavior.createTime | formatDate('hh:mm:ss')}}</span>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="person-item">
+        <div class="person-item" v-if="browseGroup" >
             <div class="block-item-title">
                 <i class="iconfont iconcard_pause"></i>
                 客户行为统计
@@ -403,6 +403,7 @@ export default {
                 }
                 .time{
                     color: #6F6F76;
+                    white-space: nowrap;
                 }
             }
         }
