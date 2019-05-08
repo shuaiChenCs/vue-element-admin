@@ -23,16 +23,16 @@
                 </div>
             </div>
             <div class="scview-list">
-                <div class="good-item">
-                    <img src="https://wx.qlogo.cn/mmopen/vi_32/3fgqmf5ocmjtXN9uXL2SLAb8JuawzU9uicrHRq8URmhNAxicqU4kxFnUVicSkibANNqgeDffDrEQcvwh3KckAVibicog/132" alt="">
+                <div class="good-item" v-if="operateCode==2 && objectId!=0">
+                    <img :src="product.imgUrl" alt="">
                     <div class="good-detial">
                         <div class="info">
-                            <span class="name">Iponex</span>
-                            <span class="money">$500</span>
+                            <span class="name">{{product.name}}</span>
+                            <span class="money">￥ {{product.price}}</span>
                         </div>
                         <div class="record">
-                            <span>浏览次数 300</span>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <span>浏览时长 300</span>
+                            <span>浏览次数 {{product.browseCount}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span>浏览时长 {{product.duration}} 秒</span>
                         </div>
                     </div>
                 </div>
@@ -67,6 +67,7 @@
                 colors: ["#1ED29A", "#EFCA08", "#60AFFF", "#7E7EFF"],
                 active: "卡片",
                 goods: [],
+                product:{},
                 users: [],
                 current: 1,
                 size: 5,
@@ -127,13 +128,13 @@
                 this.loadUser();
             },
             showPicker(item,index) {
-                this.browseGroup.forEach(e=>{
-                    e.selected=false
-                    e.sliced=false;
-                });
-                this.browseGroup[index].selected=true;
-                this.browseGroup[index].sliced=true;
-                this.loadmap1(this.browseGroup);
+                // this.browseGroup.forEach(e=>{
+                //     e.selected=false
+                //     e.sliced=false;
+                // });
+                // this.browseGroup[index].selected=true;
+                // this.browseGroup[index].sliced=true;
+                // this.loadmap1(this.browseGroup);
                 this.current = 1;
                 this.operateCode = item.code;
                 this.objectId=0;
@@ -157,6 +158,7 @@
             selectHandle(selectedVal, selectedIndex, selectedText) {
                 this.users = [];
                 this.objectId=this.goods[selectedIndex].id;
+                this.product=this.goods[selectedIndex];
                 this.loadUser();
             },
             loadmap1(data) {
