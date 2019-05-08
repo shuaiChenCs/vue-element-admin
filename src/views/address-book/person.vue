@@ -34,7 +34,7 @@
                 <div class="tag-item add" @click="$router.push('/address-book/addTags/'+personInfo.id)"><i class="iconfont iconcard_edit_add"></i></div>
             </div>
         </div>
-        <div class="person-item">
+        <div class="person-item" v-if="goods.length>0">
             <div class="block-item-title">
                 <i class="iconfont iconcard_pause"></i>
                 最关注的商品
