@@ -55,23 +55,38 @@
                 </div>
             </div>
         </div>
+        <!--<div class="person-item">-->
+
+        <!--<div class="push-list" v-for="(behavior,index) in personInfo.behaviorVOList" :key="index">-->
+            <!--<div class="push-item">-->
+                <!--<span class="content">{{behavior.operateDesc}}</span>-->
+                <!--<span class="time">{{behavior.createTime | formatDate('hh:mm')}}</span>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
         <div class="person-item">
             <div class="block-item-title">
                 <i class="iconfont iconcard_pause"></i>
                 客户行为
             </div>
-        <div class="push-list" v-for="(group,index) in personInfo.behaviorGroupVOList" :key="group.date">
-            {{group.date}}
-            <div class="push-item" v-for="(behavior,index) in group.behaviorVOList">
-                <span class="content">{{behavior.operateDesc}}</span>
-                <span class="time">{{behavior.createTime | formatDate('hh:mm')}}</span>
+            <div class="push-box">
+                <!--<div class="pushornot">-->
+                <!--<span>推送到AI雷达和公众号</span>-->
+                <!--<cube-switch v-model="value"></cube-switch>-->
+                <!--</div>-->
+                <div class="push-list">
+                    <div class="push-item" v-for="(behavior,index) in personInfo.behaviorVOList" :key="index">
+                        <span class="content">{{behavior.operateDesc}}</span>
+                        <span class="time">{{behavior.createTime | formatDate('hh:mm')}}</span>
+                    </div>
+                </div>
             </div>
         </div>
-        </div>
+
         <div class="person-item">
             <div class="block-item-title">
                 <i class="iconfont iconcard_pause"></i>
-                客户观察热度
+                客户行为统计
             </div>
             <div class="charts-box" v-show="browseGroup.length>0">
                 <div class="lenged">
@@ -83,19 +98,6 @@
                 </div>
                 <div class="charts" id="container"></div>
             </div>
-            <!-- <div class="push-box"> -->
-                <!--<div class="pushornot">-->
-                    <!--<span>推送到AI雷达和公众号</span>-->
-                    <!--<cube-switch v-model="value"></cube-switch>-->
-                <!--</div>-->
-                <!-- <div class="push-list" v-for="(group,index) in personInfo.behaviorGroupVOList" :key="group.date">
-                   {{group.date}}
-                    <div class="push-item" v-for="(behavior,index) in group.behaviorVOList">
-                        <span class="content">{{behavior.operateDesc}}</span>
-                        <span class="time">{{behavior.createTime | formatDate('hh:mm')}}</span>
-                    </div>
-                </div> -->
-            <!-- </div> -->
         </div>
     </div>
 </template>
@@ -267,7 +269,7 @@ export default {
         .att-good{
             .good-item{
                 display: flex;
-                padding: 15px 15px;
+                padding: 15px 15px 0;
                 img{
                     height: 60px;
                     width: 60px;
@@ -375,7 +377,7 @@ export default {
         }
     }
     .push-box{
-        padding: 10px 15px 0;
+        padding: 0px 15px 0;
         .pushornot{
             margin-bottom: 15px;
             padding-left: 15px;
