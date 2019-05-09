@@ -77,7 +77,7 @@
                 <div class="push-list">
                     <div class="push-item" v-for="(behavior,index) in personInfo.behaviorVOList" :key="index">
                         <span class="content">{{behavior.operateDesc}}</span>
-                        <span class="time">{{behavior.createTime | formatDate('hh:mm:ss')}}</span>
+                        <span class="time">{{behavior.createTime | formatDate('MM-dd hh:mm:ss')}}</span>
                     </div>
                 </div>
             </div>
