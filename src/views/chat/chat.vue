@@ -203,7 +203,7 @@ export default {
 		messageNotity() {
 			let params = {
 				"formUserId": this.self.id,
-				"toUserId": this.toUser.card.id
+				"toUserId": this.toUser.card.clientId
 			};
 			axios.post(this.$apiConfig.messageNotity, params).then(res=>{
 				if(res.data.code==0){

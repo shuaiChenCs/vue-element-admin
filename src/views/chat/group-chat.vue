@@ -100,7 +100,7 @@ export default {
 					text: content,
 					done: sendMsgDone
 				});
-				_this.messageNotity(item.id);
+				_this.messageNotity(item.clientId);
 			})
 			function sendMsgDone(error, msg) {
 				_this.pushMsg(msg);
@@ -135,7 +135,7 @@ export default {
 					fileInput: 'file',
 					done: sendMsgDone
 				});
-				this.messageNotity(item.id);
+				this.messageNotity(item.clientId);
 			})
 			this.$router.replace('/address-book/message');
 			function sendMsgDone(err, obj) {
@@ -185,7 +185,7 @@ export default {
 					text: this.inputVal,
 					done: sendMsgDone
 				});
-				_this.messageNotity(item.id);
+				_this.messageNotity(item.clientId);
 			})
 			this.$router.replace('/address-book/message');
 			function sendMsgDone(error, msg) {
