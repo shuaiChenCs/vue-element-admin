@@ -39,9 +39,9 @@ export default {
       let v = this.accept.indexOf("video");
       console.log(this.accept);
       if (v == -1) {
-        return `https://c.api.msspay.com/fileUpload?type=${this.type}`;
+        return `https://api.sipinoffice.com/fileUpload?type=${this.type}`;
       } else {
-        return `https://c.api.msspay.com/mp4/fileUpload?type=${this.type}`;
+        return `https://api.sipinoffice.com/mp4/fileUpload?type=${this.type}`;
       }
     }
   },
