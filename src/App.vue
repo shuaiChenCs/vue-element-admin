@@ -44,12 +44,12 @@ export default {
             }
         }
         //wxconfig param
-        // axios.get(this.$apiConfig.wxConfig+'?url='+encodeURIComponent(url),{}).then(res=>{
-        //     if(res.data.code ==0){
-        //         let wxConfig = res.data.data;
-        //         this.setWxConfig(wxConfig);
-        //     }
-        // });
+        axios.get(this.$apiConfig.wxConfig+'?url='+encodeURIComponent(url),{}).then(res=>{
+            if(res.data.code ==0){
+                let wxConfig = res.data.data;
+                this.setWxConfig(wxConfig);
+            }
+        });
     },
     methods:{
         loadUserInfo(){
@@ -85,12 +85,21 @@ export default {
                 debug: true,// 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
                 appId: `wx9bd9279a9b4ee6a9`, // 必填，公众号的唯一标识
                 timestamp: wxConfig.timestamp, // 必填，生成签名的时间戳
-                nonceStr: wxConfig.wxConfig, // 必填，生成签名的随机串
+                nonceStr: wxConfig.nonceStr, // 必填，生成签名的随机串
                 signature: wxConfig.signature,// 必填，签名
-                jsApiList: ['openLocation','getLocation','closeWindow','checkJsApi'] //
+                jsApiList: ['openLocation','getLocation','closeWindow','checkJsApi','onMenuShareAppMessage'] //
             });
-            wx.ready(function(){
-
+            wx.ready(function(res) {
+                wx.onMenuShareAppMessage({
+                    title: '1',
+                    desc:'123123',
+                    link: 'h5.sipinoffice.com/article',
+                    imgUrl: '',
+                    trigger: function(res) {},
+                    success: function(res) {},
+                    cancel: function(res) {},
+                    fail: function(res) {}
+                });
             });
         }
     }

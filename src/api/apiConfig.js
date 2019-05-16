@@ -64,6 +64,7 @@ const apiConfig = {
     getCardPoster:`app/card/get/poster/`, //获取海报二维码
 	messageNotity: `/app/notify/leave/notify`,//消息推送
     potential:`/app/ai/potential/code`, //找客户
-    potentialWeek:`app/ai/potential/week`, //近7日潜在客戶
+    potentialWeek:`app/ai/potential/week`, //近7日潜在客戶,
+    pay:`/app/memberOrder/pay`, //支付
 }
 export default apiConfig;
