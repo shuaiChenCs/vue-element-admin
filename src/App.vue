@@ -14,28 +14,32 @@ export default {
     },
     created(){
         let code = this.getUrlParam('code');
-        // let url = this.getCrtUrl();
-        // let url = 'https://h5.sipinoffice.com';
-        //登录，设置全局token
-        // window.sessionStorage.token =  'eyJhbGciOiJIUzI1NiJ9.eyJwMSI6ODQsInAyIjo4OCwiZXhwIjoxNTU4MDEwMDczLCJpYXQiOjE1NTcxNDYwNzN9.WZ7enKyOyjb7Ei5FxBeIzWWOqzaKF0RumB2L3mIcUWU'
-        //sessionStorage.token = 'eyJhbGciOiJIUzI1NiJ9.eyJwMSI6ODMsInAyIjo4NywiZXhwIjoxNTU3NDY1NjE1LCJpYXQiOjE1NTY2MDE2MTV9.C0b7h0o_Tyw3oVnTag24a6522DE5yl4Z1_CSxctOiIs';
-        this.toast = this.$createToast({
-            txt: '登录中..'
-        });
-        this.toast.show();
-        if(!sessionStorage.token) {
-           axios.post(this.$apiConfig.officialRegister + '?code=' + code).then(res => {
-                if (res.data.code == 0) {
-                    let response = res.data;
-                    axios.defaults.headers['Authentication'] = response.data.token;
-                    window.sessionStorage.token = response.data.token;
-                    this.$store.commit('setToken', response.data.token);
-                    this.loadUserInfo();
-                    eventBus.$emit('setToken')
-                }
-            });
+        if(!code){
+            window.href='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx9bd9279a9b4ee6a9&redirect_uri=https://h5.sipinoffice.com&response_type=code&scope=snsapi_userinfo&state=1&wechat_redirect'
         }else {
-            this.loadUserInfo();
+            // let url = this.getCrtUrl();
+            // let url = 'https://h5.sipinoffice.com';
+            //登录，设置全局token
+            // window.sessionStorage.token =  'eyJhbGciOiJIUzI1NiJ9.eyJwMSI6ODQsInAyIjo4OCwiZXhwIjoxNTU4ODU0NjA5LCJpYXQiOjE1NTc5OTA2MDl9.ntrGH6uw5Cydqoc_uFvm_ZviOnblZY80eKmHJht6SG8'
+            //sessionStorage.token = 'eyJhbGciOiJIUzI1NiJ9.eyJwMSI6ODMsInAyIjo4NywiZXhwIjoxNTU3NDY1NjE1LCJpYXQiOjE1NTY2MDE2MTV9.C0b7h0o_Tyw3oVnTag24a6522DE5yl4Z1_CSxctOiIs';
+            this.toast = this.$createToast({
+                txt: '登录中..'
+            });
+            this.toast.show();
+            if (!sessionStorage.token) {
+                axios.post(this.$apiConfig.officialRegister + '?code=' + code).then(res => {
+                    if (res.data.code == 0) {
+                        let response = res.data;
+                        axios.defaults.headers['Authentication'] = response.data.token;
+                        window.sessionStorage.token = response.data.token;
+                        this.$store.commit('setToken', response.data.token);
+                        this.loadUserInfo();
+                        eventBus.$emit('setToken')
+                    }
+                });
+            } else {
+                this.loadUserInfo();
+            }
         }
         //wxconfig param
         // axios.get(this.$apiConfig.wxConfig+'?url='+encodeURIComponent(url),{}).then(res=>{
