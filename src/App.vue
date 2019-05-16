@@ -14,10 +14,10 @@ export default {
     },
     created(){
         let code = this.getUrlParam('code');
+        let docid = this.getUrlParam('docid');
+        let url = docid ? 'https://h5.sipinoffice.com/article?docid=' + docid : 'https://h5.sipinoffice.com'
         if(!code){
-        console.log(code)
-            window.location.href='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx9bd9279a9b4ee6a9&redirect_uri=https://h5.sipinoffice.com&response_type=code&scope=snsapi_userinfo&state=1&wechat_redirect'
-            // console.log(window.location)
+            window.location.href=`https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx9bd9279a9b4ee6a9&redirect_uri=${url}&response_type=code&scope=snsapi_userinfo&state=1&wechat_redirect`
         }else {
             // let url = this.getCrtUrl();
             // let url = 'https://h5.sipinoffice.com';

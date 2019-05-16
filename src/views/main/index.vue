@@ -86,7 +86,7 @@ export default {
   },
   methods: {
       goTo() {
-          this.$router.push('/article/1');
+          this.$router.push('/article?docid=' + 1);
       },
     setScroll() {
       if (this.$el.scrollTop < this.bannerHeight) {

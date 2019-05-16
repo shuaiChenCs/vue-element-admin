@@ -28,7 +28,7 @@ export default new Router({
       ]
     },
     {
-      path: '/article/:id',
+      path: '/article',
       name: 'article',
       component: () => import(/* webpackChunkName: "home" */ '@/views/main/article-detail'),
       meta:{title:'文章'}
