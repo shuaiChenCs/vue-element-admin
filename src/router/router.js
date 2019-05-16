@@ -18,7 +18,7 @@ export default new Router({
       children: [
         {
           path: '/',
-          redirect: '/board'
+          redirect: '/main'
         },
         ...board,
         ...addressBook,
@@ -26,6 +26,12 @@ export default new Router({
         ...main,
         ...chat
       ]
+    },
+    {
+      path: '/article/:id',
+      name: 'article',
+      component: () => import(/* webpackChunkName: "home" */ '@/views/main/article-detail'),
+      meta:{title:'文章'}
     }
   ]
 })

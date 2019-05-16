@@ -4,6 +4,14 @@
       <div class="item">
         <img :src="`${this.$imageUrl}/add_goods@3x.png`" alt="">
         <div class="des" @click="addGoods">
+          <p class="main">新建文章</p>
+          <p>精准营销文章</p>
+          <p>转发即可获取浏览数据噢</p>
+        </div>
+      </div>
+      <div class="item">
+        <img :src="`${this.$imageUrl}/add_goods@3x.png`" alt="">
+        <div class="des" @click="addGoods">
           <p class="main">添加商品</p>
           <p>上传价廉好物</p>
           <p>分享您最推荐的日常小物</p>
@@ -38,27 +46,27 @@ export default {
   data() {
     return {
       show: false,
-      selectedLabelDefault: "看板",
+      selectedLabelDefault: "首页",
       tabs: [
-        // {
-        //   label: "首页",
-        //   icon: `${this.$imageUrl}/tabbar_home02@2x.png`,
-        //   activeIcon: `${this.$imageUrl}/tabbar_home01@2x.png`
-        // },
-          {
-              label: "看板",
-              icon: `${this.$imageUrl}/tabbar_board02@2x.png`,
-              activeIcon: `${this.$imageUrl}/tabbar_board01@2x.png`
-          },
+        {
+          label: "首页",
+          icon: `${this.$imageUrl}/tabbar_home02@2x.png`,
+          activeIcon: `${this.$imageUrl}/tabbar_home01@2x.png`
+        },
         {
           label: "通讯录",
           icon: `${this.$imageUrl}/tabbar_contacts02@2x.png`,
           activeIcon: `${this.$imageUrl}/tabbar_contacts01@2x.png`
         },
         {
-          label: "快捷",
-          icon: `${this.$imageUrl}/tabbar_add02@3x.png`,
-          activeIcon: `${this.$imageUrl}/tabbar_add01@3x.png`
+          label: "",
+          icon: `${this.$imageUrl}/tabbar_add@3x.png`,
+          activeIcon: `${this.$imageUrl}/tabbar_add@3x.png`
+        },
+        {
+            label: "看板",
+            icon: `${this.$imageUrl}/tabbar_board02@2x.png`,
+            activeIcon: `${this.$imageUrl}/tabbar_board01@2x.png`
         },
         {
           label: "我的",
@@ -84,7 +92,7 @@ export default {
           this.$router.push('/my/dynamic/add');
       },
     clickHandler(label) {
-      if(label=='快捷') {
+      if(label=='') {
         this.show = true;
         return;
       }
