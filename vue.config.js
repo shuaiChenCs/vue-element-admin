@@ -1,4 +1,5 @@
 module.exports = {
+  outputDir: 'official',
   css: {
     loaderOptions: {
       stylus: {
