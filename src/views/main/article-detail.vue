@@ -1,10 +1,26 @@
 <template>
-    <div>
-        123123
+    <div class="article-detail">
+        <div class="article-header">
+            <div class="avatar">
+                <img src="https://images.sipinoffice.com/common/4CB354CF6EE845A3BFB26A9A82302D40.png" alt="">
+            </div>
+            <div class="info">
+                <div class="name">刘鹤鸣</div>
+                <div class="view-info">文章数 2&nbsp;&nbsp;&nbsp;视频数 3&nbsp;&nbsp;&nbsp;浏览量 14</div>
+            </div>
+            <div class="article-btn">
+                <button>查看名片</button>
+            </div>
+        </div>
     </div>
 </template>
 <script>
     export default {
+        data() {
+            return {
+
+            }
+        },
         mounted(){
             wx.ready(function(res) {
                 wx.onMenuShareAppMessage({
@@ -41,5 +57,48 @@
             }
         }
     }
-
 </script>
+<style lang="less" scoped>
+.article-detail{
+    .article-header{
+        padding: 25px 15px;
+        height: 100px;
+        background:linear-gradient(30deg,rgba(11,196,183,1) 0%,rgba(43,217,144,1) 100%);
+        display: flex;
+        align-items: center;
+        .avatar{
+            height: 50px;
+            width: 60px;
+            img{
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+            }
+        }
+        .info{
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            color: white;
+            font-size: 12px;
+            .name{
+                font-size: 15px;
+                margin-bottom: 10px;
+            }
+        }
+        .article-btn{
+            width: 100px;
+            >button{
+                width: 100%;
+                height: 34px;
+                border: 1Px solid white;
+                border-radius: 17px;
+                background: transparent;
+                color: white;
+                font-size: 15px;
+            }
+        }
+    }
+}
+</style>

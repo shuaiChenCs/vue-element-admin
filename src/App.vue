@@ -22,10 +22,12 @@ export default {
         })
     },
     created(){
-        let code = this.getUrlParam('code');
-        let docid = this.getUrlParam('docid');
-        let url = docid ? 'https://h5.sipinoffice.com/article?docid=' + docid : 'https://h5.sipinoffice.com'
-        if(!code){
+        let token = this.getUrlParam('token') || sessionStorage.token;
+        if(this.getUrlParam('token')) {
+            sessionStorage.token = this.getUrlParam('token');
+        }
+        let url = this.getCrtUrl();
+        if(!token){
             window.document.location.replace(`https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx9bd9279a9b4ee6a9&redirect_uri=${url}&response_type=code&scope=snsapi_base&state=1&wechat_redirect&connect_redirect=1`);
         }else {
             // let url = this.getCrtUrl();
@@ -38,6 +40,7 @@ export default {
             });
             this.toast.show();
             if (!sessionStorage.token) {
+                let code = this.getUrlParam('code');
                 axios.post(this.$apiConfig.officialRegister + '?code=' + code).then(res => {
                     if (res.data.code == 0) {
                         let response = res.data;
