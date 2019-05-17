@@ -13,17 +13,17 @@ export default {
         }
     },
     created(){
-        let code = this.getUrlParam('code');
-        let docid = this.getUrlParam('docid');
-        let url = docid ? 'https://h5.sipinoffice.com/article?docid=' + docid : 'https://h5.sipinoffice.com'
-        if(!code){
-            window.location.href=`https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx9bd9279a9b4ee6a9&redirect_uri=${url}&response_type=code&scope=snsapi_userinfo&state=1&wechat_redirect`
-        }else {
+        // let code = this.getUrlParam('code');
+        // let docid = this.getUrlParam('docid');
+        // let url = docid ? 'https://h5.sipinoffice.com/article?docid=' + docid : 'https://h5.sipinoffice.com'
+        // if(!code){
+        //     window.location.href=`https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx9bd9279a9b4ee6a9&redirect_uri=${url}&response_type=code&scope=snsapi_userinfo&state=1&wechat_redirect`
+        // }else {
             // let url = this.getCrtUrl();
             // let url = 'https://h5.sipinoffice.com';
             //登录，设置全局token
             // window.sessionStorage.token =  'eyJhbGciOiJIUzI1NiJ9.eyJwMSI6ODQsInAyIjo4OCwiZXhwIjoxNTU4ODU0NjA5LCJpYXQiOjE1NTc5OTA2MDl9.ntrGH6uw5Cydqoc_uFvm_ZviOnblZY80eKmHJht6SG8'
-            //sessionStorage.token = 'eyJhbGciOiJIUzI1NiJ9.eyJwMSI6ODMsInAyIjo4NywiZXhwIjoxNTU3NDY1NjE1LCJpYXQiOjE1NTY2MDE2MTV9.C0b7h0o_Tyw3oVnTag24a6522DE5yl4Z1_CSxctOiIs';
+            sessionStorage.token = 'eyJhbGciOiJIUzI1NiJ9.eyJwMSI6ODMsInAyIjo4NywiZXhwIjoxNTU4MzM2OTk3LCJpYXQiOjE1NTc0NzI5OTd9.Dn-NQ0cve5q7P8I_HqHKB7F43EbfhpDOlJaxaU_zFOk';
             this.toast = this.$createToast({
                 txt: '登录中..'
             });
@@ -42,14 +42,15 @@ export default {
             } else {
                 this.loadUserInfo();
             }
-        }
+        // }
         //wxconfig param
-        axios.get(this.$apiConfig.wxConfig+'?url='+encodeURIComponent(url),{}).then(res=>{
-            if(res.data.code ==0){
-                let wxConfig = res.data.data;
-                this.setWxConfig(wxConfig);
-            }
-        });
+        // alert(url)
+        // axios.get(this.$apiConfig.wxConfig+'?url='+encodeURIComponent(url),{}).then(res=>{
+        //     if(res.data.code ==0){
+        //         let wxConfig = res.data.data;
+        //         this.setWxConfig(wxConfig);
+        //     }
+        // });
     },
     methods:{
         loadUserInfo(){
