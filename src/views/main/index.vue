@@ -47,6 +47,7 @@
   </div>
 </template>
 <script>
+    import eventBus from '@/lib/eventBus.js'
 export default {
   data() {
     return {
@@ -67,14 +68,24 @@ export default {
       articleList: []
     };
   },
+    created(){
+        if(sessionStorage.token) {
+            this.getIndex();
+            this.getArticleList(this.formData);
+        }else{
+            let vm = this;
+            eventBus.$once('setToken',function(){
+                vm.getIndex();
+                vm.getArticleList(vm.formData);
+            });
+        }
+    },
   mounted() {
     let _this = this;
     let el = this.$el;
     el.addEventListener("scroll", function() {
       _this.scrollToType = el.scrollTop > _this.bannerHeight;
     });
-    this.getIndex();
-    this.getArticleList(this.formData);
   },
   methods: {
     getArticleList(params) {
