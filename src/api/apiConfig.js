@@ -66,5 +66,7 @@ const apiConfig = {
     potential:`/app/ai/potential/code`, //找客户
     potentialWeek:`app/ai/potential/week`, //近7日潜在客戶,
     pay:`/app/memberOrder/pay`, //支付
+    getIndex: 'app/index/get', //获取首页数据
+    getArticle: 'app/new/list', //获取文章列表
 }
 export default apiConfig;

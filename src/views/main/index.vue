@@ -1,46 +1,44 @@
 <template>
   <div class="main sp-scroll" v-scroll="loadmore">
     <div class="slide-block">
-      <cube-slide ref="slide" :data="items">
-        <cube-slide-item v-for="(item, index) in items" :key="index">
-          <img :src="item">
+      <cube-slide ref="slide" :data="indexData.indexBannerVO">
+        <cube-slide-item v-for="(item, index) in indexData.indexBannerVO" :key="index">
+          <img :src="item.bannerUrl">
         </cube-slide-item>
       </cube-slide>
     </div>
     <div class="article-type-block" :class="{blockfixed: scrollToType}">
       <!-- <div class="more">
         <i class="iconfont iconhome_more" @click="$router.push('/main/article-type')"></i>
-      </div> -->
+      </div>-->
       <div class="article-type-box">
-          <div
-        class="scroll-view-item"
-        v-for="(item, index) in articleTypes"
-        :key="index"
-        @click="chooseType(item)"
-      >
-        <span :class="{active: activeType == item}">{{item}}</span>
+        <div
+          class="scroll-view-item"
+          v-for="(item, index) in indexData.newsCategoryVOList"
+          :key="index"
+          @click="chooseType(item)"
+        >
+          <span :class="{active: activeType == item.categoryName}">{{item.categoryName}}</span>
+        </div>
       </div>
-      </div>
-      
+
       <div class="more">
         <i class="iconfont iconhome_more" @click="$router.push('/main/article-type')"></i>
       </div>
     </div>
     <div class="article-list-block" :class="{blockpaddding: scrollToType}">
-      <div v-for="item in count" :key="item" @click="goTo">
+      <div v-for="(item, index) in articleList" :key="index" @click="goTo(item)">
         <div class="article-list-item">
           <div class="img">
-            <img src="https://images.sipinoffice.com/common/4CB354CF6EE845A3BFB26A9A82302D40.png">
+            <img :src="item.newsThumbnail">
           </div>
           <div class="content">
-            <div
-              class="content-top"
-            >产品实验：...产品实验产品实验产品实验产品实验产品实验产品实验产品实验产品实验产品实验产品实验产品实验产品实验产品实验产品实验产品实验产品实验产品实验</div>
+            <div class="content-top">{{item.newsTitle}}</div>
             <div class="content-bottom">
               <i class="iconfont iconcard_browse"></i>
-              <span style="margin-right: 50px;">1298</span>
+              <span style="margin-right: 50px;">{{item.readQuantity}}</span>
               <i type class="iconfont iconcard_share"></i>
-              <span>345</span>
+              <span>{{item.shareQuantity}}</span>
             </div>
           </div>
         </div>
@@ -52,29 +50,21 @@
 export default {
   data() {
     return {
-        bannerHeight: 620,
+      indexData: {
+        indexBannerVO: [],
+        newsCategoryVOList: []
+      },
+      formData: {
+        categoryId: 0,
+        current: 1,
+        size: 10
+      },
+      bannerHeight: 620,
       count: 10,
       scrollToType: false,
-      items: [
-        "https://images.sipinoffice.com/common/banner1.jpg",
-        "https://images.sipinoffice.com/common/banner2.jpg"
-      ],
-      activeType: "纳米技术",
-      articleTypes: [
-        "纳米技术",
-        "健康",
-        "美容",
-        "小家电",
-        "日化",
-        "公司",
-        "娱乐",
-        "小视频",
-        "红酒",
-        "养生",
-        "科技",
-        "NBA",
-        "军事"
-      ]
+      oldActiveType: '推荐',
+      activeType: "推荐",
+      articleList: []
     };
   },
   mounted() {
@@ -83,11 +73,34 @@ export default {
     el.addEventListener("scroll", function() {
       _this.scrollToType = el.scrollTop > _this.bannerHeight;
     });
+    this.getIndex();
+    this.getArticleList(this.formData);
   },
   methods: {
-      goTo() {
-          this.$router.push('/article?docid=' + 1);
-      },
+    getArticleList(params) {
+      axios.post(this.$apiConfig.getArticle, params).then(res => {
+        if (res.data.code == 0) {
+          if(this.oldActiveType == this.activeType) {
+            this.articleList = this.articleList.concat(
+              res.data.data.records || []
+            );
+          }else{
+            this.articleList = res.data.data.records || [];
+            this.oldActiveType = this.activeType;
+          }
+        }
+      });
+    },
+    getIndex() {
+      axios.get(this.$apiConfig.getIndex).then(res => {
+        if (res.data.code == 0) {
+          this.indexData = res.data.data || {};
+        }
+      });
+    },
+    goTo(item) {
+      this.$router.push("/article?docid=" + item.id);
+    },
     setScroll() {
       if (this.$el.scrollTop < this.bannerHeight) {
         let top = this.$el.scrollTop;
@@ -99,11 +112,15 @@ export default {
       }
     },
     loadmore() {
-      this.count += 5;
+      this.formData.current++;
+      this.getArticleList(this.formData);
     },
     chooseType(item) {
       this.setScroll();
-      this.activeType = item;
+      this.activeType = item.categoryName;
+      this.formData.categoryId = item.id;
+      this.formData.current = 1;
+      this.getArticleList(this.formData);
     }
   }
 };
@@ -126,10 +143,10 @@ export default {
     height: 45px;
     position: relative;
     display: flex;
-    .article-type-box{
-        white-space: nowrap;
-        flex: 1;
-        overflow-x: auto;
+    .article-type-box {
+      white-space: nowrap;
+      flex: 1;
+      overflow-x: auto;
     }
     .more {
       height: 45px;
@@ -160,6 +177,7 @@ export default {
       > span {
         &.active {
           border-bottom: 2px solid rgba(30, 210, 154, 1);
+          padding-bottom: 3px;
         }
       }
     }
