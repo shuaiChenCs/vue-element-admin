@@ -22,6 +22,7 @@ export default {
         })
     },
     created(){
+        // sessionStorage.token = 'eyJhbGciOiJIUzI1NiJ9.eyJwMSI6ODMsInAyIjo4NywiZXhwIjoxNTU4MzM2OTk3LCJpYXQiOjE1NTc0NzI5OTd9.Dn-NQ0cve5q7P8I_HqHKB7F43EbfhpDOlJaxaU_zFOk';
         let token = this.getUrlParam('token') || sessionStorage.token;
         if(this.getUrlParam('token')) {
             sessionStorage.token = this.getUrlParam('token');
