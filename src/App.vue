@@ -26,7 +26,7 @@ export default {
         let docid = this.getUrlParam('docid');
         let url = docid ? 'https://h5.sipinoffice.com/article?docid=' + docid : 'https://h5.sipinoffice.com'
         if(!code){
-            window.location.href=`https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx9bd9279a9b4ee6a9&redirect_uri=${url}&response_type=code&scope=snsapi_userinfo&state=1&wechat_redirect`
+            window.document.location.replace(`https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx9bd9279a9b4ee6a9&redirect_uri=${url}&response_type=code&scope=snsapi_base&state=1&wechat_redirect&connect_redirect=1`);
         }else {
             // let url = this.getCrtUrl();
             // let url = 'https://h5.sipinoffice.com';
@@ -91,7 +91,7 @@ export default {
                 signature: wxConfig.signature,// 必填，签名
                 jsApiList: ['onMenuShareAppMessage'] //
             });
-
+            wx.ready(function () {  wx.hideOptionMenu();    })
         }
     }
 };
