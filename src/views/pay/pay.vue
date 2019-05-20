@@ -1,5 +1,7 @@
 <template>
-    <div class="pay"></div>
+    <div class="pay">
+        fdsa
+    </div>
 </template>
 <script>
 export default {

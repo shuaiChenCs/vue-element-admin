@@ -68,5 +68,6 @@ const apiConfig = {
     pay:`/app/memberOrder/pay`, //支付
     getIndex: 'app/index/get', //获取首页数据
     getArticle: 'app/new/list', //获取文章列表
+    getArticleContent: 'app/new/view', //获取文章内容
 }
 export default apiConfig;

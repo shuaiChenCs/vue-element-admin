@@ -30,7 +30,10 @@
       </div> 
     </div>
     <div class="main-content" :class="{hastab: $hastab}">
-      <router-view />
+      <keep-alive>
+        <router-view v-if="$route.name == 'main'" />
+      </keep-alive>
+      <router-view v-if="$route.name != 'main'"/>
     </div>
     <div class="sp-tabbar" v-if="$hastab">
       <div class="tab-item" v-for="(item, index) in tabs" :key="index" @click="clickHandler(item.label)">

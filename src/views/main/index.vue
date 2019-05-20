@@ -60,12 +60,13 @@ export default {
         current: 1,
         size: 10
       },
-      bannerHeight: 620,
+      bannerHeight: 207,
       count: 10,
       scrollToType: false,
       oldActiveType: '推荐',
       activeType: "推荐",
-      articleList: []
+      articleList: [],
+      scrollTop: 0
     };
   },
     created(){
@@ -85,7 +86,11 @@ export default {
     let el = this.$el;
     el.addEventListener("scroll", function() {
       _this.scrollToType = el.scrollTop > _this.bannerHeight;
+      _this.scrollTop = el.scrollTop;
     });
+  },
+  activated() {
+    this.$el.scrollTop = this.scrollTop;
   },
   methods: {
     getArticleList(params) {
@@ -110,7 +115,7 @@ export default {
       });
     },
     goTo(item) {
-      this.$router.push("/article?docid=" + item.id);
+      this.$router.push("/main/article-h5?docid=" + item.id);
     },
     setScroll() {
       if (this.$el.scrollTop < this.bannerHeight) {

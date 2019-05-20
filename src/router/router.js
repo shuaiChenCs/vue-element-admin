@@ -33,6 +33,12 @@ export default new Router({
       name: 'article',
       component: () => import(/* webpackChunkName: "home" */ '@/views/main/article-detail'),
       meta:{title:'文章'}
+    },
+    {
+      path: '/pay',
+      name: 'pay',
+      component: () => import(/* webpackChunkName: "pay" */ '../views/pay/pay'),
+          meta:{title:'试用已到期'}
     }
   ]
 })

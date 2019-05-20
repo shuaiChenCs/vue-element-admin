@@ -22,7 +22,7 @@ export default {
         })
     },
     created(){
-        // sessionStorage.token = 'eyJhbGciOiJIUzI1NiJ9.eyJwMSI6ODMsInAyIjo4NywiZXhwIjoxNTU4MzM2OTk3LCJpYXQiOjE1NTc0NzI5OTd9.Dn-NQ0cve5q7P8I_HqHKB7F43EbfhpDOlJaxaU_zFOk';
+        sessionStorage.token = 'eyJhbGciOiJIUzI1NiJ9.eyJwMSI6ODMsInAyIjo4NywiZXhwIjoxNTU4MzM2OTk3LCJpYXQiOjE1NTc0NzI5OTd9.Dn-NQ0cve5q7P8I_HqHKB7F43EbfhpDOlJaxaU_zFOk';
         let token = this.getUrlParam('token') || sessionStorage.token;
         if(this.getUrlParam('token')) {
             sessionStorage.token = this.getUrlParam('token');
@@ -40,7 +40,7 @@ export default {
             // window.sessionStorage.token =  'eyJhbGciOiJIUzI1NiJ9.eyJwMSI6ODMsInAyIjo4NywiZXhwIjoxNTU4MzM2OTk3LCJpYXQiOjE1NTc0NzI5OTd9.Dn-NQ0cve5q7P8I_HqHKB7F43EbfhpDOlJaxaU_zFOk'
             //sessionStorage.token = 'eyJhbGciOiJIUzI1NiJ9.eyJwMSI6ODMsInAyIjo4NywiZXhwIjoxNTU3NDY1NjE1LCJpYXQiOjE1NTY2MDE2MTV9.C0b7h0o_Tyw3oVnTag24a6522DE5yl4Z1_CSxctOiIs';
             this.toast = this.$createToast({
-                txt: '登录中..'
+                txt: ''
             });
             this.toast.show();
             if (!sessionStorage.token) {
@@ -71,7 +71,7 @@ export default {
                 }
             }).then(() => {
                 this.$store.commit('initNim', {});
-                this.toast.hide()
+                this.toast.hide();
             });
         },
         getUrlParam (name) {

@@ -23,9 +23,14 @@ export default new Vuex.Store({
     nim: null,
     sessions: [],
     userList: [],
-    toUser:{}
+    toUser:{},
+    mainTop: 0,
+    mainActive: ''
   },
   mutations: {
+    setMainTop(state, top) {
+      state.mainTop = top;
+    },
     setGroup(state, arr) {
       state.group = arr;
     },
