@@ -85,6 +85,9 @@ export default {
       // console.log(val)
     }
   },
+    created(){
+        wx.ready(function () {  wx.hideOptionMenu();    });
+    },
   methods: {
       addGoods(){
           this.show=false;
