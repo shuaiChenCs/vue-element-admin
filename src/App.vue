@@ -23,9 +23,14 @@ export default {
     },
     created(){
         // sessionStorage.token = 'eyJhbGciOiJIUzI1NiJ9.eyJwMSI6ODMsInAyIjo4NywiZXhwIjoxNTU4MzM2OTk3LCJpYXQiOjE1NTc0NzI5OTd9.Dn-NQ0cve5q7P8I_HqHKB7F43EbfhpDOlJaxaU_zFOk';
-        let token = this.getUrlParam('token') || sessionStorage.token;
-        if(this.getUrlParam('token')) {
-            sessionStorage.token = this.getUrlParam('token');
+        let shareToken = this.getUrlParam('token');
+        let token = "";
+        if(shareToken) {
+            token = shareToken.substring(0, shareToken.length - 1);
+            sessionStorage.token = token;
+            axios.defaults.headers['Authentication'] = token;
+        }else{
+            token = sessionStorage.token
         }
         let url = encodeURIComponent( this.getUrlParam("docId") ? window.location.href+'article' : this.getCrtUrl());
         let code = this.getUrlParam('code');
@@ -34,11 +39,6 @@ export default {
         if(!token && !code){
             window.document.location.replace(`https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx9bd9279a9b4ee6a9&redirect_uri=${url}&response_type=code&scope=snsapi_base&state=1&wechat_redirect&connect_redirect=1`);
         }else {
-            // let url = this.getCrtUrl();
-            // let url = 'https://h5.sipinoffice.com';
-            //登录，设置全局token
-            // window.sessionStorage.token =  'eyJhbGciOiJIUzI1NiJ9.eyJwMSI6ODMsInAyIjo4NywiZXhwIjoxNTU4MzM2OTk3LCJpYXQiOjE1NTc0NzI5OTd9.Dn-NQ0cve5q7P8I_HqHKB7F43EbfhpDOlJaxaU_zFOk'
-            //sessionStorage.token = 'eyJhbGciOiJIUzI1NiJ9.eyJwMSI6ODMsInAyIjo4NywiZXhwIjoxNTU3NDY1NjE1LCJpYXQiOjE1NTY2MDE2MTV9.C0b7h0o_Tyw3oVnTag24a6522DE5yl4Z1_CSxctOiIs';
             this.toast = this.$createToast({
                 txt: ''
             });

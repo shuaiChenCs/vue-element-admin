@@ -14,5 +14,17 @@
     <!-- built files will be auto injected -->
     <script src="./font/iconfont.js"></script>
    <script src="./js/jweixin-1.4.0.js"></script>
+   <script>
+      document.addEventListener('UniAppJSBridgeReady', function() {
+        uni.postMessage({
+            data: {
+                action: 'message'
+            }
+        });
+        uni.getEnv(function(res) {
+            console.log('当前环境：' + JSON.stringify(res));
+        });
+      });
+   </script>
   </body>
 </html>

@@ -1,5 +1,8 @@
 <template>
     <div class="article-detail">
+        <cube-popup type="my-popup" :zIndex="10000" class="share-pop" :position="''" :mask-closable="true" ref="cardPopup">
+            <img src="@/assets/images/yindao.png" alt="" width="200">
+        </cube-popup>
         <div class="article-header">
             <div class="avatar">
                 <img src="https://images.sipinoffice.com/common/4CB354CF6EE845A3BFB26A9A82302D40.png" alt="">
@@ -38,8 +41,9 @@
                 </div>
             </div>
         </div>
-        <div class="fixed-btn" v-if="isMe">
-            dsa
+        <div class="fixed-btn">
+            <button class="left">生成文章小程序</button>
+            <button class="right" @click="showPopup">分享</button>
         </div>
     </div>
 </template>
@@ -47,7 +51,6 @@
     export default {
         data() {
             return {
-                isMe: true,
                 article: {}
             }
         },
@@ -80,6 +83,10 @@
                     });
                 });
             },
+            showPopup() {
+                const component = this.$refs.cardPopup;
+                component.show();
+            },
             getCrtUrl(){
                 let temp = window.location.href;
                 let end = temp.indexOf('#');
@@ -91,7 +98,7 @@
             },
             getArticleContent() {
                 let params = {
-                    newsId: this.$route.query.docid
+                    newsId: this.$route.query.docId
                 }
                 axios.post(this.$apiConfig.getArticleContent, params).then(res => {
                     if(res.data.code == 0) {
@@ -222,6 +229,24 @@
         position: fixed;
         padding: 10px 15px;
         background: white;
+        display: flex;
+        >button{
+            flex: 1;
+            border: none;
+            height: 44px;
+            border-radius: 22px;
+            font-size: 15px;
+            &.left{
+                margin-right: 15px;
+                border: 1Px solid rgba(30, 210, 154, 1);
+                color: rgba(43, 217, 144, 1);
+                background: white;
+            }
+            &.right{
+                background:linear-gradient(90deg,rgba(11,196,183,1) 0%,rgba(43,217,144,1) 100%);
+                color: white;
+            }
+        }
     }
 }
 </style>

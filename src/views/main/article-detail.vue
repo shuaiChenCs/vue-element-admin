@@ -9,7 +9,7 @@
                 <div class="view-info">文章数 2&nbsp;&nbsp;&nbsp;视频数 3&nbsp;&nbsp;&nbsp;浏览量 14</div>
             </div>
             <div class="article-btn">
-                <button>查看名片</button>
+                <button @tap="goto">查看名片</button>
             </div>
         </div>
         <div class="article-content">
@@ -52,19 +52,19 @@
             }
         },
         mounted(){
-            this.shareToOne();
             this.getArticleContent();
         },
         methods:{
             shareToOne() {
-                let url  = this.getCrtUrl()+'?docId=1';
+                let _this = this;
+                let url  = this.getCrtUrl()+'?docId=' + _this.getUrlParam('docId');
                 wx.ready(function(res) {
                     wx.showOptionMenu();
                     wx.onMenuShareAppMessage({
-                        title: '互联网之子',
+                        title: _this.article.newsTitle,
                         desc: '在长大的过程中，我才慢慢发现，我身边的所有事，别人跟我说的所有事，那些所谓本来如此，注定如此的事，它们其实没有非得如此，事情是可以改变的。更重要的是，有些事既然错了，那就该做出改变。',
                         link: url,
-                        imgUrl: 'http://demo.open.weixin.qq.com/jssdk/images/p2166127561.jpg',
+                        imgUrl: _this.article.newsThumbnail,
                         trigger: function (res) {
                             // 不要尝试在trigger中使用ajax异步请求修改本次分享的内容，因为客户端分享操作是一个同步操作，这时候使用ajax的回包会还没有返回
                             // alert('用户点击发送给朋友');
@@ -81,6 +81,16 @@
                     });
                 });
             },
+            goto() {
+                uni.reLaunch({
+					url: `/pages/index/index?id=83`
+				});
+            },
+            getUrlParam (name) {
+                let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)');
+                let r = window.location.search.substr(1).match(reg);
+                if (r != null) return decodeURIComponent(r[2]); return null;
+            },
             getCrtUrl(){
                 let temp = window.location.href;
                 let end = temp.indexOf('?');
@@ -91,13 +101,15 @@
                 }
             },
             getArticleContent() {
+                console.log(window.location)
                 let params = {
-                    newsId: this.$route.query.docid
+                    newsId: this.getUrlParam('docId')
                 }
                 axios.post(this.$apiConfig.getArticleContent, params).then(res => {
                     if(res.data.code == 0) {
                         this.article = res.data.data || {};
                         document.title = this.article.newsTitle;
+                        this.shareToOne();
                     }
                 });
             }

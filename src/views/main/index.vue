@@ -115,7 +115,7 @@ export default {
       });
     },
     goTo(item) {
-      this.$router.push("/main/article-h5?docid=" + item.id);
+      this.$router.push("/main/article-h5?docId=" + item.id);
     },
     setScroll() {
       if (this.$el.scrollTop < this.bannerHeight) {

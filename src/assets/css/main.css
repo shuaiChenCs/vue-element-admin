@@ -158,5 +158,9 @@ textarea, input{
     color: #1ED29A !important;
 }
 .cube-popup{
-    position: absolute !important;
+    position: fixed !important;
+}
+.share-pop .cube-popup-content{
+    top: -88% !important;
+    left: -30% !important;
 }
