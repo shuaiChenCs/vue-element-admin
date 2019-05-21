@@ -9,7 +9,7 @@
                 <div class="view-info">文章数 2&nbsp;&nbsp;&nbsp;视频数 3&nbsp;&nbsp;&nbsp;浏览量 14</div>
             </div>
             <div class="article-btn">
-                <button @tap="goto">查看名片</button>
+                <button @click="goto">查看名片</button>
             </div>
         </div>
         <div class="article-content">
@@ -101,7 +101,6 @@
                 }
             },
             getArticleContent() {
-                console.log(window.location)
                 let params = {
                     newsId: this.getUrlParam('docId')
                 }
