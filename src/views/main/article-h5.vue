@@ -55,18 +55,40 @@
             }
         },
         mounted(){
-            this.shareToOne();
             this.getArticleContent();
         },
         methods:{
             shareToOne() {
+                let _this = this;
+                let url  = this.getCrtUrl()+'?docId='+this.$route.query.docId;
                 wx.ready(function(res) {
                     wx.showOptionMenu();
-                    wx.onMenuShareAppMessage({
-                        title: '互联网之子',
+                    //分享微信朋友/qq
+                    wx.updateAppMessageShareData({
+                        title: _this.article.newsTitle,
                         desc: '在长大的过程中，我才慢慢发现，我身边的所有事，别人跟我说的所有事，那些所谓本来如此，注定如此的事，它们其实没有非得如此，事情是可以改变的。更重要的是，有些事既然错了，那就该做出改变。',
-                        link: window.location.href,
-                        imgUrl: 'http://demo.open.weixin.qq.com/jssdk/images/p2166127561.jpg',
+                        link: url,
+                        imgUrl: _this.article.newsThumbnail,
+                        trigger: function (res) {
+                            // 不要尝试在trigger中使用ajax异步请求修改本次分享的内容，因为客户端分享操作是一个同步操作，这时候使用ajax的回包会还没有返回
+                            // alert('用户点击发送给朋友');
+                        },
+                        success: function (res) {
+                            // alert('已分享');
+                        },
+                        cancel: function (res) {
+                            // alert('已取消');
+                        },
+                        fail: function (res) {
+                            // alert(JSON.stringify(res));
+                        }
+                    });
+                    //分享到朋友圈”及“分享到QQ空间”
+                    wx.updateTimelineShareData({
+                        title: _this.article.newsTitle,
+                        desc: '在长大的过程中，我才慢慢发现，我身边的所有事，别人跟我说的所有事，那些所谓本来如此，注定如此的事，它们其实没有非得如此，事情是可以改变的。更重要的是，有些事既然错了，那就该做出改变。',
+                        link: url,
+                        imgUrl: _this.article.newsThumbnail,
                         trigger: function (res) {
                             // 不要尝试在trigger中使用ajax异步请求修改本次分享的内容，因为客户端分享操作是一个同步操作，这时候使用ajax的回包会还没有返回
                             // alert('用户点击发送给朋友');
@@ -89,7 +111,7 @@
             },
             getCrtUrl(){
                 let temp = window.location.href;
-                let end = temp.indexOf('#');
+                let end = temp.indexOf('?');
                 if(end!=-1){
                     return temp.substring(0,end);
                 }else{
@@ -104,6 +126,7 @@
                     if(res.data.code == 0) {
                         this.article = res.data.data || {};
                         document.title = this.article.newsTitle;
+                        this.shareToOne();
                     }
                 });
             }

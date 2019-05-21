@@ -36,7 +36,8 @@ export default {
         let code = this.getUrlParam('code');
 
 
-        if(!token && !code){
+        let ua = window.navigator.userAgent.toLowerCase(); //验证微信浏览器
+        if((ua.match(/MicroMessenger/i) != 'micromessenger')||(!token && !code)){
             window.document.location.replace(`https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx9bd9279a9b4ee6a9&redirect_uri=${url}&response_type=code&scope=snsapi_base&state=1&wechat_redirect&connect_redirect=1`);
         }else {
             this.toast = this.$createToast({
@@ -95,7 +96,7 @@ export default {
                 timestamp: wxConfig.timestamp, // 必填，生成签名的时间戳
                 nonceStr: wxConfig.nonceStr, // 必填，生成签名的随机串
                 signature: wxConfig.signature,// 必填，签名
-                jsApiList: ['onMenuShareAppMessage'] //
+                jsApiList: ['updateAppMessageShareData','updateTimelineShareData','onMenuShareAppMessage','onMenuShareTimeline','onMenuShareQQ','onMenuShareQZone'] //
             });
             wx.ready(function () {  wx.hideOptionMenu();    })
         }
