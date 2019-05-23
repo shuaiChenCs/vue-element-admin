@@ -58,10 +58,11 @@
         },
         mounted(){
             this.getArticleContent();
-            window.addEventListener( 'popstate', e => {
-                alert(123)
-                this.addBehavior('5-1');
-            });
+            window.onbeforeunload=function(e){
+                let a = window.event||e;
+                alert(1)
+                this.addBehavior('5-1')
+            }
         },
         destroyed(){
             alert(312)
