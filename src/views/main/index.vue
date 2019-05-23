@@ -89,6 +89,13 @@ export default {
       _this.scrollTop = el.scrollTop;
     });
   },
+    beforeRouteLeave(to,from,next){
+     if(to.path=='/author' && sessionStorage.token) {
+         next(false);
+     }else{
+         next();
+     }
+    },
   activated() {
     this.$el.scrollTop = this.scrollTop;
   },

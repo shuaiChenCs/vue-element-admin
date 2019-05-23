@@ -5,11 +5,11 @@
         </cube-popup>
         <div class="article-header">
             <div class="avatar">
-                <img src="https://images.sipinoffice.com/common/4CB354CF6EE845A3BFB26A9A82302D40.png" alt="">
+                <img :src="selfCard.headImg" alt="">
             </div>
             <div class="info">
-                <div class="name">刘鹤鸣</div>
-                <div class="view-info">文章数 2&nbsp;&nbsp;&nbsp;视频数 3&nbsp;&nbsp;&nbsp;浏览量 14</div>
+                <div class="name">{{selfCard.cardName}}</div>
+                <div class="view-info">文章数 {{selfCard.articleQuantity || 0}}&nbsp;&nbsp;&nbsp;视频数 {{selfCard.videoQuantity || 0}}&nbsp;&nbsp;&nbsp;浏览量 {{selfCard.pageView}}</div>
             </div>
             <div class="article-btn">
                 <button>查看名片</button>
@@ -25,18 +25,18 @@
             </div>
             <div class="card-info">
                 <div class="item-avatar">
-                    <img src="https://images.sipinoffice.com/common/4CB354CF6EE845A3BFB26A9A82302D40.png" />
+                    <img :src="selfCard.headImg" />
                 </div>
                 <div class="item-info">
-                    <span class="name">张三</span>
-                    <span class="job">销售经理</span>
+                    <span class="name">{{selfCard.cardName}}</span>
+                    <span class="job">{{selfCard.position}}</span>
                     <div class="company">
                         <i class="iconfont iconcard_company"></i>
-                        <span>暂无数据</span>
+                        <span>{{selfCard.companyName}}</span>
                     </div>
                     <div class="phone">
                         <i type="" class="iconfont iconcard_phone"></i>
-                        <span>暂无数据</span>
+                        <span>{{selfCard.mobile}}</span>
                     </div>
                 </div>
             </div>
@@ -51,30 +51,42 @@
     export default {
         data() {
             return {
-                article: {}
+                selfCard:this.$store.state.user.cardVO,
+                article: {
+                    newsTitle:'',
+                    newsThumbnail:'',
+                    newsIntroduce:''
+                }
             }
         },
         mounted(){
             this.getArticleContent();
+            // this.shareToOne();
         },
         methods:{
             shareToOne() {
                 let _this = this;
-                let url  = this.getCrtUrl()+'?docId='+this.$route.query.docId;
+                console.log(this.selfCard)
+                let url  = this.getCrtUrl()+'?docId='+this.$route.query.docId+'&cardId='+this.selfCard.id;
                 wx.ready(function(res) {
-                    wx.showOptionMenu();
-                    //分享微信朋友/qq
-                    wx.updateAppMessageShareData({
+                    wx.showOptionMenu({
+                        menuList: ["menuItem:share:appMessage","menuItem:share:timeline", "menuItem:share:qq","menuItem:share:QZone"]
+                    });
+                    let share = {
                         title: _this.article.newsTitle,
-                        desc: '在长大的过程中，我才慢慢发现，我身边的所有事，别人跟我说的所有事，那些所谓本来如此，注定如此的事，它们其实没有非得如此，事情是可以改变的。更重要的是，有些事既然错了，那就该做出改变。',
+                        desc: _this.article.newsIntroduce,
                         link: url,
                         imgUrl: _this.article.newsThumbnail,
                         trigger: function (res) {
                             // 不要尝试在trigger中使用ajax异步请求修改本次分享的内容，因为客户端分享操作是一个同步操作，这时候使用ajax的回包会还没有返回
                             // alert('用户点击发送给朋友');
+                            _this.axios.post(_this.$apiConfig.shareNew,{
+                                newsId:_this.$route.query.docId
+                            }).then(res=>{
+                            })
                         },
                         success: function (res) {
-                            // alert('已分享');
+                            // alert('分享成功')
                         },
                         cancel: function (res) {
                             // alert('已取消');
@@ -82,27 +94,11 @@
                         fail: function (res) {
                             // alert(JSON.stringify(res));
                         }
-                    });
-                    //分享到朋友圈”及“分享到QQ空间”
-                    wx.updateTimelineShareData({
-                        title: _this.article.newsTitle,
-                        desc: '在长大的过程中，我才慢慢发现，我身边的所有事，别人跟我说的所有事，那些所谓本来如此，注定如此的事，它们其实没有非得如此，事情是可以改变的。更重要的是，有些事既然错了，那就该做出改变。',
-                        link: url,
-                        imgUrl: _this.article.newsThumbnail,
-                        trigger: function (res) {
-                            // 不要尝试在trigger中使用ajax异步请求修改本次分享的内容，因为客户端分享操作是一个同步操作，这时候使用ajax的回包会还没有返回
-                            // alert('用户点击发送给朋友');
-                        },
-                        success: function (res) {
-                            // alert('已分享');
-                        },
-                        cancel: function (res) {
-                            // alert('已取消');
-                        },
-                        fail: function (res) {
-                            // alert(JSON.stringify(res));
-                        }
-                    });
+                    };
+                    wx.onMenuShareAppMessage(share); //分享朋友
+                    wx.onMenuShareTimeline(share);  //朋友圈
+                    wx.onMenuShareQQ(share); //分享qq
+                    wx.onMenuShareQZone(share); //分享qq空间
                 });
             },
             showPopup() {

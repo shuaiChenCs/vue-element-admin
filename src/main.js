@@ -25,8 +25,19 @@ Vue.prototype.$hastab;
 
 router.beforeEach((to,from,next)=>{
     Vue.prototype.$hastab = to.meta.hastab;
-    document.title=to.meta.title;
-    next();
+    if(!sessionStorage.token && to.path != '/author') {
+        next('/author');
+    }
+    if(to.path == '/author' && sessionStorage.token){
+        if(window.location.href.indexOf('docId')>0){
+            next('/article')
+        }else {
+            next(from.path)
+        }
+    }else {
+        document.title = to.meta.title;
+        next();
+    }
 })
 
 new Vue({

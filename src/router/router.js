@@ -34,6 +34,12 @@ export default new Router({
       component: () => import(/* webpackChunkName: "home" */ '@/views/main/article-detail'),
       meta:{title:'文章'}
     },
+      {
+          path: '/author',
+          name: 'author',
+          component: () => import(/* webpackChunkName: "home" */ '@/views/author'),
+          meta:{title:'心脉科技'}
+      },
     {
       path: '/pay',
       name: 'pay',

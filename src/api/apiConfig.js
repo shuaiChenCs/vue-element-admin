@@ -69,5 +69,6 @@ const apiConfig = {
     getIndex: 'app/index/get', //获取首页数据
     getArticle: 'app/new/list', //获取文章列表
     getArticleContent: 'app/new/view', //获取文章内容
+    shareNew:`app/member/new/share` //分享文章
 }
 export default apiConfig;

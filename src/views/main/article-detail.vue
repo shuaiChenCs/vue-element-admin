@@ -54,6 +54,12 @@
         mounted(){
             this.getArticleContent();
         },
+        beforeRouteLeave(to,from,next){
+            if(this.getUrlParam('token')) {
+                next();
+            }else
+                next(false);
+        },
         methods:{
             shareToOne() {
                 let _this = this;
