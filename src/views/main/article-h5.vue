@@ -9,7 +9,7 @@
             </div>
             <div class="info">
                 <div class="name">{{selfCard.cardName}}</div>
-                <div class="view-info">文章数 {{selfCard.articleQuantity || 0}}&nbsp;&nbsp;&nbsp;视频数 {{selfCard.videoQuantity || 0}}&nbsp;&nbsp;&nbsp;浏览量 {{selfCard.pageView}}</div>
+                <div class="view-info">文章数 {{selfCard.articleQuantity || 0}}&nbsp;&nbsp;&nbsp;视频数 {{selfCard.videoQuantity || 0}}&nbsp;&nbsp;&nbsp;浏览量 {{selfCard.pageView || 0}}</div>
             </div>
             <div class="article-btn">
                 <button>查看名片</button>
@@ -66,7 +66,6 @@
         methods:{
             shareToOne() {
                 let _this = this;
-                console.log(this.selfCard)
                 let url  = this.getCrtUrl()+'?docId='+this.$route.query.docId+'&cardId='+this.selfCard.id;
                 wx.ready(function(res) {
                     wx.showOptionMenu({
