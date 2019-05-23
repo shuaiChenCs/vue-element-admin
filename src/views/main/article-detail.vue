@@ -50,11 +50,21 @@
                 card:{},
                 selfCard:this.$store.state.user.cardVO,
                 isMe: true,
-                article: {}
+                article: {},
+                time:1,
+                docId:0,
+                cardId:0
             }
         },
         mounted(){
             this.getArticleContent();
+            window.addEventListener( 'popstate', e => {
+                alert(123)
+                this.addBehavior('5-1');
+            });
+        },
+        destroyed(){
+            alert(312)
         },
         beforeRouteLeave(to,from,next){
             if(this.getUrlParam('token')) {
@@ -65,7 +75,6 @@
         methods:{
             shareToOne() {
                 let _this = this;
-                console.log(this.selfCard)
                 let url  = this.getCrtUrl()+'?docId='+this.getUrlParam('docId')+'&cardId='+this.card.id;
                 wx.ready(function(res) {
                     wx.showOptionMenu({
@@ -120,10 +129,11 @@
                 }
             },
             getArticleContent() {
-                let cardId = this.getUrlParam('cardId') || this.selfCard.id;
+                this.cardId = this.getUrlParam('cardId') || this.selfCard.id;
+                this.docId = this.getUrlParam('docId');
                 let params = {
-                    newsId: this.getUrlParam('docId'),
-                    cardId:cardId
+                    newsId: this.docId,
+                    cardId:this.cardId
                 }
                 axios.post(this.$apiConfig.getShareArticleContent, params).then(res => {
                     if(res.data.code == 0) {
@@ -138,6 +148,18 @@
                         this.shareToOne();
                     }
                 });
+                this.addBehavior('5');
+                setInterval(function(){
+                    this.time++;
+                },1000);
+            },
+            addBehavior(code){
+                axios.post(this.$apiConfig.behavior,{
+                    cardId:this.cardId,
+                    duration:this.time,
+                    objectId:this.docId,
+                    operateCode:code
+                }).then(res=>{});
             }
         }
     }
