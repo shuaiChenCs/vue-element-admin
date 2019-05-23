@@ -57,6 +57,9 @@
             }
         },
         mounted(){
+            setInterval(() =>{
+                this.time++;
+            },1000);
             this.getArticleContent();
             window.onbeforeunload=function(e){
                 let a = window.event||e;
@@ -112,7 +115,7 @@
             },
             goto() {
                 uni.reLaunch({
-					url: `/pages/index/index?id=83`
+					url: `/pages/index/index?id=` + this.card.id
 				});
             },
             getUrlParam (name) {
@@ -150,9 +153,6 @@
                     }
                 });
                 this.addBehavior('5');
-                setInterval(function(){
-                    this.time++;
-                },1000);
             },
             addBehavior(code){
                 axios.post(this.$apiConfig.behavior,{
