@@ -74,6 +74,9 @@
         },
         mounted(){
             uni.getEnv((res)=> {
+                if(res.miniprogram == false) {
+                    this.env = 'h5';
+                }
                 if(res.h5 == true) {
                     this.env = 'h5';
                 }
@@ -192,9 +195,10 @@
                         this.card = data.articleMemberVO.cardVO;
                         this.meCardId = data.readMemberVO.cardVO.id;
                         this.imCard = {
-                            nickName: data.articleMemberVO.nikeName,
+                            nikeName: data.articleMemberVO.nikeName,
                             imAccount: data.articleMemberVO.imAccount,
-                            headImg: data.articleMemberVO.headImg
+                            headImg: data.articleMemberVO.headImg,
+                            clientId: data.articleMemberVO.id
                         }
                         this.isMe = data.isMe;
                         this.shareToOne();
