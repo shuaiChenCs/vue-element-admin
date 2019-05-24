@@ -1,5 +1,8 @@
 <template>
     <div class="article-detail">
+        <cube-popup type="my-popup" :zIndex="10000" :position="''" :mask-closable="true" ref="articlePopup">
+            <sp-card :title="'查看文章'" :url="articleQrcode"></sp-card>
+        </cube-popup>
         <cube-popup type="my-popup" :zIndex="10000" class="share-pop" :position="''" :mask-closable="true" ref="cardPopup">
             <img src="@/assets/images/yindao.png" alt="" width="200">
         </cube-popup>
@@ -46,16 +49,19 @@
         <div class="save-btn-box" v-else>
             <div class="other" @click="chat">
                 <i class="iconfont iconmoment_message"></i>
-                消息
+                咨询
             </div>
-            <cube-button @click="changeToMe">制作成我的</cube-button>
+            <cube-button @click="showArticlePop" v-if="env == 'h5'">查看文章小程序</cube-button>
+            <cube-button @click="changeToMe" v-if="env != 'h5'">制作成我的</cube-button>
         </div>
     </div>
 </template>
 <script>
+    import merge from 'webpack-merge';
     export default {
         data() {
             return {
+                articleQrcode: '',
                 env: '',
                 card:{},
                 selfCard:this.$store.state.user.cardVO,
@@ -96,6 +102,9 @@
             if(to.path=='/chat'){
                 next();
             }
+            if(to.path=='/main'){
+                next();
+            }
             if(this.getUrlParam('token')) {
                 next();
             }else{
@@ -103,6 +112,10 @@
             } 
         },
         methods:{
+            showArticlePop() {
+                const component = this.$refs.articlePopup;
+                component.show();
+            },
             chat() {
                 let params = {
                     card: this.imCard
@@ -115,7 +128,21 @@
                 }
                 axios.post(this.$apiConfig.changeToMy, params).then(res => {
                     if(res.data.code == 0) {
-                        window.location.replace(`${this.getCrtUrl()}?docId=${this.docId}&cardId=${this.meCardId}#/article`);
+                        if(this.env == 'h5') {
+                            
+                            // this.$router.push({
+                            //     query:merge(this.$route.query,{cardId: this.meCardId})
+                            // })
+                            // this.$router.push({path: '/article-my', query: {docId: this.docId, cardId: this.meCardId}})
+                        }else{
+                            window.location.replace(`${this.getCrtUrl()}?docId=${this.docId}&cardId=${this.meCardId}#/article`);
+                        }
+                    }
+                }).then(() => {
+                    if(this.env != 'h5') {
+                        uni.redirectTo({
+                            url: `/pages/article-detail/article-detail?share_cardId=${this.meCardId}&share_type=article&docId=${this.docId}`
+                        });
                     }
                 });
             },
@@ -187,6 +214,11 @@
                     if(res.data.code == 0) {
                         this.article = res.data.data || {};
                         document.title = this.article.newsTitle;
+                    }
+                });
+                axios.post(this.$apiConfig.getArticleQrcode, params).then(res => {
+                    if(res.data.code == 0) {
+                        this.articleQrcode = res.data.data.newsQrCode || '';
                     }
                 });
                 axios.post(this.$apiConfig.newsOther, params).then(res=>{
