@@ -54,7 +54,7 @@
                     }
                 }).then(() => {
                     this.$store.commit('initNim', {});
-                    this.loadWxConfig();
+                    // this.loadWxConfig();
                     toast.hide();
                     if(replace) {
                         this.$router.replace(routerUrl)
@@ -62,25 +62,6 @@
                         this.$router.push(routerUrl);
                     }
                 });
-            },
-            loadWxConfig(){
-                axios.get(this.$apiConfig.wxConfig + '?url=' + encodeURIComponent(this.getCrtUrl('#'), {})).then(res => {
-                    if (res.data.code == 0) {
-                        let wxConfig = res.data.data;
-                        this.setWxConfig(wxConfig);
-                    }
-                })
-            },
-            setWxConfig(wxConfig){
-                wx.config({
-                    debug: false,// 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-                    appId: `wx9bd9279a9b4ee6a9`, // 必填，公众号的唯一标识
-                    timestamp: wxConfig.timestamp, // 必填，生成签名的时间戳
-                    nonceStr: wxConfig.nonceStr, // 必填，生成签名的随机串
-                    signature: wxConfig.signature,// 必填，签名
-                    jsApiList: ['updateAppMessageShareData','updateTimelineShareData','onMenuShareAppMessage','onMenuShareTimeline','onMenuShareQQ','onMenuShareQZone'] //
-                });
-                // wx.ready(function () {  wx.hideOptionMenu ();    })
             },
             getUrlParam (name) {
                 let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)');

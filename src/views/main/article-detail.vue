@@ -51,13 +51,12 @@
                 <i class="iconfont iconmoment_message"></i>
                 咨询
             </div>
-            <cube-button @click="showArticlePop" v-if="env == 'h5'">查看文章小程序</cube-button>
-            <cube-button @click="changeToMe" v-if="env != 'h5'">制作成我的</cube-button>
+            <!--<cube-button @click="showArticlePop" v-if="env == 'h5'">查看文章小程序</cube-button>-->
+            <cube-button @click="changeToMe">制作成我的</cube-button>
         </div>
     </div>
 </template>
 <script>
-    import merge from 'webpack-merge';
     export default {
         data() {
             return {
@@ -79,6 +78,9 @@
             }
         },
         mounted(){
+            if(wx){
+                this.shareToOne();
+            }
             uni.getEnv((res)=> {
                 if(res.miniprogram == false) {
                     this.env = 'h5';
@@ -87,22 +89,12 @@
                     this.env = 'h5';
                 }
             });
-            setInterval(() =>{
-                this.time++;
-            },1000);
             this.cardId = this.getUrlParam('cardId') || this.selfCard.id;
             this.docId = this.getUrlParam('docId');
             this.getArticleContent(this.cardId, this.docId);
-            // window.onbeforeunload=function(e){
-            //     let a = window.event||e;
-            //     this.addBehavior('5-1')
-            // }
         },
         beforeRouteLeave(to,from,next){
             if(to.path=='/chat'){
-                next();
-            }
-            if(to.path=='/main'){
                 next();
             }
             if(this.getUrlParam('token')) {
@@ -126,17 +118,14 @@
                 let params = {
                     newsId: this.docId
                 }
+                let toast = this.$createToast({
+                    txt: ''
+                });
+                toast.show();
                 axios.post(this.$apiConfig.changeToMy, params).then(res => {
                     if(res.data.code == 0) {
-                        if(this.env == 'h5') {
-                            
-                            // this.$router.push({
-                            //     query:merge(this.$route.query,{cardId: this.meCardId})
-                            // })
-                            // this.$router.push({path: '/article-my', query: {docId: this.docId, cardId: this.meCardId}})
-                        }else{
+                        toast.hide();
                             window.location.replace(`${this.getCrtUrl()}?docId=${this.docId}&cardId=${this.meCardId}#/article`);
-                        }
                     }
                 }).then(() => {
                     if(this.env != 'h5') {
