@@ -122,7 +122,7 @@ export default {
       loadCss(){
           let ua = navigator.userAgent.toLowerCase();
           if(/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)){
-              return "30px";
+              return "15px";
           }else if (/(Android)/i.test(navigator.userAgent)){
               return "15px";
           }

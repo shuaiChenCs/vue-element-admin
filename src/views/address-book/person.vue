@@ -115,7 +115,7 @@ export default {
                 behaviorVOList:[]
             },
             browseGroup: [],
-            colors: ["#1ED29A", "#EFCA08", "#60AFFF", "#7E7EFF"],
+            colors: ["#1ED29A", "#EFCA08", "#60AFFF", "#7E7EFF","#EF767A"],
         }
     },
     created(){

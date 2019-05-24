@@ -189,7 +189,7 @@
         overflow-x: hidden !important;
         padding: 15px;
         background: white;
-        img, video{
+        img, video, section{
             max-width: 100% !important;
         }
     }
