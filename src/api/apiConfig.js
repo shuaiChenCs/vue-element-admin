@@ -72,5 +72,6 @@ const apiConfig = {
     shareNew:`app/member/new/share`, //分享文章
     newsOther:`app/member/new/get/news/member`, //获取文章会员信息
     getShareArticleContent:`/app/member/new/get/info`, //获取分享文章信息
+    changeToMy:`app/member/new/make/me`, //制作成我的文章
 }
 export default apiConfig;

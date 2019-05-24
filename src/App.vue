@@ -15,6 +15,8 @@ export default {
         if(!sessionStorage.token) {
             this.$router.replace('/author');
             return;
+        }else{
+          this.$store.commit('initNim', {});
         }
     }
 };

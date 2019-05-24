@@ -1,5 +1,8 @@
 <template>
     <div class="article-detail">
+        <cube-popup type="my-popup" :zIndex="10000" class="share-pop" :position="''" :mask-closable="true" ref="cardPopup">
+            <img src="@/assets/images/yindao.png" alt="" width="200">
+        </cube-popup>
         <div class="article-header">
             <div class="avatar">
                 <img :src="card.headImg || ''" alt="">
@@ -8,7 +11,7 @@
                 <div class="name">{{card.cardName || ''}}</div>
                 <div class="view-info">文章数 {{card.articleQuantity || 0}}&nbsp;&nbsp;&nbsp;视频数 {{card.videoQuantity}}&nbsp;&nbsp;&nbsp;浏览量 {{card.pageView || 0}}</div>
             </div>
-            <div class="article-btn">
+            <div class="article-btn" v-if="env != 'h5'">
                 <button @click="goto">查看名片</button>
             </div>
         </div>
@@ -21,9 +24,6 @@
                 名片显示
             </div>
             <div class="card-info">
-                <div class="item-avatar">
-                    <img :src="card.headImg || ''" />
-                </div>
                 <div class="item-info">
                     <span class="name">{{card.cardName || ''}}</span>
                     <span class="job">{{card.position || ''}}</span>
@@ -36,10 +36,19 @@
                         <span>{{card.mobile || ''}}</span>
                     </div>
                 </div>
+                <div class="item-avatar">
+                    <img :src="card.qrCode || ''" @click="goto"/>
+                    {{env == 'h5' ? '长按进入名片' : '点击进入名片'}}
+                </div>
             </div>
         </div>
-        <div class="fixed-btn" v-if="isMe">
-            dsa
+        <fixed-button :title="'转发'" @clickHandler="share" v-if="isMe"></fixed-button>
+        <div class="save-btn-box" v-else>
+            <div class="other" @click="chat">
+                <i class="iconfont iconmoment_message"></i>
+                消息
+            </div>
+            <cube-button @click="changeToMe">制作成我的</cube-button>
         </div>
     </div>
 </template>
@@ -47,39 +56,73 @@
     export default {
         data() {
             return {
+                env: '',
                 card:{},
                 selfCard:this.$store.state.user.cardVO,
-                isMe: true,
                 article: {},
+                isMe: false,
                 time:1,
                 docId:0,
-                cardId:0
+                cardId:0,
+                meCardId: 0,
+                imCard: {
+                    nickName: '',
+                    imAccount: '',
+                    headImg: ''
+                }
             }
         },
         mounted(){
+            uni.getEnv((res)=> {
+                if(res.h5 == true) {
+                    this.env = 'h5';
+                }
+            });
             setInterval(() =>{
                 this.time++;
             },1000);
-            this.getArticleContent();
-            window.onbeforeunload=function(e){
-                let a = window.event||e;
-                alert(1)
-                this.addBehavior('5-1')
-            }
-        },
-        destroyed(){
-            alert(312)
+            this.cardId = this.getUrlParam('cardId') || this.selfCard.id;
+            this.docId = this.getUrlParam('docId');
+            this.getArticleContent(this.cardId, this.docId);
+            // window.onbeforeunload=function(e){
+            //     let a = window.event||e;
+            //     this.addBehavior('5-1')
+            // }
         },
         beforeRouteLeave(to,from,next){
+            if(to.path=='/chat'){
+                next();
+            }
             if(this.getUrlParam('token')) {
                 next();
-            }else
+            }else{
                 next(false);
+            } 
         },
         methods:{
+            chat() {
+                let params = {
+                    card: this.imCard
+                }
+                this.$router.push({ path: '/chat', query: { user: params }});
+            },
+            changeToMe() {
+                let params = {
+                    newsId: this.docId
+                }
+                axios.post(this.$apiConfig.changeToMy, params).then(res => {
+                    if(res.data.code == 0) {
+                        window.location.replace(`${this.getCrtUrl()}?docId=${this.docId}&cardId=${this.meCardId}#/article`);
+                    }
+                });
+            },
+            share() {
+                const component = this.$refs.cardPopup;
+                component.show();
+            },
             shareToOne() {
                 let _this = this;
-                let url  = this.getCrtUrl()+'?docId='+this.getUrlParam('docId')+'&cardId='+this.card.id;
+                let url  = this.getCrtUrl()+'?docId='+this.getUrlParam('docId')+'&cardId='+this.cardId;
                 wx.ready(function(res) {
                     wx.showOptionMenu({
                         menuList: ["menuItem:share:appMessage","menuItem:share:timeline", "menuItem:share:qq","menuItem:share:QZone"]
@@ -132,12 +175,10 @@
                     return temp
                 }
             },
-            getArticleContent() {
-                this.cardId = this.getUrlParam('cardId') || this.selfCard.id;
-                this.docId = this.getUrlParam('docId');
+            getArticleContent(cardId, docId) {
                 let params = {
-                    newsId: this.docId,
-                    cardId:this.cardId
+                    newsId: docId,
+                    cardId: cardId
                 }
                 axios.post(this.$apiConfig.getShareArticleContent, params).then(res => {
                     if(res.data.code == 0) {
@@ -149,6 +190,13 @@
                     if(res.data.code == 0){
                         let data = res.data.data;
                         this.card = data.articleMemberVO.cardVO;
+                        this.meCardId = data.readMemberVO.cardVO.id;
+                        this.imCard = {
+                            nickName: data.articleMemberVO.nikeName,
+                            imAccount: data.articleMemberVO.imAccount,
+                            headImg: data.articleMemberVO.headImg
+                        }
+                        this.isMe = data.isMe;
                         this.shareToOne();
                     }
                 });
@@ -230,12 +278,17 @@
 			border-radius: 5px;
 			box-shadow:3px 3px 4px 0px rgba(43,217,144,1);
 			.item-avatar{
-				width: 249px/2;
+                width: 276px/2;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
 				img{
-					width: 100%;
-					height: 100%;
+					width: 70%;
+					height: 70%;
 					border-top-left-radius: 5px;
-					border-bottom-left-radius: 5px;
+                    border-bottom-left-radius: 5px;
+                    margin-bottom: 8px;
 				}
 			}
 			.item-info{

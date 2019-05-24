@@ -11,9 +11,6 @@
                 <div class="name">{{selfCard.cardName}}</div>
                 <div class="view-info">文章数 {{selfCard.articleQuantity || 0}}&nbsp;&nbsp;&nbsp;视频数 {{selfCard.videoQuantity || 0}}&nbsp;&nbsp;&nbsp;浏览量 {{selfCard.pageView || 0}}</div>
             </div>
-            <div class="article-btn">
-                <button>查看名片</button>
-            </div>
         </div>
         <div class="article-content">
             <div v-html="article.newsContent"></div>
@@ -24,9 +21,6 @@
                 名片显示
             </div>
             <div class="card-info">
-                <div class="item-avatar">
-                    <img :src="selfCard.headImg" />
-                </div>
                 <div class="item-info">
                     <span class="name">{{selfCard.cardName}}</span>
                     <span class="job">{{selfCard.position}}</span>
@@ -38,6 +32,9 @@
                         <i type="" class="iconfont iconcard_phone"></i>
                         <span>{{selfCard.mobile}}</span>
                     </div>
+                </div>
+                <div class="item-avatar">
+                    <img :src="selfCard.qrCode || ''"/>
                 </div>
             </div>
         </div>
@@ -193,12 +190,16 @@
 			border-radius: 5px;
 			box-shadow:3px 3px 4px 0px rgba(43,217,144,1);
 			.item-avatar{
-				width: 249px/2;
+                width: 276px/2;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
 				img{
-					width: 100%;
-					height: 100%;
+					width: 70%;
+					height: 70%;
 					border-top-left-radius: 5px;
-					border-bottom-left-radius: 5px;
+                    border-bottom-left-radius: 5px;
 				}
 			}
 			.item-info{

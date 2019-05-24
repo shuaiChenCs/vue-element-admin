@@ -36,6 +36,7 @@
 	position: fixed;
 	padding: 10px 15px;
 	background: white;
+	display: flex;
 	button{
 		background:#1ED29A;
 		border-radius:22px;
@@ -49,6 +50,20 @@
 	}
 	button:active{
 		background:#1ED29A;
+	}
+	.other{
+		padding-bottom: 2px;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		width: 40px;
+		margin-right: 10px;
+		color: rgba(151, 160, 177, 1);
+		font-size: 13px;
+		text-align: center;
+		i{
+			font-size: 30px;
+		}
 	}
 }
 </style>
