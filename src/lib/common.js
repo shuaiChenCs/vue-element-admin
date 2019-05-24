@@ -7,6 +7,8 @@ import spReply from '@/components/reply';
 import card from '@/components/card';
 import noMore from '@/components/no-more';
 import noData from '@/components/no-data';
+import noRrticle from '@/components/no-article';
+
 
 Vue.component('fixed-button', fixedButton);
 Vue.component('sp-upload', spUpload);
@@ -16,3 +18,4 @@ Vue.component('sp-reply', spReply);
 Vue.component('sp-card', card);
 Vue.component('no-more', noMore);
 Vue.component('no-data', noData);
+Vue.component('no-article', noRrticle);

@@ -73,5 +73,6 @@ const apiConfig = {
     newsOther:`app/member/new/get/news/member`, //获取文章会员信息
     getShareArticleContent:`/app/member/new/get/info`, //获取分享文章信息
     changeToMy:`app/member/new/make/me`, //制作成我的文章
+    getArticleQrcode:`app/member/new/generate/code`, //生成文章二维码
 }
 export default apiConfig;

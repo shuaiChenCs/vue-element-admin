@@ -1,5 +1,8 @@
 <template>
     <div class="article-detail">
+        <cube-popup type="my-popup" :zIndex="10000" :position="''" :mask-closable="true" ref="articlePopup">
+            <sp-card :title="'查看文章'" :url="articleQrcode"></sp-card>
+        </cube-popup>
         <cube-popup type="my-popup" :zIndex="10000" class="share-pop" :position="''" :mask-closable="true" ref="cardPopup">
             <img src="@/assets/images/yindao.png" alt="" width="200">
         </cube-popup>
@@ -39,7 +42,7 @@
             </div>
         </div>
         <div class="fixed-btn">
-            <button class="left">生成文章小程序</button>
+            <button class="left" @click="showArticlePop">生成文章小程序</button>
             <button class="right" @click="showPopup">分享</button>
         </div>
     </div>
@@ -53,7 +56,8 @@
                     newsTitle:'',
                     newsThumbnail:'',
                     newsIntroduce:''
-                }
+                },
+                articleQrcode: ''
             }
         },
         mounted(){
@@ -61,6 +65,10 @@
             // this.shareToOne();
         },
         methods:{
+            showArticlePop() {
+                const component = this.$refs.articlePopup;
+                component.show();
+            },
             shareToOne() {
                 let _this = this;
                 let url  = this.getCrtUrl()+'?docId='+this.$route.query.docId+'&cardId='+this.selfCard.id;
@@ -121,6 +129,12 @@
                         this.shareToOne();
                     }
                 });
+                axios.post(this.$apiConfig.getArticleQrcode, params).then(res => {
+                    if(res.data.code == 0) {
+                        this.articleQrcode = res.data.data.newsQrCode || '';
+                    }
+                });
+                
             }
         }
     }

@@ -22,11 +22,11 @@
         </div>
       </div>
 
-      <div class="more">
+      <!-- <div class="more">
         <i class="iconfont iconhome_more" @click="$router.push('/main/article-type')"></i>
-      </div>
+      </div> -->
     </div>
-    <div class="article-list-block" :class="{blockpaddding: scrollToType}">
+    <div class="article-list-block" :class="{blockpaddding: scrollToType}" v-if="!nodata">
       <div v-for="(item, index) in articleList" :key="index" @click="goTo(item)">
         <div class="article-list-item">
           <div class="img">
@@ -43,7 +43,9 @@
           </div>
         </div>
       </div>
+      <no-more v-if="nomore"></no-more>
     </div>
+    <no-article v-if="nodata"></no-article>
   </div>
 </template>
 <script>
@@ -51,6 +53,8 @@
 export default {
   data() {
     return {
+      nomore: false,
+      nodata: false,
       indexData: {
         indexBannerVO: [],
         newsCategoryVOList: []
@@ -102,6 +106,8 @@ export default {
   methods: {
     getArticleList(params) {
       axios.post(this.$apiConfig.getArticle, params).then(res => {
+        let d = res.data.data.records || [];
+        this.nomore = d.length == 0;
         if (res.data.code == 0) {
           if(this.oldActiveType == this.activeType) {
             this.articleList = this.articleList.concat(
@@ -111,6 +117,7 @@ export default {
             this.articleList = res.data.data.records || [];
             this.oldActiveType = this.activeType;
           }
+          this.nodata = this.articleList.length == 0;
         }
       });
     },
@@ -139,6 +146,7 @@ export default {
       this.getArticleList(this.formData);
     },
     chooseType(item) {
+      this.$el.scrollTop = this.bannerHeight + 1;
       this.setScroll();
       this.activeType = item.categoryName;
       this.formData.categoryId = item.id;
