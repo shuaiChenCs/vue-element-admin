@@ -104,6 +104,41 @@
             } 
         },
         methods:{
+            socketInit(){
+                if(this.isMe){
+                    return;
+                }
+                let websocket = null;
+
+                //判断当前浏览器是否支持WebSocket
+                let url = this.axios.defaults.baseURL.replace('https','ws').replace('http','ws')+'/websocket/';
+                let behavior = {
+                    cardId:this.cardId,
+                    duration:this.time,
+                    objectId:this.docId,
+                    operateCode:"5-1",
+                    currentCid:this.$store.state.user.cardVO.id,
+                    userId:this.$store.state.user.id
+                };
+                if('WebSocket' in window){
+                    websocket = new WebSocket(url+"/{"+JSON.stringify(behavior)+"}");
+                }
+                else{
+                    console.log('Not support websocket')
+                }
+
+                //连接发生错误的回调方法
+                websocket.onerror = function(){};
+
+                //连接关闭的回调方法
+                websocket.onclose = function(){};
+
+                //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+                window.onbeforeunload = function(){
+                    websocket.close();
+                }
+
+            },
             showArticlePop() {
                 const component = this.$refs.articlePopup;
                 component.show();
@@ -223,6 +258,7 @@
                         }
                         this.isMe = data.isMe;
                         this.shareToOne();
+                        this.socketInit();
                     }
                 });
                 this.addBehavior('5');

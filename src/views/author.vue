@@ -15,9 +15,13 @@
             if(window.sessionStorage.token){
                 this.$router.push(routerUrl);
             }else{
-                // token = 'eyJhbGciOiJIUzI1NiJ9.eyJwMSI6ODMsInAyIjo4NywiZXhwIjoxNTU5NDY0NDk5LCJpYXQiOjE1NTg2MDA0OTl9.HtEeRG3jTwVpxEA51zhAJVh6y-Y2GIMH5PDePE_HEOs';
+                token = 'eyJhbGciOiJIUzI1NiJ9.eyJwMSI6ODMsInAyIjo4NywiZXhwIjoxNTU5NDY0NDk5LCJpYXQiOjE1NTg2MDA0OTl9.HtEeRG3jTwVpxEA51zhAJVh6y-Y2GIMH5PDePE_HEOs';
                 if(!code && !token){
-                    window.location.replace(`https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx9bd9279a9b4ee6a9&redirect_uri=${wxRedirectUrl}&response_type=code&scope=snsapi_userinfo&state=1&wechat_redirect`);
+                    axios.get(this.$apiConfig.wxAuthorization+'?url='+wxRedirectUrl).then(res=>{
+                        if(res.data.code==0)
+                            window.location.replace(res.data.data);
+                    })
+
                 }else{
                     let toast = this.$createToast({
                         txt: ''

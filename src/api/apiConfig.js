@@ -74,5 +74,6 @@ const apiConfig = {
     getShareArticleContent:`/app/member/new/get/info`, //获取分享文章信息
     changeToMy:`app/member/new/make/me`, //制作成我的文章
     getArticleQrcode:`app/member/new/generate/code`, //生成文章二维码
+    wxAuthorization:`/wx/authorization`, //微信授权地址返回
 }
 export default apiConfig;

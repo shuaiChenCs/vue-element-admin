@@ -17,6 +17,8 @@ import './assets/css/main.css'
 import './assets/css/my-mint.css';
 import '../public/font/iconfont.css';
 import apiConfig from './api/apiConfig.js';
+import wxConfig from './config/wxConfig.js';
+Vue.use(wxConfig);
 Vue.config.productionTip = false
 Vue.prototype.$apiConfig=apiConfig;
 Vue.prototype.$imageUrl = 'https://images.sipinoffice.com/miniProgram/images';

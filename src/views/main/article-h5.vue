@@ -61,6 +61,7 @@
             }
         },
         mounted(){
+            this.getWxConfig(encodeURIComponent(this.getCrtUrl('#'), {}));
             this.getArticleContent();
             // this.shareToOne();
         },
@@ -71,7 +72,7 @@
             },
             shareToOne() {
                 let _this = this;
-                let url  = this.getCrtUrl()+'?docId='+this.$route.query.docId+'&cardId='+this.selfCard.id;
+                let url  = this.getCrtUrl('?')+'?docId='+this.$route.query.docId+'&cardId='+this.selfCard.id;
                 wx.ready(function(res) {
                     wx.showOptionMenu({
                         menuList: ["menuItem:share:appMessage","menuItem:share:timeline", "menuItem:share:qq","menuItem:share:QZone"]
@@ -109,9 +110,9 @@
                 const component = this.$refs.cardPopup;
                 component.show();
             },
-            getCrtUrl(){
+            getCrtUrl(indexChar){
                 let temp = window.location.href;
-                let end = temp.indexOf('?');
+                let end = temp.indexOf(indexChar);
                 if(end!=-1){
                     return temp.substring(0,end);
                 }else{
@@ -122,11 +123,16 @@
                 let params = {
                     newsId: this.$route.query.docId
                 }
+                let _this = this;
                 axios.post(this.$apiConfig.getArticleContent, params).then(res => {
                     if(res.data.code == 0) {
                         this.article = res.data.data || {};
                         document.title = this.article.newsTitle;
-                        this.shareToOne();
+                        // this.shareToOne();
+                        let url  = this.getCrtUrl('?')+'?docId='+this.$route.query.docId+'&cardId='+this.selfCard.id;
+                        this.wxShareAll(this.article.newsTitle,this.article.newsIntroduce,url,this.article.newsThumbnail,function (res1) {
+                            _this.axios.post(_this.$apiConfig.shareNew,params).then(res1=>{});
+                        });
                     }
                 });
                 axios.post(this.$apiConfig.getArticleQrcode, params).then(res => {
