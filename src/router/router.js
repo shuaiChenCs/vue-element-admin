@@ -43,7 +43,7 @@ export default new Router({
     {
       path: '/pay',
       name: 'pay',
-      component: () => import(/* webpackChunkName: "pay" */ '../views/pay/pay'),
+      component: () => import(/* webpackChunkName: "pay" */ '../views/pay'),
           meta:{title:'试用已到期'}
     }
   ]

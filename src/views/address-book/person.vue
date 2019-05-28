@@ -34,6 +34,16 @@
                 <div class="tag-item add" @click="$router.push('/address-book/addTags/'+personInfo.id)"><i class="iconfont iconcard_edit_add"></i></div>
             </div>
         </div>
+        <div class="person-item">
+            <div class="block-item-title">
+                <i class="iconfont iconcard_pause"></i>
+                客户信息
+            </div>
+            <div class="info-block">
+                手机号码：1383131333
+                <button @click="chat(personInfo)">呼叫</button>
+            </div>
+        </div>
         <div class="person-item" v-if="goods.length>0">
             <div class="block-item-title">
                 <i class="iconfont iconcard_pause"></i>
@@ -268,6 +278,20 @@ export default {
         }
     }
     .person-item{
+        .info-block{
+            font-size: 15px;
+            display: flex;
+            padding: 10px 15px 0 35px;
+            align-items: center;
+            justify-content: space-between;
+            button{
+                border-radius:22px;
+                border: none;
+                background: white;
+                border: 1Px solid #949494;
+                padding: 5px 10px;
+            }
+        }
         .att-good{
             .good-item{
                 display: flex;
@@ -399,6 +423,7 @@ export default {
                 display: flex;
                 justify-content: space-between;
                 .content{
+                    line-height: 1.2;
                     font-size: 16px;
                     color: black;
                     width: 90%;

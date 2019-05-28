@@ -24,7 +24,6 @@ export default {
     },
     methods:{
         loadWxConfig(){
-            alert(this.getCrtUrl('#'));
             axios.get(this.$apiConfig.wxConfig + '?url=' + encodeURIComponent(this.getCrtUrl('#'), {})).then(res => {
                 if (res.data.code == 0) {
                     let wxConfig = res.data.data;

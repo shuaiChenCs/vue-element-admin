@@ -126,7 +126,7 @@ export default {
 <style lang="less" scoped>
 .sp {
   .fabu{
-    padding-top: 80%;
+    padding-top: 50%;
     height: 100vh;
     position: fixed;
     width: 100%;
