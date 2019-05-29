@@ -101,7 +101,7 @@
                 next();
             }else{
                 next(false);
-            } 
+            }
         },
         methods:{
             socketInit(){
@@ -111,7 +111,7 @@
                 let websocket = null;
 
                 //判断当前浏览器是否支持WebSocket
-                let url = this.axios.defaults.baseURL.replace('https','ws').replace('http','ws')+'/websocket/';
+                let url = this.axios.defaults.baseURL.replace('https','wss').replace('http','wss')+'/websocket/';
                 let behavior = {
                     cardId:this.cardId,
                     duration:this.time,

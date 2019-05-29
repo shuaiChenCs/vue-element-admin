@@ -39,8 +39,8 @@
                 <i class="iconfont iconcard_pause"></i>
                 客户信息
             </div>
-            <div class="info-block">
-                手机号码：1383131333
+            <div class="info-block" v-if="personInfo.mobile">
+                手机号码：{{personInfo.mobile}}
                 <button @click="chat(personInfo)">呼叫</button>
             </div>
         </div>

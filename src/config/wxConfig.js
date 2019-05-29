@@ -28,7 +28,6 @@ export default {
                         jsApiList: ['updateAppMessageShareData','updateTimelineShareData','onMenuShareAppMessage','onMenuShareTimeline','onMenuShareQQ','onMenuShareQZone'] //
                     });
                     wx.error(function (res) {
-                        alert(JSON.stringify(res))
                     })
                 }
             });

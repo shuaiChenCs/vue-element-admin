@@ -15,7 +15,7 @@
             if(window.sessionStorage.token){
                 this.$router.push(routerUrl);
             }else{
-                token = 'eyJhbGciOiJIUzI1NiJ9.eyJwMSI6ODMsInAyIjo4NywiZXhwIjoxNTU5NDY0NDk5LCJpYXQiOjE1NTg2MDA0OTl9.HtEeRG3jTwVpxEA51zhAJVh6y-Y2GIMH5PDePE_HEOs';
+                // token = 'eyJhbGciOiJIUzI1NiJ9.eyJwMSI6ODQsInAyIjo4OCwiZXhwIjoxNTU5OTg0MzkyLCJpYXQiOjE1NTkxMjAzOTJ9.fPKuQG0tK1zDUo9vAsyqBG4O7LaI72fR370Y0sSSqBg';
                 if(!code && !token){
                     axios.get(this.$apiConfig.wxAuthorization+'?url='+wxRedirectUrl).then(res=>{
                         if(res.data.code==0)
@@ -27,6 +27,7 @@
                         txt: ''
                     });
                     toast.show();
+                    token = token ||  window.sessionStorage.token;
                     if(token){
                         window.sessionStorage.token = token;
                         axios.defaults.headers['Authentication'] = token;
@@ -48,9 +49,10 @@
         },
         methods:{
             loadUserInfo(routerUrl,toast,replace){
+                let memberInfo ={};
                 axios.get(this.$apiConfig.memberInfo, {}).then((member) => {
                     if (member.data.code == 0) {
-                        let memberInfo = member.data.data;
+                        memberInfo = member.data.data;
                         window.sessionStorage.card = JSON.stringify(memberInfo.cardVO);
                         window.sessionStorage.user = JSON.stringify(memberInfo);
                         this.$store.commit('setCard', memberInfo.cardVO);
@@ -60,6 +62,12 @@
                     this.$store.commit('initNim', {});
                     // this.loadWxConfig();
                     toast.hide();
+                    if(memberInfo.cardVO.id==84) {
+                        if (memberInfo.isExpire && routerUrl != '/article') {
+                            replace = true;
+                            routerUrl = '/pay';
+                        }
+                    }
                     if(replace) {
                         this.$router.replace(routerUrl)
                     }else {
