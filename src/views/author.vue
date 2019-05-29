@@ -63,10 +63,10 @@
                     // this.loadWxConfig();
                     toast.hide();
                     // if(memberInfo.cardVO.id==84) {
-                     if (memberInfo.isExpire && routerUrl != '/article') {
-                         replace = true;
-                         routerUrl = '/pay';
-                     }
+                    if (memberInfo.isExpire && routerUrl != '/article') {
+                        replace = true;
+                        routerUrl = '/pay';
+                    }
                     // }
                     if(replace) {
                         this.$router.replace(routerUrl)
