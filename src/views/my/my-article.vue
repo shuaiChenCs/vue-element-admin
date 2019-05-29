@@ -1,15 +1,15 @@
 <template>
   <div class="my-article sp-scroll" v-scroll="loadmore">
     <div class="article-list-block" v-if="!nodata">
-      <div v-for="(item, index) in articleList" :key="index" @click="chooseItem(item)">
+      <div v-for="(item, index) in articleList" :key="index">
         <div class="article-list-item">
             <div class="check-block">
                 <cube-checkbox v-model="item.isChoose" class="with-click">{{''}}</cube-checkbox>
             </div>
-          <div class="img">
+          <div class="img" @click="goTo(item)">
             <img :src="item.newsThumbnail">
           </div>
-          <div class="content">
+          <div class="content" @click="goTo(item)">
             <div class="content-top">{{item.newsTitle}}</div>
             <div class="content-bottom">
               <i class="iconfont iconcard_browse"></i>
@@ -68,8 +68,9 @@ export default {
                 }
             });
       },
-      chooseItem(item) {
-          item.isChoose = !item.isChoose;
+      goTo(item) {
+          this.$router.push("/main/article-h5?docId=" + item.id);
+        //   item.isChoose = !item.isChoose;
       },
       loadmore() {
           this.formData.current++;
@@ -104,7 +105,7 @@ export default {
         border: none;
       }
       .check-block{
-          width: 30px;
+          width: 35px;
           display: flex;
           align-items: center;
       }

@@ -46,9 +46,11 @@ export default {
         toast.show();
       axios.post(this.$apiConfig.makeArticle, params).then(res => {
           if(res.data.code == 0) {
-              toast.hide();
               let d= res.data.data;
-              this.$router.push("/main/article-h5?docId=" + d.newsId);
+              setTimeout(() => {
+                  toast.hide();
+                  this.$router.push("/main/article-h5?docId=" + d.newsId);
+              }, 1000);
           }else{
               toast.hide();
               this.$createToast({
