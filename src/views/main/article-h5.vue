@@ -27,11 +27,11 @@
                 <div class="item-info">
                     <span class="name">{{selfCard.cardName}}</span>
                     <span class="job">{{selfCard.position}}</span>
-                    <div class="company">
+                    <div class="company" v-if="selfCard.companyName">
                         <i class="iconfont iconcard_company"></i>
                         <span>{{selfCard.companyName}}</span>
                     </div>
-                    <div class="phone">
+                    <div class="phone" v-if="selfCard.mobile">
                         <i type="" class="iconfont iconcard_phone"></i>
                         <span>{{selfCard.mobile}}</span>
                     </div>
@@ -63,6 +63,7 @@
         mounted(){
             this.getWxConfig(encodeURIComponent(this.getCrtUrl('#'), {}));
             this.getArticleContent();
+            
             // this.shareToOne();
         },
         methods:{
@@ -192,11 +193,14 @@
         }
     }
     .article-content{
-        overflow-x: hidden !important;
+        // overflow-x: hidden !important;
         padding: 15px;
         background: white;
         img, video, section{
             max-width: 100% !important;
+        }
+        iframe{
+            width: 100% !important;
         }
     }
     .show-card{

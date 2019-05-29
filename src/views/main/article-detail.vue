@@ -30,11 +30,11 @@
                 <div class="item-info">
                     <span class="name">{{card.cardName || ''}}</span>
                     <span class="job">{{card.position || ''}}</span>
-                    <div class="company">
+                    <div class="company" v-if="card.companyName">
                         <i class="iconfont iconcard_company"></i>
                         <span>{{card.companyName || ''}}</span>
                     </div>
-                    <div class="phone">
+                    <div class="phone" v-if="card.mobile">
                         <i type="" class="iconfont iconcard_phone"></i>
                         <span>{{card.mobile || ''}}</span>
                     </div>
@@ -321,11 +321,14 @@
         }
     }
     .article-content{
-        overflow-x: hidden !important;
+        // overflow-x: hidden !important;
         padding: 15px;
         background: white;
         img, video, section{
             max-width: 100% !important;
+        }
+        iframe{
+            width: 100% !important;
         }
     }
     .show-card{

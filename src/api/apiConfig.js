@@ -75,5 +75,7 @@ const apiConfig = {
     changeToMy:`app/member/new/make/me`, //制作成我的文章
     getArticleQrcode:`app/member/new/generate/code`, //生成文章二维码
     wxAuthorization:`/wx/authorization`, //微信授权地址返回
+    getMyArticle:`app/member/new/list/my/article`, //获取我的文章
+    makeArticle:`app/member/new/generate/url`, //根据URL生成文章
 }
 export default apiConfig;

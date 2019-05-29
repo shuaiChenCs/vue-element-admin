@@ -16,5 +16,11 @@ export default [
 		name: 'articleH5',
 		component: () => import(/* webpackChunkName: "addressBook" */ '../views/main/article-h5'),
         meta:{title:'文章'}
+	},
+	{
+		path: '/main/make-article',
+		name: 'makeArticle',
+		component: () => import(/* webpackChunkName: "addressBook" */ '../views/main/make-article'),
+        meta:{title:'制作文章'}
 	}
 ]

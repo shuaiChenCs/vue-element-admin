@@ -2,8 +2,8 @@
   <div class="sp">
     <div class="fabu" v-show="show">
       <div class="item">
-        <img :src="`${this.$imageUrl}/add_goods@3x.png`" alt="">
-        <div class="des" @click="addGoods">
+        <img :src="`${this.$imageUrl}/add_article@3x.png`" alt="">
+        <div class="des" @click="makeArticle">
           <p class="main">新建文章</p>
           <p>精准营销文章</p>
           <p>转发即可获取浏览数据噢</p>
@@ -89,6 +89,10 @@ export default {
         wx.ready(function () {  wx.hideOptionMenu();    });
     },
   methods: {
+    makeArticle() {
+      this.show=false;
+      this.$router.push('/main/make-article');
+    },
       addGoods(){
           this.show=false;
           this.$router.push('/my/goods/add');

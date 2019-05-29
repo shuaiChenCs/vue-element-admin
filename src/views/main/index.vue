@@ -241,7 +241,6 @@ export default {
         flex-direction: column;
         justify-content: space-between;
         .content-top {
-          font-weight: bold;
           display: -webkit-box;
           -webkit-box-orient: vertical;
           -webkit-line-clamp: 2;

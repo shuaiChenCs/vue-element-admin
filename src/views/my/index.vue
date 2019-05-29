@@ -51,6 +51,7 @@ export default {
                 {title: '我的名片', icon:require(`@/assets/images/mine_card@3x.png`), url: '', click: () => {this.toMycard()}},
                 {title: '我的商品', icon:require(`@/assets/images/mine_shop@3x.png`), url: '/my/goods'},
                 {title: '我的动态', icon:require(`@/assets/images/mine_moments@3x.png`), url: '/my/dynamic'},
+                {title: '我的文章', icon:require(`@/assets/images/add_article@3x.png`), url: '/my/my-article'},
             ],
             data3: [
                 {title: '聊天选项', icon:require(`@/assets/images/mine_chat@3x.png`), url: '/my/chat'},

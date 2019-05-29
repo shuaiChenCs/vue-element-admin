@@ -83,5 +83,11 @@ export default [
         name: 'playbill',
         component: () => import(/* webpackChunkName: "my" */ '../views/my/playbill'),
         meta:{title:'海报'}
+    },
+    {
+        path: 'my/my-article',
+        name: 'myArticle',
+        component: () => import(/* webpackChunkName: "my" */ '../views/my/my-article'),
+        meta:{title:'我的文章'}
     }
 ]
