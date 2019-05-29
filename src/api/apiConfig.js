@@ -77,5 +77,6 @@ const apiConfig = {
     wxAuthorization:`/wx/authorization`, //微信授权地址返回
     getMyArticle:`app/member/new/list/my/article`, //获取我的文章
     makeArticle:`app/member/new/generate/url`, //根据URL生成文章
+    deleteMyArticle:`app/member/new/delete/news`, //删除我的文章
 }
 export default apiConfig;

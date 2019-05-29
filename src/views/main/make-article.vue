@@ -38,11 +38,19 @@ export default {
         let params = {
             url: this.url
         }
+        const toast = this.$createToast({
+            txt: '生成中...',
+            mask: true,
+            time: 0
+        });
+        toast.show();
       axios.post(this.$apiConfig.makeArticle, params).then(res => {
           if(res.data.code == 0) {
+              toast.hide();
               let d= res.data.data;
               this.$router.push("/main/article-h5?docId=" + d.newsId);
           }else{
+              toast.hide();
               this.$createToast({
                 txt: '该链接生成文章失败',
                 type: 'txt'

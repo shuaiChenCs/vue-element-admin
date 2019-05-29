@@ -23,7 +23,7 @@
       <no-more></no-more>
     </div>
     <no-article v-if="nodata"></no-article>
-    <fixed-button :title="'删除'" @clickHandler="deleteArticle"></fixed-button>
+    <fixed-button :title="'删除'" @clickHandler="deleteMyArticle"></fixed-button>
   </div>
 </template>
 <script>
@@ -36,16 +36,37 @@ export default {
         current: 1,
         size: 10
       },
-      articleList: []
+      articleList: [],
+      deletes: []
     };
   },
   mounted() {
     this.getMyArticle();
   },
   methods: {
-      deleteArticle() {
+      deleteMyArticle() {
           let deletes = this.articleList.filter(item => item.isChoose).map(item => item.id);
-          console.log(deletes)
+          if(deletes.length == 0) {
+              this.$createToast({
+                txt: '请至少选择一条',
+                type: 'txt'
+            }).show();
+              return;
+          }
+          let params = {
+              newsIdList: deletes
+          }
+          axios.post(this.$apiConfig.deleteMyArticle, params).then(res => {
+                if(res.data.code == 0) {
+                    this.$createToast({
+                        txt: '删除成功',
+                        type: 'txt'
+                    }).show();
+                    this.articleList = [];
+                    this.formData.current = 1;
+                    this.getMyArticle();
+                }
+            });
       },
       chooseItem(item) {
           item.isChoose = !item.isChoose;
