@@ -15,7 +15,7 @@
             if(window.sessionStorage.token){
                 this.$router.push(routerUrl);
             }else{
-                token = 'eyJhbGciOiJIUzI1NiJ9.eyJwMSI6ODMsInAyIjo4NywiZXhwIjoxNTU5NDY0NDk5LCJpYXQiOjE1NTg2MDA0OTl9.HtEeRG3jTwVpxEA51zhAJVh6y-Y2GIMH5PDePE_HEOs';
+                // token = 'eyJhbGciOiJIUzI1NiJ9.eyJwMSI6ODMsInAyIjo4NywiZXhwIjoxNTU5NDY0NDk5LCJpYXQiOjE1NTg2MDA0OTl9.HtEeRG3jTwVpxEA51zhAJVh6y-Y2GIMH5PDePE_HEOs';
                 if(!code && !token){
                     axios.get(this.$apiConfig.wxAuthorization+'?url='+wxRedirectUrl).then(res=>{
                         if(res.data.code==0)
