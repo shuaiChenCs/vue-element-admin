@@ -78,5 +78,6 @@ const apiConfig = {
     getMyArticle:`app/member/new/list/my/article`, //获取我的文章
     makeArticle:`app/member/new/generate/url`, //根据URL生成文章
     deleteMyArticle:`app/member/new/delete/news`, //删除我的文章
+    getArticleProducts:`app/new/view/goods`, //获取文章中的产品列表
 }
 export default apiConfig;
