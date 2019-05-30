@@ -108,7 +108,9 @@ export default {
         imAccount: "",
         headImg: ""
       },
-      goods: []
+      goods: [],
+      isPush:false,
+      websocket:null
     };
   },
   mounted() {
@@ -129,6 +131,7 @@ export default {
   },
   beforeRouteLeave(to, from, next) {
     if (to.path == "/chat") {
+        this.websocket.close();
       next();
     }
     if (this.getUrlParam("token")) {
@@ -137,42 +140,57 @@ export default {
       next(false);
     }
   },
+    beforeRouteEnter(to,from,next){
+        next(vm=> {
+            if(from.path=='/author') {
+                vm.isPush = true;
+            }else{
+                vm.isPush=false;
+            }
+        });
+    },
+    watch:{
+        isPush:function(){
+            if(this.isPush){
+                this.addBehavior('5');
+                this.socketInit();
+            }
+        }
+    },
   methods: {
     socketInit() {
-      if (this.isMe) {
-        return;
-      }
-      let websocket = null;
+        if(this.isMe){
+            return;
+        }
+        this.websocket = null;
 
-      //判断当前浏览器是否支持WebSocket
-      let url =
-        this.axios.defaults.baseURL
-          .replace("https", "wss")
-          .replace("http", "wss") + "/websocket/";
-      let behavior = {
-        cardId: this.cardId,
-        duration: this.time,
-        objectId: this.docId,
-        operateCode: "5-1",
-        currentCid: this.$store.state.user.cardVO.id,
-        userId: this.$store.state.user.id
-      };
-      if ("WebSocket" in window) {
-        websocket = new WebSocket(url + "/{" + JSON.stringify(behavior) + "}");
-      } else {
-        console.log("Not support websocket");
-      }
+        //判断当前浏览器是否支持WebSocket
+        let url = this.axios.defaults.baseURL.replace('https','wss').replace('http','wss')+'/websocket/';
+        let behavior = {
+            cardId:this.cardId,
+            duration:this.time,
+            objectId:this.docId,
+            operateCode:"5-1",
+            currentCid:this.$store.state.user.cardVO.id,
+            userId:this.$store.state.user.id
+        };
+        if('WebSocket' in window){
+            this.websocket = new WebSocket(url+"/{"+JSON.stringify(behavior)+"}");
+        }
+        else{
+            console.log('Not support websocket')
+        }
 
-      //连接发生错误的回调方法
-      websocket.onerror = function() {};
+        //连接发生错误的回调方法
+        this.websocket.onerror = function(){};
 
-      //连接关闭的回调方法
-      websocket.onclose = function() {};
+        //连接关闭的回调方法
+        this.websocket.onclose = function(){};
 
-      //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
-      window.onbeforeunload = function() {
-        websocket.close();
-      };
+        //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+        window.onbeforeunload = function(){
+            this.websocket.close();
+        }
     },
     showArticlePop() {
       const component = this.$refs.articlePopup;
@@ -315,10 +333,10 @@ export default {
           this.goods = data.goodsVOList;
           this.isMe = data.isMe;
           this.shareToOne();
-          this.socketInit();
+          // this.socketInit();
         }
       });
-      this.addBehavior("5");
+      // this.addBehavior("5");
     },
     addBehavior(code) {
       axios
