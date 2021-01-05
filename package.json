@@ -7,7 +7,7 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "core-js": "^2.6.5",
     "cube-ui": "~1.12.1",
     "highcharts": "^7.1.1",
@@ -21,7 +21,7 @@
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.5.0",
     "@vue/cli-service": "^3.5.0",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
     "postcss-px2rem": "^0.3.0",
